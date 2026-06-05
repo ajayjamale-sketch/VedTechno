@@ -698,7 +698,7 @@ export default function DeveloperDashboard({
               AI Assistant
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
                 label: "Problems Solved",
@@ -835,7 +835,7 @@ export default function DeveloperDashboard({
             </div>
           </div>
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h2 className="font-semibold text-foreground">Recent Activity</h2>
               <button
                 onClick={() => setActiveTab("challenges")}
@@ -898,7 +898,7 @@ export default function DeveloperDashboard({
       {/* Challenges Tab */}
       {activeTab === "challenges" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">
               Coding Challenges
             </h1>
@@ -1095,7 +1095,7 @@ export default function DeveloperDashboard({
       {/* Portfolio Tab */}
       {activeTab === "portfolio" && (
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">My Portfolio</h1>
             <button
               onClick={() => setAddProjectModal(true)}
@@ -1308,7 +1308,7 @@ export default function DeveloperDashboard({
             ))}
           </div>
           <div className="bg-card border border-border rounded-2xl p-5">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h2 className="font-semibold text-foreground">Top Job Matches</h2>
               <button
                 onClick={() => toast.info("Opening full job board...")}
@@ -1405,7 +1405,7 @@ export default function DeveloperDashboard({
               <p className="text-sm text-foreground mt-3">
                 {hackathonDetailModal.description}
               </p>
-              <div className="grid grid-cols-2 gap-3 mt-3 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 text-sm">
                 <div>
                   <span className="text-muted-foreground">Organizer:</span>{" "}
                   <span className="text-foreground font-medium">

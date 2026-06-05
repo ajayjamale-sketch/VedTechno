@@ -372,7 +372,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
               <Zap className="w-4 h-4 mr-1.5" />Upgrade to Pro
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Courses Active", value: enrolledCourses.length.toString(), icon: BookOpen, color: "text-primary bg-primary/10", change: "+2 this week", tab: "courses" },
               { label: "Hours Learned", value: Math.round(totalHours).toString(), icon: Clock, color: "text-accent bg-accent/10", change: "+8.5 hrs", tab: "analytics" },
@@ -390,7 +390,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
           </div>
           <div className="grid lg:grid-cols-2 gap-5">
             <div className="bg-card border border-border rounded-2xl p-5">
-              <div className="flex items-center justify-between mb-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
                 <div><h3 className="font-semibold text-foreground text-sm">Weekly Learning Activity</h3><p className="text-xs text-muted-foreground">Hours per day this week</p></div>
                 <span className="badge-accent text-xs">{totalHours.toFixed(0)}h total</span>
               </div>
@@ -406,7 +406,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
               </div>
             </div>
             <div className="bg-card border border-border rounded-2xl p-5">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <div><h3 className="font-semibold text-foreground text-sm">Career Readiness Score</h3><p className="text-xs text-muted-foreground">Monthly improvement</p></div>
                 <span className="text-2xl font-bold text-foreground">{Math.round(completionRate * 0.8 + 20)}<span className="text-sm text-muted-foreground">/100</span></span>
               </div>
@@ -436,7 +436,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
           </div>
           <div className="grid lg:grid-cols-3 gap-5">
             <div className="lg:col-span-2">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <h2 className="font-semibold text-foreground">Continue Learning</h2>
                 <button onClick={() => setActiveTab("courses")} className="text-sm text-primary dark:text-primary/80 hover:underline flex items-center gap-1">View all <ChevronRight className="w-3.5 h-3.5" /></button>
               </div>
@@ -455,7 +455,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
               </div>
             </div>
             <div>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <h2 className="font-semibold text-foreground">Upcoming Tasks</h2>
                 <button onClick={() => setTaskModal(true)} className="text-xs text-primary dark:text-primary/80 hover:underline flex items-center gap-1"><Plus className="w-3 h-3" />Add</button>
               </div>
@@ -487,7 +487,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
       {/* My Courses Tab */}
       {activeTab === "courses" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">My Courses</h1>
             <button onClick={() => setBrowseCoursesModal(true)} className="btn-primary text-sm">Browse More</button>
           </div>
@@ -544,7 +544,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
       {/* Coding Lab Tab */}
       {activeTab === "lab" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">Interactive Coding Lab</h1>
             <select className="input-field py-1.5 text-sm w-auto" value={selectedLang} onChange={(e) => { setSelectedLang(e.target.value); toast.info(`Switched to ${e.target.value}`); }}>
               {["Python", "JavaScript", "Go", "Java", "C++", "Rust"].map(l => <option key={l}>{l}</option>)}
@@ -589,7 +589,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
       {/* Certificates Tab - SHARE BUTTON FIXED */}
       {activeTab === "certs" && (
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">My Certificates</h1>
             <button onClick={() => setBrowseCoursesModal(true)} className="btn-primary text-sm">Browse Courses</button>
           </div>
@@ -685,7 +685,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
       {/* Community Tab */}
       {activeTab === "community" && (
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">Developer Community</h1>
             <button onClick={() => setDiscussionModal(true)} className="btn-primary text-sm"><Plus className="w-4 h-4 mr-1.5" />New Discussion</button>
           </div>
@@ -736,7 +736,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
       {activeTab === "analytics" && (
         <div className="space-y-6">
           <h1 className="text-2xl font-bold text-foreground">Learning Analytics</h1>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Total Hours", value: Math.round(totalHours) + "h", color: "text-primary" },
               { label: "Avg Daily", value: avgDaily + "h", color: "text-accent" },
@@ -819,7 +819,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
         <div className="space-y-4">
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Task Title</label><input className="input-field" placeholder="e.g. Complete React module" value={newTask.title} onChange={e => setNewTask({ ...newTask, title: e.target.value })} /></div>
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Course</label><select className="input-field" value={newTask.courseId} onChange={e => setNewTask({ ...newTask, courseId: e.target.value })}><option value="">Select course</option>{enrolledCourses.map(c => <option key={c.id} value={c.id}>{c.title}</option>)}</select></div>
-          <div className="grid grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Due Date</label><input type="date" className="input-field" value={newTask.dueDate} onChange={e => setNewTask({ ...newTask, dueDate: e.target.value })} /></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Priority</label><select className="input-field" value={newTask.priority} onChange={e => setNewTask({ ...newTask, priority: e.target.value as Task["priority"] })}><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Due Date</label><input type="date" className="input-field" value={newTask.dueDate} onChange={e => setNewTask({ ...newTask, dueDate: e.target.value })} /></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Priority</label><select className="input-field" value={newTask.priority} onChange={e => setNewTask({ ...newTask, priority: e.target.value as Task["priority"] })}><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div></div>
           <button onClick={addTask} className="btn-primary w-full">Add Task</button>
         </div>
       </Modal>

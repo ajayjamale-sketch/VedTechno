@@ -228,7 +228,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
               <Plus className="w-4 h-4 mr-1.5" />Create Course
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Total Students", value: totalStudents.toLocaleString(), icon: Users, color: "text-accent bg-accent/10", tab: "students" },
               { label: "Active Courses", value: courses.filter(c => c.status === "published").length.toString(), icon: BookOpen, color: "text-primary bg-primary/10", tab: "courses" },
@@ -271,7 +271,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
             </div>
           </div>
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h2 className="font-semibold text-foreground">My Courses</h2>
               <button onClick={() => setActiveTab("courses")} className="text-sm text-accent hover:underline flex items-center gap-1">
                 Manage all <ChevronRight className="w-3.5 h-3.5" />
@@ -305,7 +305,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
       {/* Courses Tab */}
       {activeTab === "courses" && (
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">Course Management</h1>
             <button onClick={() => setCreateCourseModal(true)} className="btn-primary text-sm bg-accent hover:bg-accent/90">
               <Plus className="w-4 h-4 mr-1.5" />New Course
@@ -347,7 +347,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
       {/* Students Tab */}
       {activeTab === "students" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">Student Management</h1>
             <button onClick={exportCSV} className="btn-secondary text-sm flex items-center gap-1.5">
               <Download className="w-4 h-4" />Export CSV
@@ -428,7 +428,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
               <Download className="w-4 h-4" />Download Report
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Total Earned", value: `$${totalRevenue.toLocaleString()}`, color: "text-accent" },
               { label: "This Month", value: "$4,800", color: "text-primary" },
@@ -582,7 +582,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
               <h3 className="text-xl font-bold text-foreground">{previewModal.course.title}</h3>
               <p className="text-sm text-muted-foreground mt-1">{previewModal.course.category}</p>
             </div>
-            <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               <div><span className="text-muted-foreground">Students:</span> <span className="font-medium">{previewModal.course.students}</span></div>
               <div><span className="text-muted-foreground">Rating:</span> <span className="font-medium">{previewModal.course.rating > 0 ? `★ ${previewModal.course.rating}` : "Not rated"}</span></div>
               <div><span className="text-muted-foreground">Status:</span> <span className={cn("font-medium", previewModal.course.status === "published" ? "text-accent" : "text-yellow-600")}>{previewModal.course.status}</span></div>
@@ -693,7 +693,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
               <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent font-bold text-xl">{viewStudentModal.student.name.split(" ").map(n => n[0]).join("")}</div>
               <div><p className="font-bold text-foreground">{viewStudentModal.student.name}</p><p className="text-sm text-muted-foreground">{viewStudentModal.student.email}</p></div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Course</p><p className="text-sm font-medium text-foreground mt-0.5 line-clamp-2">{viewStudentModal.student.course}</p></div>
               <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Progress</p><p className="text-sm font-bold text-foreground mt-0.5">{viewStudentModal.student.progress}%</p></div>
               <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Last Active</p><p className="text-sm font-medium text-foreground mt-0.5">{viewStudentModal.student.last}</p></div>

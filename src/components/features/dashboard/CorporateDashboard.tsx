@@ -266,7 +266,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
               Assign Training
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Enrolled Employees", value: String(employees.length), icon: Users, color: "text-violet-600 bg-primary/10", tab: "team", change: "+12 this month" },
               { label: "Avg Completion", value: "74%", icon: CheckCircle2, color: "text-accent bg-accent/10", tab: "analytics", change: "↑ 9% vs last Q" },
@@ -309,7 +309,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
             </div>
           </div>
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h2 className="font-semibold text-foreground">Skill Gap Alerts</h2>
               <button onClick={() => setAnalysisModal(true)} className="text-sm text-violet-600 hover:underline">Full Analysis</button>
             </div>
@@ -338,7 +338,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
       {/* Team Tab */}
       {activeTab === "team" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">Team Management</h1>
             <div className="flex gap-2">
               <button onClick={exportTeamCSV} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
@@ -420,7 +420,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
       {/* Learning Paths Tab */}
       {activeTab === "paths" && (
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">Learning Paths</h1>
             <button onClick={() => setCreatePathModal(true)} className="btn-primary text-sm bg-primary hover:bg-violet-700">
               <Plus className="w-4 h-4 mr-1.5" />Create Path
@@ -462,7 +462,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
             <h1 className="text-2xl font-bold text-foreground">Team Certifications</h1>
             <button onClick={exportCertCSV} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Total Issued", value: String(employees.reduce((a, e) => a + e.certs, 0)), color: "text-yellow-600" },
               { label: "This Quarter", value: "23", color: "text-violet-600" },
@@ -604,7 +604,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
         <div className="space-y-4">
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Full Name</label><input className="input-field" placeholder="John Smith" value={inviteForm.name} onChange={e => setInviteForm(p => ({ ...p, name: e.target.value }))} /></div>
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Email Address *</label><input type="email" className="input-field" placeholder="john@company.com" value={inviteForm.email} onChange={e => setInviteForm(p => ({ ...p, email: e.target.value }))} /></div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div><label className="block text-sm font-medium text-foreground mb-1.5">Department</label><select className="input-field" value={inviteForm.dept} onChange={e => setInviteForm(p => ({ ...p, dept: e.target.value }))}><option value="">Select...</option><option>Engineering</option><option>Data</option><option>DevOps</option><option>Design</option><option>Security</option></select></div>
             <div><label className="block text-sm font-medium text-foreground mb-1.5">Assign Learning Path</label><select className="input-field" value={inviteForm.pathId} onChange={e => setInviteForm(p => ({ ...p, pathId: e.target.value }))}><option value="">None</option>{learningPaths.map(p => <option key={p.id} value={p.id}>{p.title}</option>)}</select></div>
           </div>
@@ -622,7 +622,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
               </div>
               <div><p className="font-bold text-foreground">{viewEmpModal.emp.name}</p><p className="text-sm text-muted-foreground">{viewEmpModal.emp.dept} · {viewEmpModal.emp.email}</p></div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Learning Path</p><p className="text-sm font-medium text-foreground mt-0.5">{viewEmpModal.emp.path}</p></div>
               <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Progress</p><p className="text-sm font-bold text-foreground mt-0.5">{viewEmpModal.emp.progress}%</p></div>
               <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Certifications</p><p className="text-sm font-medium text-foreground mt-0.5">{viewEmpModal.emp.certs}</p></div>
@@ -654,7 +654,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
       <Modal open={createPathModal} onClose={() => setCreatePathModal(false)} title="Create Learning Path">
         <div className="space-y-4">
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Path Name *</label><input className="input-field" placeholder="e.g. Advanced Data Engineering" value={newPathForm.title} onChange={e => setNewPathForm(p => ({ ...p, title: e.target.value }))} /></div>
-          <div className="grid grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Target Department</label><select className="input-field" value={newPathForm.dept} onChange={e => setNewPathForm(p => ({ ...p, dept: e.target.value }))}><option>Engineering</option><option>Data</option><option>DevOps</option><option>Design</option><option>Security</option></select></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Duration</label><select className="input-field" value={newPathForm.duration} onChange={e => setNewPathForm(p => ({ ...p, duration: e.target.value }))}><option>1 month</option><option>2 months</option><option>3 months</option><option>4 months</option><option>6 months</option></select></div></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Target Department</label><select className="input-field" value={newPathForm.dept} onChange={e => setNewPathForm(p => ({ ...p, dept: e.target.value }))}><option>Engineering</option><option>Data</option><option>DevOps</option><option>Design</option><option>Security</option></select></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Duration</label><select className="input-field" value={newPathForm.duration} onChange={e => setNewPathForm(p => ({ ...p, duration: e.target.value }))}><option>1 month</option><option>2 months</option><option>3 months</option><option>4 months</option><option>6 months</option></select></div></div>
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Description</label><textarea className="input-field resize-none min-h-[80px]" placeholder="What skills will employees gain?" value={newPathForm.description} onChange={e => setNewPathForm(p => ({ ...p, description: e.target.value }))} /></div>
           <button onClick={handleCreatePath} className="btn-primary w-full text-sm bg-primary hover:bg-violet-700">Create Path</button>
         </div>
@@ -666,7 +666,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
           <div className="space-y-4">
             <div><h3 className="text-xl font-bold text-foreground">{viewPathModal.path.title}</h3><p className="text-sm text-muted-foreground">{viewPathModal.path.dept} · {viewPathModal.path.duration}</p></div>
             <p className="text-sm text-foreground">{viewPathModal.path.description}</p>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Enrolled</p><p className="text-lg font-bold text-foreground">{viewPathModal.path.assignedTo}</p></div>
               <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Completion Rate</p><p className="text-lg font-bold text-foreground">{viewPathModal.path.completion}%</p></div>
             </div>

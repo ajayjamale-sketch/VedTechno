@@ -597,7 +597,7 @@ export default function AdminDashboard({
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
                 label: "Total Users",
@@ -767,7 +767,7 @@ export default function AdminDashboard({
           </div>
           <div className="grid lg:grid-cols-3 gap-5">
             <div className="bg-card border border-border rounded-2xl p-5">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <h3 className="font-semibold text-foreground text-sm">
                   Platform Status
                 </h3>
@@ -796,7 +796,7 @@ export default function AdminDashboard({
               </div>
             </div>
             <div className="bg-card border border-border rounded-2xl p-5 lg:col-span-2">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <h3 className="font-semibold text-foreground text-sm">
                   Recent Admin Actions
                 </h3>
@@ -867,7 +867,7 @@ export default function AdminDashboard({
       {/* Users Tab (unchanged, fully functional) */}
       {activeTab === "users" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">
               User Management
             </h1>
@@ -1063,7 +1063,7 @@ export default function AdminDashboard({
       {/* Courses Tab with working View and Flag */}
       {activeTab === "courses" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">
               Course Management
             </h1>
@@ -1178,7 +1178,7 @@ export default function AdminDashboard({
               Download Report
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
                 label: "Monthly Revenue",
@@ -1298,7 +1298,7 @@ export default function AdminDashboard({
       {/* Moderation Tab (unchanged) */}
       {activeTab === "moderation" && (
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">
               Content Moderation
             </h1>
@@ -1586,7 +1586,7 @@ export default function AdminDashboard({
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
                 { label: "Role", value: viewUserModal.user.role },
                 { label: "Status", value: viewUserModal.user.status },
@@ -1908,7 +1908,7 @@ export default function AdminDashboard({
                 By {courseViewModal.course.instructor}
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-muted rounded-xl p-3">
                 <p className="text-xs text-muted-foreground">Status</p>
                 <p className="text-sm font-medium capitalize">

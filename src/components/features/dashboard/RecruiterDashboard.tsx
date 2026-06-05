@@ -267,7 +267,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
               <Plus className="w-4 h-4 mr-1.5" />Post Job
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Active Jobs", value: String(jobs.filter(j => j.status === "active").length), icon: Briefcase, color: "text-orange-600 bg-accent/10", tab: "jobs" },
               { label: "Total Applicants", value: String(jobs.reduce((a, j) => a + j.applicants, 0)), icon: Users, color: "text-primary bg-primary/10", tab: "candidates" },
@@ -296,7 +296,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
             </div>
           </div>
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h2 className="font-semibold text-foreground">Top Matched Candidates</h2>
               <button onClick={() => setActiveTab("candidates")} className="text-sm text-orange-600 hover:underline flex items-center gap-1">
                 Search all <ArrowRight className="w-3.5 h-3.5" />
@@ -333,7 +333,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
       {/* Candidates Tab (unchanged) */}
       {activeTab === "candidates" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">Candidate Search</h1>
             <span className="text-sm text-muted-foreground">{filteredCandidates.length} candidates</span>
           </div>
@@ -410,7 +410,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
       {/* Jobs Tab (unchanged) */}
       {activeTab === "jobs" && (
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">Job Postings</h1>
             <button onClick={() => setPostJobModal(true)} className="btn-primary text-sm bg-accent hover:bg-orange-700">
               <Plus className="w-4 h-4 mr-1.5" />Post New Job
@@ -444,7 +444,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
       {/* Interviews Tab (with Add Feedback button now functional) */}
       {activeTab === "interviews" && (
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">Interview Schedule</h1>
             <button onClick={() => openScheduleModal()} className="btn-primary text-sm bg-accent hover:bg-orange-700">
               <Plus className="w-4 h-4 mr-1.5" />Schedule Interview
@@ -504,7 +504,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
               <Download className="w-4 h-4" />Export Report
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Time to Hire", value: "18 days", color: "text-orange-600" },
               { label: "Offer Accept Rate", value: "78%", color: "text-accent" },
@@ -563,7 +563,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
                 <p className="text-xs text-accent dark:text-emerald-400 font-bold">{viewCandidateModal.candidate.match}% match</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
                 { label: "Location", value: viewCandidateModal.candidate.location },
                 { label: "Exp. Salary", value: viewCandidateModal.candidate.salary },
@@ -594,7 +594,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
       <Modal open={postJobModal} onClose={() => setPostJobModal(false)} title="Post New Job">
         <div className="space-y-4">
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Job Title *</label><input className="input-field" placeholder="e.g. Senior React Developer" value={newJob.title} onChange={e => setNewJob(p => ({ ...p, title: e.target.value }))} /></div>
-          <div className="grid grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Department</label><input className="input-field" placeholder="Engineering" value={newJob.dept} onChange={e => setNewJob(p => ({ ...p, dept: e.target.value }))} /></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Location</label><input className="input-field" placeholder="Remote / City" value={newJob.location} onChange={e => setNewJob(p => ({ ...p, location: e.target.value }))} /></div></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Department</label><input className="input-field" placeholder="Engineering" value={newJob.dept} onChange={e => setNewJob(p => ({ ...p, dept: e.target.value }))} /></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Location</label><input className="input-field" placeholder="Remote / City" value={newJob.location} onChange={e => setNewJob(p => ({ ...p, location: e.target.value }))} /></div></div>
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Employment Type</label><select className="input-field" value={newJob.type} onChange={e => setNewJob(p => ({ ...p, type: e.target.value }))}><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select></div>
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Job Description</label><textarea className="input-field resize-none min-h-[80px]" placeholder="Describe responsibilities, requirements..." /></div>
           <div className="flex gap-3"><button onClick={() => setPostJobModal(false)} className="flex-1 btn-secondary text-sm">Cancel</button><button onClick={handlePostJob} className="flex-1 btn-primary text-sm bg-accent hover:bg-orange-700">Post Job</button></div>
@@ -606,7 +606,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
         {editJobModal.job && (
           <div className="space-y-4">
             <div><label className="block text-sm font-medium text-foreground mb-1.5">Job Title</label><input className="input-field" value={editJobForm.title} onChange={e => setEditJobForm({ ...editJobForm, title: e.target.value })} /></div>
-            <div className="grid grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Department</label><input className="input-field" value={editJobForm.dept} onChange={e => setEditJobForm({ ...editJobForm, dept: e.target.value })} /></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Location</label><input className="input-field" value={editJobForm.location} onChange={e => setEditJobForm({ ...editJobForm, location: e.target.value })} /></div></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Department</label><input className="input-field" value={editJobForm.dept} onChange={e => setEditJobForm({ ...editJobForm, dept: e.target.value })} /></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Location</label><input className="input-field" value={editJobForm.location} onChange={e => setEditJobForm({ ...editJobForm, location: e.target.value })} /></div></div>
             <div><label className="block text-sm font-medium text-foreground mb-1.5">Status</label><select className="input-field" value={editJobForm.status} onChange={e => setEditJobForm({ ...editJobForm, status: e.target.value })}><option value="active">Active</option><option value="draft">Draft</option><option value="closed">Closed</option></select></div>
             <div className="flex gap-3"><button onClick={() => setEditJobModal({ open: false, job: null })} className="flex-1 btn-secondary text-sm">Cancel</button><button onClick={handleEditJob} className="flex-1 btn-primary text-sm bg-accent hover:bg-orange-700">Save Changes</button></div>
           </div>
@@ -617,7 +617,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
       <Modal open={scheduleModal.open} onClose={() => setScheduleModal({ open: false })} title={scheduleModal.interview ? "Reschedule Interview" : "Schedule Interview"}>
         <div className="space-y-4">
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Candidate *</label><input className="input-field" value={scheduleForm.candidate} onChange={e => setScheduleForm({ ...scheduleForm, candidate: e.target.value })} /></div>
-          <div className="grid grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Date *</label><input type="date" className="input-field" value={scheduleForm.date} onChange={e => setScheduleForm({ ...scheduleForm, date: e.target.value })} /></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Time *</label><input type="time" className="input-field" value={scheduleForm.time} onChange={e => setScheduleForm({ ...scheduleForm, time: e.target.value })} /></div></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Date *</label><input type="date" className="input-field" value={scheduleForm.date} onChange={e => setScheduleForm({ ...scheduleForm, date: e.target.value })} /></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Time *</label><input type="time" className="input-field" value={scheduleForm.time} onChange={e => setScheduleForm({ ...scheduleForm, time: e.target.value })} /></div></div>
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Interview Type</label><select className="input-field" value={scheduleForm.type} onChange={e => setScheduleForm({ ...scheduleForm, type: e.target.value })}><option>Initial Screen</option><option>Technical Round</option><option>System Design</option><option>Final Round</option></select></div>
           <div><label className="block text-sm font-medium text-foreground mb-1.5">Meeting Link (optional)</label><input className="input-field" placeholder="https://meet.google.com/..." value={scheduleForm.link} onChange={e => setScheduleForm({ ...scheduleForm, link: e.target.value })} /></div>
           <button onClick={handleSchedule} className="btn-primary w-full text-sm bg-accent hover:bg-orange-700">{scheduleModal.interview ? "Reschedule & Notify" : "Schedule & Send Invite"}</button>

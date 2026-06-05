@@ -267,7 +267,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
               <Lightbulb className="w-4 h-4 mr-1.5" />Innovation Hub
             </button>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Startup Score", value: "81/100", icon: Rocket, color: "text-pink-600 bg-accent/10", tab: "overview" },
               { label: "Courses Done", value: String(learningModules.filter(m => m.status === "completed").length), icon: BookOpen, color: "text-primary bg-primary/10", tab: "learning" },
@@ -350,7 +350,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         <div className="space-y-6">
           <h1 className="text-2xl font-bold text-foreground">Startup Learning Path</h1>
           <div className="bg-card border border-border rounded-2xl p-5">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h3 className="font-semibold text-foreground">Your Progress</h3>
               <span className="text-2xl font-bold text-pink-600">{learningProgress}%</span>
             </div>
@@ -489,7 +489,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
       {/* Challenges Tab with Open button functional */}
       {activeTab === "challenges" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h1 className="text-2xl font-bold text-foreground">Challenges & Programs</h1>
             <span className="text-sm text-muted-foreground">{filteredChallenges.length} available</span>
           </div>
@@ -565,7 +565,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
               <p className="text-xs text-muted-foreground">Type: {challengeModal.challenge.type}</p>
               <p className="text-sm text-foreground mt-1">{challengeModal.challenge.description}</p>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-muted rounded-xl p-3">
                 <p className="text-xs text-muted-foreground">Reward</p>
                 <p className="text-sm font-bold text-accent">{challengeModal.challenge.reward}</p>
@@ -625,7 +625,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
                 <option>General Startup Advice</option>
               </select>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div><label className="block text-sm font-medium text-foreground mb-1.5">Preferred Date</label><input type="date" className="input-field" /></div>
               <div><label className="block text-sm font-medium text-foreground mb-1.5">Duration</label><select className="input-field"><option>30 min</option><option>45 min</option><option>60 min</option></select></div>
             </div>
