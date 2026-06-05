@@ -22,7 +22,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Terms from "@/pages/Terms";
 import NotFound from "@/pages/NotFound";
 
-const NO_LAYOUT_ROUTES = ["/login", "/register", "/forgot-password"];
+const NO_LAYOUT_ROUTES = ["/login", "/register", "/forgot-password", "/dashboard"];
 const NO_FOOTER_ROUTES = ["/dashboard"];
 
 function AppContent() {
