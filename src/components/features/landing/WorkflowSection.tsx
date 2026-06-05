@@ -73,7 +73,7 @@ export default function WorkflowSection() {
                 <ul className="space-y-2">
                   {step.checks.map((c) => (
                     <li key={c} className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-accent flex-shrink-0" />
                       {c}
                     </li>
                   ))}
@@ -84,7 +84,7 @@ export default function WorkflowSection() {
         </div>
 
         <div className="mt-10 pt-8 border-t border-border">
-          <Link to="/register" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors group">
+          <Link to="/register" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary dark:hover:text-primary/80 transition-colors group">
             Start your path today
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>

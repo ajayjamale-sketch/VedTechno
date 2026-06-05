@@ -354,7 +354,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
         {tabs.map(({ id, label, icon: Icon }) => (
           <button key={id} onClick={() => setActiveTab(id)}
             className={cn("flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all",
-              activeTab === id ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25" : "text-muted-foreground hover:text-foreground hover:bg-muted")}>
+              activeTab === id ? "bg-primary text-white shadow-lg shadow-primary/25" : "text-muted-foreground hover:text-foreground hover:bg-muted")}>
             <Icon className="w-3.5 h-3.5" />{label}
           </button>
         ))}
@@ -374,17 +374,17 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: "Courses Active", value: enrolledCourses.length.toString(), icon: BookOpen, color: "text-blue-600 bg-blue-600/10", change: "+2 this week", tab: "courses" },
-              { label: "Hours Learned", value: Math.round(totalHours).toString(), icon: Clock, color: "text-emerald-600 bg-emerald-600/10", change: "+8.5 hrs", tab: "analytics" },
+              { label: "Courses Active", value: enrolledCourses.length.toString(), icon: BookOpen, color: "text-primary bg-primary/10", change: "+2 this week", tab: "courses" },
+              { label: "Hours Learned", value: Math.round(totalHours).toString(), icon: Clock, color: "text-accent bg-accent/10", change: "+8.5 hrs", tab: "analytics" },
               { label: "Certificates", value: certificatesEarned.toString(), icon: Award, color: "text-yellow-600 bg-yellow-600/10", change: `${certificates.filter(c => c.status === "in-progress").length} in progress`, tab: "certs" },
-              { label: "Streak Days", value: streakDays.toString(), icon: Flame, color: "text-orange-600 bg-orange-600/10", change: "Personal best!", tab: "analytics" },
+              { label: "Streak Days", value: streakDays.toString(), icon: Flame, color: "text-orange-600 bg-accent/10", change: "Personal best!", tab: "analytics" },
             ].map(({ label, value, icon: Icon, color, change, tab }) => (
               <button key={label} onClick={() => setActiveTab(tab)}
-                className="bg-card border border-border rounded-2xl p-4 hover:border-blue-600/30 transition-colors text-left">
+                className="bg-card border border-border rounded-2xl p-4 hover:border-primary/30 transition-colors text-left">
                 <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center mb-3", color)}><Icon className="w-4 h-4" /></div>
                 <p className="text-2xl font-bold text-foreground">{value}</p>
                 <p className="text-xs text-muted-foreground">{label}</p>
-                <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1 font-medium">{change}</p>
+                <p className="text-xs text-accent dark:text-emerald-400 mt-1 font-medium">{change}</p>
               </button>
             ))}
           </div>
@@ -428,7 +428,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
                 ].map((s) => (
                   <div key={s.skill}>
                     <div className="flex justify-between text-xs mb-1"><span className="text-muted-foreground">{s.skill}</span><span className="font-medium text-foreground">{s.pct}%</span></div>
-                    <div className="h-1.5 bg-muted rounded-full"><div className="h-full bg-emerald-500 rounded-full" style={{ width: `${s.pct}%` }} /></div>
+                    <div className="h-1.5 bg-muted rounded-full"><div className="h-full bg-accent rounded-full" style={{ width: `${s.pct}%` }} /></div>
                   </div>
                 ))}
               </div>
@@ -438,7 +438,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
             <div className="lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-semibold text-foreground">Continue Learning</h2>
-                <button onClick={() => setActiveTab("courses")} className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">View all <ChevronRight className="w-3.5 h-3.5" /></button>
+                <button onClick={() => setActiveTab("courses")} className="text-sm text-primary dark:text-primary/80 hover:underline flex items-center gap-1">View all <ChevronRight className="w-3.5 h-3.5" /></button>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 {enrolledCourses.slice(0, 2).filter(c => c.progress > 0).map((course) => (
@@ -447,9 +447,9 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
                     <h4 className="text-sm font-semibold text-foreground line-clamp-2 mb-2">{course.title}</h4>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1"><span className="text-muted-foreground">Progress</span><span className="font-medium text-foreground">{course.progress}%</span></div>
-                      <div className="h-1.5 bg-muted rounded-full"><div className="h-full bg-blue-600 rounded-full" style={{ width: `${course.progress}%` }} /></div>
+                      <div className="h-1.5 bg-muted rounded-full"><div className="h-full bg-primary rounded-full" style={{ width: `${course.progress}%` }} /></div>
                     </div>
-                    <button onClick={() => setCoursePlayerModal(course)} className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-xs font-medium"><Play className="w-3 h-3 fill-current" />Continue</button>
+                    <button onClick={() => setCoursePlayerModal(course)} className="flex items-center gap-1.5 text-primary dark:text-primary/80 text-xs font-medium"><Play className="w-3 h-3 fill-current" />Continue</button>
                   </div>
                 ))}
               </div>
@@ -457,7 +457,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-semibold text-foreground">Upcoming Tasks</h2>
-                <button onClick={() => setTaskModal(true)} className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><Plus className="w-3 h-3" />Add</button>
+                <button onClick={() => setTaskModal(true)} className="text-xs text-primary dark:text-primary/80 hover:underline flex items-center gap-1"><Plus className="w-3 h-3" />Add</button>
               </div>
               <div className="space-y-3">
                 {upcomingTasks.map((task) => (
@@ -499,12 +499,12 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
             </div>
             <div className="flex gap-2 overflow-x-auto scrollbar-hide">
               {["All", "Beginner", "Intermediate", "Advanced"].map(f => (
-                <button key={f} onClick={() => setCourseFilter(f)} className={cn("px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all border", courseFilter === f ? "bg-blue-600 text-white border-blue-600" : "border-border text-muted-foreground hover:bg-muted")}>{f}</button>
+                <button key={f} onClick={() => setCourseFilter(f)} className={cn("px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all border", courseFilter === f ? "bg-primary text-white border-primary" : "border-border text-muted-foreground hover:bg-muted")}>{f}</button>
               ))}
             </div>
           </div>
           {filteredCourses.length === 0 ? (
-            <div className="text-center py-16"><Search className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-40" /><p className="text-muted-foreground">No courses found</p><button onClick={() => { setCourseSearch(""); setCourseFilter("All"); }} className="mt-3 text-sm text-blue-600 dark:text-blue-400 hover:underline">Clear filters</button></div>
+            <div className="text-center py-16"><Search className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-40" /><p className="text-muted-foreground">No courses found</p><button onClick={() => { setCourseSearch(""); setCourseFilter("All"); }} className="mt-3 text-sm text-primary dark:text-primary/80 hover:underline">Clear filters</button></div>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredCourses.map((course) => (
@@ -527,8 +527,8 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
                   {course.progress > 0 ? (
                     <div>
                       <div className="flex justify-between text-xs mb-1"><span className="text-muted-foreground">Progress</span><span className="font-medium text-foreground">{course.progress}%</span></div>
-                      <div className="h-1.5 bg-muted rounded-full"><div className="h-full bg-blue-600 rounded-full" style={{ width: `${course.progress}%` }} /></div>
-                      <button onClick={() => setCoursePlayerModal(course)} className="mt-2 flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 font-medium"><Play className="w-3 h-3 fill-current" />Continue</button>
+                      <div className="h-1.5 bg-muted rounded-full"><div className="h-full bg-primary rounded-full" style={{ width: `${course.progress}%` }} /></div>
+                      <button onClick={() => setCoursePlayerModal(course)} className="mt-2 flex items-center gap-1 text-xs text-primary dark:text-primary/80 font-medium"><Play className="w-3 h-3 fill-current" />Continue</button>
                     </div>
                   ) : (
                     <button onClick={() => updateCourseProgress(course.id, 10)} className="btn-primary w-full text-xs py-2 mt-1">Start Course</button>
@@ -558,7 +558,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
               </div>
               <div className="flex items-center gap-2">
                 <button onClick={() => { setCode("# Start fresh\n\n"); setCodeOutput(""); toast.info("Editor cleared"); }} className="px-3 py-1 border border-gray-700 text-gray-400 text-xs rounded-lg hover:border-gray-500">Clear</button>
-                <button onClick={runCode} disabled={codeRunning} className="px-4 py-1 bg-emerald-600 text-white text-xs rounded-lg font-medium hover:bg-emerald-700 disabled:opacity-50 flex items-center gap-1.5">
+                <button onClick={runCode} disabled={codeRunning} className="px-4 py-1 bg-accent text-white text-xs rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 flex items-center gap-1.5">
                   {codeRunning ? <><div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />Running...</> : <>▶ Run Code</>}
                 </button>
               </div>
@@ -576,10 +576,10 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
               { title: "Dynamic Programming", desc: "Hard · DP · Memoization", pts: 50 },
             ].map((ch) => (
               <button key={ch.title} onClick={() => loadChallenge(ch.title, ch.desc)} className="feature-card text-left">
-                <Code2 className="w-5 h-5 text-blue-600 mb-2" />
+                <Code2 className="w-5 h-5 text-primary mb-2" />
                 <p className="text-sm font-medium text-foreground">{ch.title}</p>
                 <p className="text-xs text-muted-foreground mt-1">{ch.desc}</p>
-                <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mt-1">+{ch.pts} pts</p>
+                <p className="text-xs text-primary dark:text-primary/80 font-medium mt-1">+{ch.pts} pts</p>
               </button>
             ))}
           </div>
@@ -597,15 +597,15 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
             {certificates.map((cert) => (
               <div key={cert.id} className="feature-card">
                 <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center mb-4", cert.status === "earned" ? "bg-yellow-500/10" : "bg-blue-500/10")}>
-                  {cert.status === "earned" ? <Award className="w-6 h-6 text-yellow-500" /> : <Lock className="w-6 h-6 text-blue-600" />}
+                  {cert.status === "earned" ? <Award className="w-6 h-6 text-yellow-500" /> : <Lock className="w-6 h-6 text-primary" />}
                 </div>
                 <h3 className="font-semibold text-foreground text-sm mb-1">{cert.name}</h3>
                 <p className="text-xs text-muted-foreground mb-3">{cert.issuer} · {cert.date}</p>
                 {cert.status === "earned" ? (
                   <div className="space-y-2">
-                    <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-3.5 h-3.5" />Verified Certificate</div>
+                    <div className="flex items-center gap-1.5 text-xs text-accent dark:text-emerald-400"><CheckCircle2 className="w-3.5 h-3.5" />Verified Certificate</div>
                     <div className="flex gap-2">
-                      <button onClick={() => downloadCertificate(cert)} className="flex-1 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 flex items-center justify-center gap-1">
+                      <button onClick={() => downloadCertificate(cert)} className="flex-1 py-1.5 bg-primary text-white text-xs font-medium rounded-lg hover:bg-primary/90 flex items-center justify-center gap-1">
                         <Download className="w-3 h-3" />Download
                       </button>
                       <button onClick={() => shareCertificate(cert)} className="flex-1 py-1.5 border border-border text-xs font-medium rounded-lg hover:bg-muted text-foreground flex items-center justify-center gap-1">
@@ -616,8 +616,8 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
                 ) : (
                   <div>
                     <div className="flex justify-between text-xs mb-1"><span className="text-muted-foreground">Progress</span><span className="font-medium text-foreground">{cert.progress}%</span></div>
-                    <div className="h-1.5 bg-muted rounded-full"><div className="h-full bg-blue-600 rounded-full" style={{ width: `${cert.progress}%` }} /></div>
-                    <button onClick={() => { setActiveTab("courses"); }} className="mt-2 text-xs text-blue-600 dark:text-blue-400 font-medium">Continue course →</button>
+                    <div className="h-1.5 bg-muted rounded-full"><div className="h-full bg-primary rounded-full" style={{ width: `${cert.progress}%` }} /></div>
+                    <button onClick={() => { setActiveTab("courses"); }} className="mt-2 text-xs text-primary dark:text-primary/80 font-medium">Continue course →</button>
                   </div>
                 )}
               </div>
@@ -632,13 +632,13 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
           <h1 className="text-2xl font-bold text-foreground mb-6">Career Hub</h1>
           <div className="grid lg:grid-cols-3 gap-5">
             <div className="bg-card border border-border rounded-2xl p-5">
-              <Target className="w-6 h-6 text-blue-600 mb-3" />
+              <Target className="w-6 h-6 text-primary mb-3" />
               <h3 className="font-semibold text-foreground mb-2">Career Readiness</h3>
               <div className="text-4xl font-bold text-foreground mb-4">82<span className="text-lg text-muted-foreground">/100</span></div>
               <button onClick={() => setRoadmapModal(true)} className="btn-primary w-full text-sm">View Roadmap</button>
             </div>
             <div className="bg-card border border-border rounded-2xl p-5">
-              <TrendingUp className="w-6 h-6 text-emerald-600 mb-3" />
+              <TrendingUp className="w-6 h-6 text-accent mb-3" />
               <h3 className="font-semibold text-foreground mb-2">Resume Builder</h3>
               <p className="text-sm text-muted-foreground mb-4">AI-powered resume tailored to your target role.</p>
               <button onClick={() => setResumeModal(true)} className="btn-secondary w-full text-sm">Build Resume</button>
@@ -658,10 +658,10 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
                   <div>
                     <p className="font-medium text-foreground text-sm">{job.title}</p>
                     <p className="text-xs text-muted-foreground">{job.company} · {job.location}</p>
-                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mt-0.5">{job.salary}</p>
+                    <p className="text-xs text-primary dark:text-primary/80 font-medium mt-0.5">{job.salary}</p>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0">
-                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">{job.match}% match</span>
+                    <span className="text-xs font-bold text-accent dark:text-emerald-400">{job.match}% match</span>
                     <button 
                       onClick={() => {
                         if (!appliedJobs.includes(job.id)) {
@@ -671,7 +671,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
                         }
                       }} 
                       disabled={job.applied}
-                      className={cn("px-3 py-1.5 text-xs font-medium rounded-lg transition-colors", job.applied ? "bg-green-600 text-white opacity-80 cursor-default" : "bg-blue-600 text-white hover:bg-blue-700")}>
+                      className={cn("px-3 py-1.5 text-xs font-medium rounded-lg transition-colors", job.applied ? "bg-green-600 text-white opacity-80 cursor-default" : "bg-primary text-white hover:bg-primary/90")}>
                       {job.applied ? "Applied ✓" : "Apply"}
                     </button>
                   </div>
@@ -694,8 +694,8 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
               <h2 className="font-semibold text-foreground mb-3">Active Discussions</h2>
               <div className="space-y-3">
                 {discussions.map((post) => (
-                  <button key={post.id} onClick={() => setDiscussionViewModal(post)} className="w-full bg-card border border-border rounded-xl p-4 text-left hover:border-blue-600/30 transition-colors">
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 font-medium">{post.tag}</span>
+                  <button key={post.id} onClick={() => setDiscussionViewModal(post)} className="w-full bg-card border border-border rounded-xl p-4 text-left hover:border-primary/30 transition-colors">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary dark:text-primary/80 font-medium">{post.tag}</span>
                     <p className="text-sm font-medium text-foreground mt-2 line-clamp-2">{post.title}</p>
                     <p className="text-xs text-muted-foreground mt-1">{post.replies} replies · {post.views} views</p>
                   </button>
@@ -710,7 +710,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
                     <p className="text-sm font-medium text-foreground">{event.title}</p>
                     <p className="text-xs text-muted-foreground mt-1">{event.date} · {event.participants} participants</p>
                     <div className="flex items-center justify-between mt-3">
-                      <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Prize: {event.prize}</span>
+                      <span className="text-xs font-bold text-accent dark:text-emerald-400">Prize: {event.prize}</span>
                       <button 
                         onClick={() => {
                           if (!registeredEvents.includes(event.id)) {
@@ -720,7 +720,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
                           }
                         }}
                         disabled={event.registered}
-                        className={cn("px-3 py-1.5 text-xs font-medium rounded-lg transition-colors", event.registered ? "bg-green-600 text-white opacity-80 cursor-default" : "bg-blue-600 text-white hover:bg-blue-700")}>
+                        className={cn("px-3 py-1.5 text-xs font-medium rounded-lg transition-colors", event.registered ? "bg-green-600 text-white opacity-80 cursor-default" : "bg-primary text-white hover:bg-primary/90")}>
                         {event.registered ? "Registered ✓" : "Register"}
                       </button>
                     </div>
@@ -738,8 +738,8 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
           <h1 className="text-2xl font-bold text-foreground">Learning Analytics</h1>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: "Total Hours", value: Math.round(totalHours) + "h", color: "text-blue-600" },
-              { label: "Avg Daily", value: avgDaily + "h", color: "text-emerald-600" },
+              { label: "Total Hours", value: Math.round(totalHours) + "h", color: "text-primary" },
+              { label: "Avg Daily", value: avgDaily + "h", color: "text-accent" },
               { label: "Completion Rate", value: completionRate + "%", color: "text-yellow-600" },
               { label: "Best Streak", value: streakDays + " days", color: "text-orange-600" },
             ].map(({ label, value, color }) => (
@@ -767,7 +767,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
             <div className="space-y-3">
               {[
                 { skill: "React & Frontend", pct: Math.min(85, completionRate + 5), color: "bg-blue-500" },
-                { skill: "Python & ML", pct: Math.min(70, completionRate - 10), color: "bg-emerald-500" },
+                { skill: "Python & ML", pct: Math.min(70, completionRate - 10), color: "bg-accent" },
                 { skill: "Node.js & APIs", pct: Math.min(60, completionRate - 15), color: "bg-indigo-500" },
                 { skill: "Databases", pct: Math.min(45, completionRate - 20), color: "bg-orange-500" },
                 { skill: "DevOps & Cloud", pct: Math.min(30, completionRate - 30), color: "bg-pink-500" },
@@ -882,7 +882,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
 
       <Modal open={resumeModal} onClose={() => setResumeModal(false)} title="AI Resume Builder">
         <div className="space-y-4 text-center">
-          <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-2"><Brain className="w-8 h-8 text-blue-600" /></div>
+          <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-2"><Brain className="w-8 h-8 text-primary" /></div>
           <h3 className="font-semibold text-foreground">Analyzing your profile...</h3>
           <p className="text-sm text-muted-foreground">Our AI is drafting a custom resume based on your completed courses, projects, and target role.</p>
           <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden mt-4"><div className="h-full bg-blue-500 w-2/3 animate-pulse" /></div>
@@ -896,7 +896,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
       <Modal open={interviewModal} onClose={() => setInterviewModal(false)} title="AI Mock Interview">
         <div className="space-y-4">
           <div className="bg-card border border-border p-4 rounded-xl flex gap-4 items-start">
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0"><Brain className="w-5 h-5 text-white" /></div>
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0"><Brain className="w-5 h-5 text-white" /></div>
             <div><p className="text-sm text-foreground">"Hi there! Let's start with a technical question. Can you explain the difference between client-side rendering and server-side rendering in React applications?"</p></div>
           </div>
           <div className="bg-muted p-4 rounded-xl text-right"><p className="text-sm text-muted-foreground italic">Waiting for your response...</p></div>
@@ -912,7 +912,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
         {discussionViewModal && (
           <div className="space-y-6">
             <div>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-blue-600/10 text-blue-600 font-medium">{discussionViewModal.tag}</span>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{discussionViewModal.tag}</span>
               <h2 className="text-lg font-bold text-foreground mt-2">{discussionViewModal.title}</h2>
               <p className="text-sm text-muted-foreground mt-2">Posted by <strong className="text-foreground">{discussionViewModal.author}</strong> · {discussionViewModal.createdAt}</p>
               <div className="p-4 bg-muted/50 rounded-xl mt-4 text-sm text-foreground">{discussionViewModal.body}</div>

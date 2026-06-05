@@ -72,7 +72,7 @@ export default function BenefitsSection() {
             {REASONS.map(({ icon: Icon, title, body }) => (
               <div key={title}>
                 <div className="flex items-center gap-2.5 mb-3">
-                  <Icon className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                  <Icon className="w-4 h-4 text-primary dark:text-primary/80 flex-shrink-0" />
                   <h3 className="text-sm font-semibold text-foreground">{title}</h3>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>

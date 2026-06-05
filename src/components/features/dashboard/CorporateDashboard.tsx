@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Users, BookOpen, Award, BarChart3, TrendingUp, Plus, Eye,
   CheckCircle2, AlertTriangle, Download, X, Search, Edit, Trash2,
-  Target, Filter, Mail, UploadCloud, ChevronDown
+  Target, Filter, Mail, UploadCloud, ChevronDown, Calendar, Clock, FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BarChart, Bar, ResponsiveContainer, XAxis, Tooltip, CartesianGrid, LineChart, Line } from "recharts";
@@ -19,18 +19,19 @@ const trendData = [
 ];
 
 const INIT_EMPLOYEES = [
-  { id: 1, name: "John Smith", dept: "Engineering", path: "Full Stack Dev", progress: 82, certs: 2, status: "on-track", email: "john@globaltech.com" },
+  { id: 1, name: "John Smith", dept: "Engineering", path: "Full Stack Development", progress: 82, certs: 2, status: "on-track", email: "john@globaltech.com" },
   { id: 2, name: "Anna Lee", dept: "Data", path: "Data Science", progress: 64, certs: 1, status: "on-track", email: "anna@globaltech.com" },
   { id: 3, name: "Mike Torres", dept: "DevOps", path: "Cloud Engineering", progress: 31, certs: 0, status: "at-risk", email: "mike@globaltech.com" },
   { id: 4, name: "Priya Singh", dept: "Security", path: "Cybersecurity", progress: 91, certs: 3, status: "completed", email: "priya@globaltech.com" },
   { id: 5, name: "David Kim", dept: "Design", path: "UI/UX Design", progress: 55, certs: 1, status: "on-track", email: "david@globaltech.com" },
 ];
 
-const LEARNING_PATHS = [
-  { id: 1, title: "Full Stack Development", assignedTo: 32, duration: "6 months", completion: 74, dept: "Engineering" },
-  { id: 2, title: "Data Science", assignedTo: 18, duration: "5 months", completion: 61, dept: "Data" },
-  { id: 3, title: "Cloud Engineering", assignedTo: 24, duration: "4 months", completion: 48, dept: "DevOps" },
-  { id: 4, title: "Cybersecurity", assignedTo: 15, duration: "4 months", completion: 85, dept: "Security" },
+const INIT_LEARNING_PATHS = [
+  { id: 1, title: "Full Stack Development", assignedTo: 32, duration: "6 months", completion: 74, dept: "Engineering", description: "Master frontend, backend, and databases." },
+  { id: 2, title: "Data Science", assignedTo: 18, duration: "5 months", completion: 61, dept: "Data", description: "Python, ML, SQL, and data visualization." },
+  { id: 3, title: "Cloud Engineering", assignedTo: 24, duration: "4 months", completion: 48, dept: "DevOps", description: "AWS, Kubernetes, CI/CD pipelines." },
+  { id: 4, title: "Cybersecurity", assignedTo: 15, duration: "4 months", completion: 85, dept: "Security", description: "Network security, penetration testing." },
+  { id: 5, title: "UI/UX Design", assignedTo: 10, duration: "3 months", completion: 55, dept: "Design", description: "Figma, user research, prototyping." },
 ];
 
 interface ModalProps { open: boolean; onClose: () => void; children: React.ReactNode; title: string; }
@@ -50,16 +51,29 @@ function Modal({ open, onClose, children, title }: ModalProps) {
   );
 }
 
-export default function CorporateDashboard({ user }: { user: User }) {
-  const [activeTab, setActiveTab] = useState("overview");
+export default function CorporateDashboard({ user, initialTab }: { user: User; initialTab?: string }) {
+  const [activeTab, setActiveTab] = useState(initialTab || "overview");
   const [employees, setEmployees] = useState(INIT_EMPLOYEES);
+  const [learningPaths, setLearningPaths] = useState(INIT_LEARNING_PATHS);
   const [empSearch, setEmpSearch] = useState("");
   const [empFilter, setEmpFilter] = useState("All");
   const [inviteModal, setInviteModal] = useState(false);
   const [viewEmpModal, setViewEmpModal] = useState<{ open: boolean; emp: typeof INIT_EMPLOYEES[0] | null }>({ open: false, emp: null });
-  const [assignPathModal, setAssignPathModal] = useState<{ open: boolean; emp: string; skill?: string }>({ open: false, emp: "", skill: "" });
+  const [assignPathModal, setAssignPathModal] = useState<{ open: boolean; empName: string; empId?: number; skill?: string }>({ open: false, empName: "", skill: "" });
   const [createPathModal, setCreatePathModal] = useState(false);
-  const [inviteForm, setInviteForm] = useState({ name: "", email: "", dept: "", path: "Full Stack Dev" });
+  const [viewPathModal, setViewPathModal] = useState<{ open: boolean; path: typeof INIT_LEARNING_PATHS[0] | null }>({ open: false, path: null });
+  const [analysisModal, setAnalysisModal] = useState(false);
+  const [bulkAssignModal, setBulkAssignModal] = useState(false);
+  const [assignExamModal, setAssignExamModal] = useState<{ open: boolean; empName: string; empId: number }>({ open: false, empName: "", empId: 0 });
+  const [inviteForm, setInviteForm] = useState({ name: "", email: "", dept: "", pathId: "" });
+  const [newPathForm, setNewPathForm] = useState({ title: "", dept: "", duration: "", description: "" });
+  const [assignPathForm, setAssignPathForm] = useState({ pathId: "", priority: "", deadline: "" });
+  const [bulkAssignForm, setBulkAssignForm] = useState({ certName: "", dept: "All", examDate: "" });
+
+  // Persist learning paths
+  useEffect(() => {
+    localStorage.setItem("corporate_paths", JSON.stringify(learningPaths));
+  }, [learningPaths]);
 
   const tabs = [
     { id: "overview", label: "Overview", icon: BarChart3 },
@@ -80,18 +94,152 @@ export default function CorporateDashboard({ user }: { user: User }) {
     });
   }, [employees, empSearch, empFilter]);
 
+  // Invite employee
   const handleInvite = () => {
     if (!inviteForm.email.trim()) { toast.error("Email is required"); return; }
-    const emp = { id: Date.now(), name: inviteForm.name || inviteForm.email.split("@")[0], dept: inviteForm.dept || "General", path: inviteForm.path, progress: 0, certs: 0, status: "on-track", email: inviteForm.email };
-    setEmployees(prev => [...prev, emp]);
-    toast.success(`Invite sent to ${inviteForm.email}!`);
+    const selectedPath = learningPaths.find(p => p.id.toString() === inviteForm.pathId);
+    const newEmp = {
+      id: Date.now(),
+      name: inviteForm.name || inviteForm.email.split("@")[0],
+      dept: inviteForm.dept || "General",
+      path: selectedPath?.title || "Not assigned",
+      progress: 0,
+      certs: 0,
+      status: "on-track",
+      email: inviteForm.email,
+    };
+    setEmployees(prev => [...prev, newEmp]);
+    toast.success(`Invite sent to ${inviteForm.email}! ${newEmp.name} has been added to the team.`);
     setInviteModal(false);
-    setInviteForm({ name: "", email: "", dept: "", path: "Full Stack Dev" });
+    setInviteForm({ name: "", email: "", dept: "", pathId: "" });
   };
 
+  // Remove employee
   const handleRemoveEmployee = (id: number, name: string) => {
     setEmployees(prev => prev.filter(e => e.id !== id));
     toast.success(`${name} removed from team`);
+  };
+
+  // Assign learning path to a specific employee
+  const handleAssignPath = () => {
+    if (!assignPathModal.empId && assignPathModal.empName !== "All Employees") {
+      toast.error("No employee selected");
+      return;
+    }
+    const selectedPath = learningPaths.find(p => p.id.toString() === assignPathForm.pathId);
+    if (!selectedPath) { toast.error("Please select a learning path"); return; }
+
+    if (assignPathModal.empId) {
+      // Assign to single employee
+      setEmployees(prev => prev.map(emp =>
+        emp.id === assignPathModal.empId
+          ? { ...emp, path: selectedPath.title, progress: emp.progress > 0 ? emp.progress : 0 }
+          : emp
+      ));
+      toast.success(`"${selectedPath.title}" assigned to ${assignPathModal.empName}`);
+    } else if (assignPathModal.empName === "All Employees") {
+      // Assign to all employees (bulk) – just toast for demo
+      toast.success(`"${selectedPath.title}" assigned to all employees! (Simulated)`);
+    } else if (assignPathModal.skill) {
+      // Assign to department/skill gap – toast
+      toast.success(`"${selectedPath.title}" assigned to team addressing "${assignPathModal.skill}"`);
+    }
+    setAssignPathModal({ open: false, empName: "", skill: "" });
+    setAssignPathForm({ pathId: "", priority: "", deadline: "" });
+  };
+
+  // Create new learning path
+  const handleCreatePath = () => {
+    if (!newPathForm.title.trim()) { toast.error("Path name is required"); return; }
+    const newPath = {
+      id: Date.now(),
+      title: newPathForm.title,
+      dept: newPathForm.dept || "General",
+      duration: newPathForm.duration || "3 months",
+      completion: 0,
+      assignedTo: 0,
+      description: newPathForm.description || "No description provided",
+    };
+    setLearningPaths(prev => [...prev, newPath]);
+    toast.success(`Learning path "${newPathForm.title}" created!`);
+    setCreatePathModal(false);
+    setNewPathForm({ title: "", dept: "", duration: "", description: "" });
+  };
+
+  // Export team data as CSV
+  const exportTeamCSV = () => {
+    const headers = ["Name", "Department", "Learning Path", "Progress %", "Certifications", "Status", "Email"];
+    const rows = filteredEmployees.map(e => [e.name, e.dept, e.path, e.progress, e.certs, e.status, e.email]);
+    const csv = [headers, ...rows].map(row => row.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "team_report.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Team data exported as CSV");
+  };
+
+  const exportCertCSV = () => {
+    const headers = ["Employee", "Department", "Certifications Count", "Latest Cert"];
+    const rows = employees.map(e => [e.name, e.dept, e.certs, e.certs > 0 ? "May 2026" : "—"]);
+    const csv = [headers, ...rows].map(row => row.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "certifications_report.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Certification report exported");
+  };
+
+  const exportAnalyticsCSV = () => {
+    const headers = ["Department", "Completion %"];
+    const rows = skillProgressData.map(d => [d.dept, d.completion]);
+    const csv = [headers, ...rows].map(row => row.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "analytics_report.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Analytics exported");
+  };
+
+  // Send nudge (simulated email)
+  const sendNudge = (empName: string) => {
+    toast.success(`Nudge sent to ${empName}! A reminder email has been dispatched.`);
+  };
+
+  // Assign exam (simulated)
+  const assignExam = () => {
+    toast.success(`Certification exam assigned to ${assignExamModal.empName}. They will receive an email with details.`);
+    setAssignExamModal({ open: false, empName: "", empId: 0 });
+  };
+
+  // Bulk assign certifications (simulated)
+  const handleBulkAssign = () => {
+    toast.success(`Bulk certification "${bulkAssignForm.certName}" assigned to ${bulkAssignForm.dept === "All" ? "all departments" : bulkAssignForm.dept} (Exam date: ${bulkAssignForm.examDate || "TBD"}).`);
+    setBulkAssignModal(false);
+    setBulkAssignForm({ certName: "", dept: "All", examDate: "" });
+  };
+
+  // Generate report (simulated download)
+  const generateReport = (title: string) => {
+    toast.success(`${title} is being generated. Download will start shortly.`);
+    // Simulate file download
+    setTimeout(() => {
+      const blob = new Blob(["Dummy report content"], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${title.toLowerCase().replace(/\s/g, "_")}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }, 1000);
   };
 
   return (
@@ -100,13 +248,13 @@ export default function CorporateDashboard({ user }: { user: User }) {
         {tabs.map(({ id, label, icon: Icon }) => (
           <button key={id} onClick={() => setActiveTab(id)}
             className={cn("flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all",
-              activeTab === id ? "bg-violet-600 text-white shadow-lg shadow-violet-600/25" : "text-muted-foreground hover:text-foreground hover:bg-muted")}>
+              activeTab === id ? "bg-primary text-white shadow-lg shadow-violet-600/25" : "text-muted-foreground hover:text-foreground hover:bg-muted")}>
             <Icon className="w-3.5 h-3.5" />{label}
           </button>
         ))}
       </div>
 
-      {/* ── Overview ── */}
+      {/* Overview Tab */}
       {activeTab === "overview" && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
@@ -114,23 +262,23 @@ export default function CorporateDashboard({ user }: { user: User }) {
               <h1 className="text-2xl font-bold text-foreground">Enterprise Dashboard 🏢</h1>
               <p className="text-sm text-muted-foreground">GlobalTech Corp · Q2 2026 Learning Report</p>
             </div>
-            <button onClick={() => setAssignPathModal({ open: true, emp: "All Employees" })} className="btn-primary text-sm bg-violet-600 hover:bg-violet-700 shadow-violet-600/25">
+            <button onClick={() => setAssignPathModal({ open: true, empName: "All Employees" })} className="btn-primary text-sm bg-primary hover:bg-violet-700 shadow-violet-600/25">
               Assign Training
             </button>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: "Enrolled Employees", value: String(employees.length), icon: Users, color: "text-violet-600 bg-violet-600/10", tab: "team", change: "+12 this month" },
-              { label: "Avg Completion", value: "74%", icon: CheckCircle2, color: "text-emerald-600 bg-emerald-600/10", tab: "analytics", change: "↑ 9% vs last Q" },
+              { label: "Enrolled Employees", value: String(employees.length), icon: Users, color: "text-violet-600 bg-primary/10", tab: "team", change: "+12 this month" },
+              { label: "Avg Completion", value: "74%", icon: CheckCircle2, color: "text-accent bg-accent/10", tab: "analytics", change: "↑ 9% vs last Q" },
               { label: "Certs Issued", value: String(employees.reduce((a, e) => a + e.certs, 0)), icon: Award, color: "text-yellow-600 bg-yellow-600/10", tab: "certs", change: "This quarter" },
-              { label: "Active Paths", value: String(LEARNING_PATHS.length), icon: BookOpen, color: "text-blue-600 bg-blue-600/10", tab: "paths", change: "Across 5 depts" },
+              { label: "Active Paths", value: String(learningPaths.length), icon: BookOpen, color: "text-primary bg-primary/10", tab: "paths", change: "Across 5 depts" },
             ].map(({ label, value, icon: Icon, color, tab, change }) => (
               <button key={label} onClick={() => setActiveTab(tab)}
                 className="bg-card border border-border rounded-2xl p-4 hover:border-violet-600/30 transition-colors text-left">
                 <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center mb-3", color)}><Icon className="w-4 h-4" /></div>
                 <p className="text-2xl font-bold text-foreground">{value}</p>
                 <p className="text-xs text-muted-foreground">{label}</p>
-                <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1 font-medium">{change}</p>
+                <p className="text-xs text-accent dark:text-emerald-400 mt-1 font-medium">{change}</p>
               </button>
             ))}
           </div>
@@ -163,7 +311,7 @@ export default function CorporateDashboard({ user }: { user: User }) {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-semibold text-foreground">Skill Gap Alerts</h2>
-              <button onClick={() => toast.info("Running full skill gap analysis...")} className="text-sm text-violet-600 hover:underline">Full Analysis</button>
+              <button onClick={() => setAnalysisModal(true)} className="text-sm text-violet-600 hover:underline">Full Analysis</button>
             </div>
             <div className="space-y-3">
               {[
@@ -177,8 +325,7 @@ export default function CorporateDashboard({ user }: { user: User }) {
                     <p className="text-sm font-medium text-foreground">{g.skill}</p>
                     <p className="text-xs text-muted-foreground">{g.dept} · {g.gap}% of team needs this skill</p>
                   </div>
-                  <button onClick={() => { setAssignPathModal({ open: true, emp: `${g.dept} team`, skill: g.skill }); }}
-                    className="px-3 py-1.5 bg-violet-600 text-white text-xs font-medium rounded-lg hover:bg-violet-700 transition-colors flex-shrink-0">
+                  <button onClick={() => setAssignPathModal({ open: true, empName: `${g.dept} team`, skill: g.skill })} className="px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-lg hover:bg-violet-700 transition-colors flex-shrink-0">
                     Assign Path
                   </button>
                 </div>
@@ -188,14 +335,14 @@ export default function CorporateDashboard({ user }: { user: User }) {
         </div>
       )}
 
-      {/* ── Team ── */}
+      {/* Team Tab */}
       {activeTab === "team" && (
         <div>
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl font-bold text-foreground">Team Management</h1>
             <div className="flex gap-2">
-              <button onClick={() => toast.success("Team data exported!")} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
-              <button onClick={() => setInviteModal(true)} className="btn-primary text-sm bg-violet-600 hover:bg-violet-700"><Plus className="w-4 h-4 mr-1.5" />Invite Employee</button>
+              <button onClick={exportTeamCSV} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
+              <button onClick={() => setInviteModal(true)} className="btn-primary text-sm bg-primary hover:bg-violet-700"><Plus className="w-4 h-4 mr-1.5" />Invite Employee</button>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 mb-4">
@@ -237,7 +384,7 @@ export default function CorporateDashboard({ user }: { user: User }) {
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <div className="h-1.5 bg-muted rounded-full w-16 flex-shrink-0">
-                            <div className={cn("h-full rounded-full", e.progress > 70 ? "bg-emerald-500" : e.progress > 40 ? "bg-yellow-500" : "bg-red-500")} style={{ width: `${e.progress}%` }} />
+                            <div className={cn("h-full rounded-full", e.progress > 70 ? "bg-accent" : e.progress > 40 ? "bg-yellow-500" : "bg-red-500")} style={{ width: `${e.progress}%` }} />
                           </div>
                           <span className="text-xs text-muted-foreground">{e.progress}%</span>
                         </div>
@@ -247,13 +394,13 @@ export default function CorporateDashboard({ user }: { user: User }) {
                         <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", {
                           "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400": e.status === "on-track",
                           "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400": e.status === "at-risk",
-                          "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400": e.status === "completed",
+                          "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-primary/80": e.status === "completed",
                         })}>{e.status}</span>
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1">
                           <button onClick={() => setViewEmpModal({ open: true, emp: e })} className="p-1.5 hover:bg-muted rounded transition-colors" title="View details"><Eye className="w-3.5 h-3.5 text-muted-foreground" /></button>
-                          <button onClick={() => setAssignPathModal({ open: true, emp: e.name })} className="p-1.5 hover:bg-violet-50 dark:hover:bg-violet-900/20 rounded transition-colors" title="Assign path">
+                          <button onClick={() => setAssignPathModal({ open: true, empName: e.name, empId: e.id })} className="p-1.5 hover:bg-violet-50 dark:hover:bg-violet-900/20 rounded transition-colors" title="Assign path">
                             <BookOpen className="w-3.5 h-3.5 text-violet-600" />
                           </button>
                           <button onClick={() => handleRemoveEmployee(e.id, e.name)} className="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors" title="Remove">
@@ -270,17 +417,17 @@ export default function CorporateDashboard({ user }: { user: User }) {
         </div>
       )}
 
-      {/* ── Learning Paths ── */}
+      {/* Learning Paths Tab */}
       {activeTab === "paths" && (
         <div>
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold text-foreground">Learning Paths</h1>
-            <button onClick={() => setCreatePathModal(true)} className="btn-primary text-sm bg-violet-600 hover:bg-violet-700">
+            <button onClick={() => setCreatePathModal(true)} className="btn-primary text-sm bg-primary hover:bg-violet-700">
               <Plus className="w-4 h-4 mr-1.5" />Create Path
             </button>
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            {LEARNING_PATHS.map((path) => (
+            {learningPaths.map((path) => (
               <div key={path.id} className="bg-card border border-border rounded-2xl p-5 hover:border-violet-600/30 transition-colors">
                 <div className="flex items-start justify-between mb-3">
                   <div>
@@ -295,12 +442,12 @@ export default function CorporateDashboard({ user }: { user: User }) {
                     <span className="font-medium text-foreground">{path.completion}%</span>
                   </div>
                   <div className="h-2 bg-muted rounded-full">
-                    <div className={cn("h-full rounded-full", path.completion >= 70 ? "bg-emerald-500" : path.completion >= 40 ? "bg-violet-500" : "bg-red-500")} style={{ width: `${path.completion}%` }} />
+                    <div className={cn("h-full rounded-full", path.completion >= 70 ? "bg-accent" : path.completion >= 40 ? "bg-violet-500" : "bg-red-500")} style={{ width: `${path.completion}%` }} />
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={() => toast.info(`Viewing ${path.title} details...`)} className="flex-1 py-1.5 border border-border rounded-lg text-xs hover:bg-muted transition-colors text-foreground">View Details</button>
-                  <button onClick={() => setAssignPathModal({ open: true, emp: "Selected Employees" })} className="flex-1 py-1.5 bg-violet-600 text-white rounded-lg text-xs hover:bg-violet-700 transition-colors">Assign</button>
+                  <button onClick={() => setViewPathModal({ open: true, path })} className="flex-1 py-1.5 border border-border rounded-lg text-xs hover:bg-muted transition-colors text-foreground">View Details</button>
+                  <button onClick={() => setAssignPathModal({ open: true, empName: "Selected Employees" })} className="flex-1 py-1.5 bg-primary text-white rounded-lg text-xs hover:bg-violet-700 transition-colors">Assign</button>
                 </div>
               </div>
             ))}
@@ -308,18 +455,18 @@ export default function CorporateDashboard({ user }: { user: User }) {
         </div>
       )}
 
-      {/* ── Certifications ── */}
+      {/* Certifications Tab */}
       {activeTab === "certs" && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-foreground">Team Certifications</h1>
-            <button onClick={() => toast.success("Certification report downloaded!")} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
+            <button onClick={exportCertCSV} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Total Issued", value: String(employees.reduce((a, e) => a + e.certs, 0)), color: "text-yellow-600" },
               { label: "This Quarter", value: "23", color: "text-violet-600" },
-              { label: "Cert Coverage", value: `${Math.round((employees.filter(e => e.certs > 0).length / employees.length) * 100)}%`, color: "text-emerald-600" },
+              { label: "Cert Coverage", value: `${Math.round((employees.filter(e => e.certs > 0).length / employees.length) * 100)}%`, color: "text-accent" },
               { label: "Pending Exams", value: "8", color: "text-orange-600" },
             ].map(({ label, value, color }) => (
               <div key={label} className="bg-card border border-border rounded-2xl p-4 text-center">
@@ -331,13 +478,12 @@ export default function CorporateDashboard({ user }: { user: User }) {
           <div className="bg-card border border-border rounded-2xl overflow-hidden">
             <div className="p-4 border-b border-border flex items-center justify-between">
               <h3 className="font-semibold text-foreground text-sm">Employee Certifications</h3>
-              <button onClick={() => toast.info("Bulk cert assignment initiated...")} className="text-xs text-violet-600 hover:underline">Bulk Assign</button>
+              <button onClick={() => setBulkAssignModal(true)} className="text-xs text-violet-600 hover:underline">Bulk Assign</button>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead className="bg-muted/50">
-                  <tr>{["Employee", "Department", "Certifications", "Latest Cert", "Actions"].map(h => <th key={h} className="text-left px-4 py-3 text-xs font-medium text-muted-foreground">{h}</th>)}</tr>
-                </thead>
+                  <tr>{["Employee", "Department", "Certifications", "Latest Cert", "Actions"].map(h => <th key={h} className="text-left px-4 py-3 text-xs font-medium text-muted-foreground">{h}</th>)}</tr></thead>
                 <tbody>
                   {employees.map(e => (
                     <tr key={e.id} className="border-t border-border hover:bg-muted/30 transition-colors">
@@ -348,10 +494,10 @@ export default function CorporateDashboard({ user }: { user: User }) {
                           {[...Array(Math.min(e.certs, 5))].map((_, i) => <Award key={i} className="w-3.5 h-3.5 text-yellow-500" />)}
                           {e.certs === 0 && <span className="text-xs text-muted-foreground">None yet</span>}
                         </div>
-                      </td>
+                       </td>
                       <td className="px-4 py-3 text-xs text-muted-foreground">{e.certs > 0 ? "May 2026" : "—"}</td>
                       <td className="px-4 py-3">
-                        <button onClick={() => toast.info(`Assigning cert exam to ${e.name}...`)} className="px-2 py-1 bg-violet-600 text-white text-xs rounded-lg hover:bg-violet-700 transition-colors">Assign Exam</button>
+                        <button onClick={() => setAssignExamModal({ open: true, empName: e.name, empId: e.id })} className="px-2 py-1 bg-primary text-white text-xs rounded-lg hover:bg-violet-700 transition-colors">Assign Exam</button>
                       </td>
                     </tr>
                   ))}
@@ -362,12 +508,12 @@ export default function CorporateDashboard({ user }: { user: User }) {
         </div>
       )}
 
-      {/* ── Analytics ── */}
+      {/* Analytics Tab */}
       {activeTab === "analytics" && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-foreground">Learning Analytics</h1>
-            <button onClick={() => toast.success("Analytics exported!")} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
+            <button onClick={exportAnalyticsCSV} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
           </div>
           <div className="grid lg:grid-cols-2 gap-5">
             <div className="bg-card border border-border rounded-2xl p-5">
@@ -400,7 +546,7 @@ export default function CorporateDashboard({ user }: { user: User }) {
             <div className="space-y-3">
               {employees.sort((a, b) => b.progress - a.progress).slice(0, 4).map(e => (
                 <div key={e.id} className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-lg bg-violet-600/10 flex items-center justify-center text-violet-600 font-bold text-xs flex-shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-violet-600 font-bold text-xs flex-shrink-0">
                     {e.name.split(" ").map(n => n[0]).join("")}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -420,7 +566,7 @@ export default function CorporateDashboard({ user }: { user: User }) {
         </div>
       )}
 
-      {/* ── Reports ── */}
+      {/* Reports Tab */}
       {activeTab === "reports" && (
         <div className="space-y-5">
           <h1 className="text-2xl font-bold text-foreground">Reports & Exports</h1>
@@ -434,7 +580,7 @@ export default function CorporateDashboard({ user }: { user: User }) {
               { title: "Learning Activity Log", desc: "Detailed daily activity per employee", format: "CSV" },
             ].map((r, i) => (
               <div key={i} className="bg-card border border-border rounded-2xl p-5 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-violet-600/10 flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <Download className="w-5 h-5 text-violet-600" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -442,7 +588,7 @@ export default function CorporateDashboard({ user }: { user: User }) {
                   <p className="text-xs text-muted-foreground">{r.desc}</p>
                   <p className="text-xs text-violet-600 dark:text-violet-400 mt-0.5">{r.format}</p>
                 </div>
-                <button onClick={() => toast.success(`${r.title} is being generated...`)} className="px-3 py-1.5 bg-violet-600 text-white text-xs font-medium rounded-lg hover:bg-violet-700 transition-colors flex-shrink-0">
+                <button onClick={() => generateReport(r.title)} className="px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-lg hover:bg-violet-700 transition-colors flex-shrink-0">
                   Generate
                 </button>
               </div>
@@ -451,125 +597,115 @@ export default function CorporateDashboard({ user }: { user: User }) {
         </div>
       )}
 
-      {/* ── MODALS ── */}
+      {/* ---------- MODALS ---------- */}
+
+      {/* Invite Employee Modal */}
       <Modal open={inviteModal} onClose={() => setInviteModal(false)} title="Invite Employee">
         <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Full Name</label>
-            <input className="input-field" placeholder="John Smith" value={inviteForm.name} onChange={e => setInviteForm(p => ({ ...p, name: e.target.value }))} />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Email Address *</label>
-            <input type="email" className="input-field" placeholder="john@company.com" value={inviteForm.email} onChange={e => setInviteForm(p => ({ ...p, email: e.target.value }))} />
-          </div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Full Name</label><input className="input-field" placeholder="John Smith" value={inviteForm.name} onChange={e => setInviteForm(p => ({ ...p, name: e.target.value }))} /></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Email Address *</label><input type="email" className="input-field" placeholder="john@company.com" value={inviteForm.email} onChange={e => setInviteForm(p => ({ ...p, email: e.target.value }))} /></div>
           <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-1.5">Department</label>
-              <select className="input-field" value={inviteForm.dept} onChange={e => setInviteForm(p => ({ ...p, dept: e.target.value }))}>
-                <option value="">Select...</option>
-                <option>Engineering</option><option>Data</option><option>DevOps</option><option>Design</option><option>Security</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-1.5">Assign Learning Path</label>
-              <select className="input-field" value={inviteForm.path} onChange={e => setInviteForm(p => ({ ...p, path: e.target.value }))}>
-                {LEARNING_PATHS.map(p => <option key={p.id}>{p.title}</option>)}
-              </select>
-            </div>
+            <div><label className="block text-sm font-medium text-foreground mb-1.5">Department</label><select className="input-field" value={inviteForm.dept} onChange={e => setInviteForm(p => ({ ...p, dept: e.target.value }))}><option value="">Select...</option><option>Engineering</option><option>Data</option><option>DevOps</option><option>Design</option><option>Security</option></select></div>
+            <div><label className="block text-sm font-medium text-foreground mb-1.5">Assign Learning Path</label><select className="input-field" value={inviteForm.pathId} onChange={e => setInviteForm(p => ({ ...p, pathId: e.target.value }))}><option value="">None</option>{learningPaths.map(p => <option key={p.id} value={p.id}>{p.title}</option>)}</select></div>
           </div>
-          <div className="flex gap-3">
-            <button onClick={() => setInviteModal(false)} className="flex-1 btn-secondary text-sm">Cancel</button>
-            <button onClick={handleInvite} className="flex-1 btn-primary text-sm bg-violet-600 hover:bg-violet-700">Send Invite</button>
-          </div>
+          <div className="flex gap-3"><button onClick={() => setInviteModal(false)} className="flex-1 btn-secondary text-sm">Cancel</button><button onClick={handleInvite} className="flex-1 btn-primary text-sm bg-primary hover:bg-violet-700">Send Invite</button></div>
         </div>
       </Modal>
 
+      {/* View Employee Modal */}
       <Modal open={viewEmpModal.open} onClose={() => setViewEmpModal({ open: false, emp: null })} title="Employee Details">
         {viewEmpModal.emp && (
           <div className="space-y-4">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-violet-600/10 flex items-center justify-center text-violet-600 font-bold text-xl">
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-violet-600 font-bold text-xl">
                 {viewEmpModal.emp.name.split(" ").map(n => n[0]).join("")}
               </div>
-              <div>
-                <p className="font-bold text-foreground">{viewEmpModal.emp.name}</p>
-                <p className="text-sm text-muted-foreground">{viewEmpModal.emp.dept} · {viewEmpModal.emp.email}</p>
-              </div>
+              <div><p className="font-bold text-foreground">{viewEmpModal.emp.name}</p><p className="text-sm text-muted-foreground">{viewEmpModal.emp.dept} · {viewEmpModal.emp.email}</p></div>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: "Learning Path", value: viewEmpModal.emp.path },
-                { label: "Progress", value: `${viewEmpModal.emp.progress}%` },
-                { label: "Certifications", value: String(viewEmpModal.emp.certs) },
-                { label: "Status", value: viewEmpModal.emp.status },
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-muted rounded-xl p-3">
-                  <p className="text-xs text-muted-foreground">{label}</p>
-                  <p className="text-sm font-medium text-foreground mt-0.5">{value}</p>
-                </div>
-              ))}
+              <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Learning Path</p><p className="text-sm font-medium text-foreground mt-0.5">{viewEmpModal.emp.path}</p></div>
+              <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Progress</p><p className="text-sm font-bold text-foreground mt-0.5">{viewEmpModal.emp.progress}%</p></div>
+              <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Certifications</p><p className="text-sm font-medium text-foreground mt-0.5">{viewEmpModal.emp.certs}</p></div>
+              <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Status</p><p className="text-sm font-medium text-foreground mt-0.5 capitalize">{viewEmpModal.emp.status}</p></div>
             </div>
             <div className="flex gap-3">
-              <button onClick={() => { toast.success(`Nudge sent to ${viewEmpModal.emp!.name}!`); setViewEmpModal({ open: false, emp: null }); }}
-                className="flex-1 btn-primary text-sm bg-violet-600 hover:bg-violet-700">Send Nudge</button>
-              <button onClick={() => { setAssignPathModal({ open: true, emp: viewEmpModal.emp!.name }); setViewEmpModal({ open: false, emp: null }); }}
-                className="flex-1 btn-secondary text-sm">Reassign Path</button>
+              <button onClick={() => { sendNudge(viewEmpModal.emp!.name); setViewEmpModal({ open: false, emp: null }); }} className="flex-1 btn-primary text-sm bg-primary hover:bg-violet-700">Send Nudge</button>
+              <button onClick={() => { setAssignPathModal({ open: true, empName: viewEmpModal.emp!.name, empId: viewEmpModal.emp!.id }); setViewEmpModal({ open: false, emp: null }); }} className="flex-1 btn-secondary text-sm">Reassign Path</button>
             </div>
           </div>
         )}
       </Modal>
 
-      <Modal open={assignPathModal.open} onClose={() => setAssignPathModal({ open: false, emp: "" })} title="Assign Learning Path">
+      {/* Assign Path Modal */}
+      <Modal open={assignPathModal.open} onClose={() => setAssignPathModal({ open: false, empName: "", skill: "" })} title="Assign Learning Path">
         <div className="space-y-4">
-          <div className="p-3 bg-violet-600/10 border border-violet-600/20 rounded-xl">
-            <p className="text-sm text-violet-600 dark:text-violet-400">Assigning to: <strong>{assignPathModal.emp}</strong></p>
+          <div className="p-3 bg-primary/10 border border-violet-600/20 rounded-xl">
+            <p className="text-sm text-violet-600 dark:text-violet-400">Assigning to: <strong>{assignPathModal.empName}</strong></p>
             {assignPathModal.skill && <p className="text-xs text-violet-500 mt-0.5">Addressing gap: {assignPathModal.skill}</p>}
           </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Learning Path</label>
-            <select className="input-field">
-              {LEARNING_PATHS.map(p => <option key={p.id}>{p.title}</option>)}
-              <option>Custom Path</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Priority</label>
-            <select className="input-field">
-              <option>Normal</option><option>High Priority</option><option>Mandatory</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Deadline</label>
-            <input type="date" className="input-field" />
-          </div>
-          <button onClick={() => { toast.success(`Learning path assigned to ${assignPathModal.emp}!`); setAssignPathModal({ open: false, emp: "" }); }}
-            className="btn-primary w-full text-sm bg-violet-600 hover:bg-violet-700">Assign Path</button>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Learning Path</label><select className="input-field" value={assignPathForm.pathId} onChange={e => setAssignPathForm({ ...assignPathForm, pathId: e.target.value })}><option value="">Select a path</option>{learningPaths.map(p => <option key={p.id} value={p.id}>{p.title}</option>)}</select></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Priority</label><select className="input-field" value={assignPathForm.priority} onChange={e => setAssignPathForm({ ...assignPathForm, priority: e.target.value })}><option>Normal</option><option>High Priority</option><option>Mandatory</option></select></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Deadline</label><input type="date" className="input-field" value={assignPathForm.deadline} onChange={e => setAssignPathForm({ ...assignPathForm, deadline: e.target.value })} /></div>
+          <button onClick={handleAssignPath} className="btn-primary w-full text-sm bg-primary hover:bg-violet-700">Assign Path</button>
         </div>
       </Modal>
 
+      {/* Create Learning Path Modal */}
       <Modal open={createPathModal} onClose={() => setCreatePathModal(false)} title="Create Learning Path">
         <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Path Name</label>
-            <input className="input-field" placeholder="e.g. Advanced Data Engineering" />
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Path Name *</label><input className="input-field" placeholder="e.g. Advanced Data Engineering" value={newPathForm.title} onChange={e => setNewPathForm(p => ({ ...p, title: e.target.value }))} /></div>
+          <div className="grid grid-cols-2 gap-3"><div><label className="block text-sm font-medium text-foreground mb-1.5">Target Department</label><select className="input-field" value={newPathForm.dept} onChange={e => setNewPathForm(p => ({ ...p, dept: e.target.value }))}><option>Engineering</option><option>Data</option><option>DevOps</option><option>Design</option><option>Security</option></select></div><div><label className="block text-sm font-medium text-foreground mb-1.5">Duration</label><select className="input-field" value={newPathForm.duration} onChange={e => setNewPathForm(p => ({ ...p, duration: e.target.value }))}><option>1 month</option><option>2 months</option><option>3 months</option><option>4 months</option><option>6 months</option></select></div></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Description</label><textarea className="input-field resize-none min-h-[80px]" placeholder="What skills will employees gain?" value={newPathForm.description} onChange={e => setNewPathForm(p => ({ ...p, description: e.target.value }))} /></div>
+          <button onClick={handleCreatePath} className="btn-primary w-full text-sm bg-primary hover:bg-violet-700">Create Path</button>
+        </div>
+      </Modal>
+
+      {/* View Path Details Modal */}
+      <Modal open={viewPathModal.open} onClose={() => setViewPathModal({ open: false, path: null })} title="Path Details">
+        {viewPathModal.path && (
+          <div className="space-y-4">
+            <div><h3 className="text-xl font-bold text-foreground">{viewPathModal.path.title}</h3><p className="text-sm text-muted-foreground">{viewPathModal.path.dept} · {viewPathModal.path.duration}</p></div>
+            <p className="text-sm text-foreground">{viewPathModal.path.description}</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Enrolled</p><p className="text-lg font-bold text-foreground">{viewPathModal.path.assignedTo}</p></div>
+              <div className="bg-muted rounded-xl p-3"><p className="text-xs text-muted-foreground">Completion Rate</p><p className="text-lg font-bold text-foreground">{viewPathModal.path.completion}%</p></div>
+            </div>
+            <button onClick={() => setAssignPathModal({ open: true, empName: "Selected Employees" })} className="btn-primary w-full text-sm bg-primary hover:bg-violet-700">Assign to Employees</button>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Target Department</label>
-            <select className="input-field">
-              <option>Engineering</option><option>Data</option><option>DevOps</option><option>Design</option><option>Security</option>
-            </select>
+        )}
+      </Modal>
+
+      {/* Full Analysis Modal */}
+      <Modal open={analysisModal} onClose={() => setAnalysisModal(false)} title="Detailed Skill Gap Analysis">
+        <div className="space-y-4">
+          <p className="text-sm text-muted-foreground">Based on latest assessment data, the following department-level gaps were identified:</p>
+          <div className="space-y-2">
+            <div className="p-3 border border-red-200 rounded-xl"><p className="font-medium">DevOps: Kubernetes & Container Orchestration</p><p className="text-xs text-muted-foreground">46% proficiency gap · 12 employees affected</p></div>
+            <div className="p-3 border border-yellow-200 rounded-xl"><p className="font-medium">Data: Advanced Python for Data Science</p><p className="text-xs text-muted-foreground">35% proficiency gap · 8 employees affected</p></div>
+            <div className="p-3 border border-yellow-200 rounded-xl"><p className="font-medium">Engineering: Security Best Practices (OWASP)</p><p className="text-xs text-muted-foreground">29% proficiency gap · 15 employees affected</p></div>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Duration</label>
-            <select className="input-field">
-              <option>1 month</option><option>2 months</option><option>3 months</option><option>4 months</option><option>6 months</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">Description</label>
-            <textarea className="input-field resize-none min-h-[80px]" placeholder="What skills will employees gain?" />
-          </div>
-          <button onClick={() => { toast.success("Learning path created!"); setCreatePathModal(false); }} className="btn-primary w-full text-sm bg-violet-600 hover:bg-violet-700">Create Path</button>
+          <button onClick={() => setAnalysisModal(false)} className="btn-secondary w-full text-sm">Close</button>
+        </div>
+      </Modal>
+
+      {/* Bulk Assign Certifications Modal */}
+      <Modal open={bulkAssignModal} onClose={() => setBulkAssignModal(false)} title="Bulk Assign Certifications">
+        <div className="space-y-4">
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Certification Name</label><input className="input-field" placeholder="e.g., AWS Certified Developer" value={bulkAssignForm.certName} onChange={e => setBulkAssignForm(p => ({ ...p, certName: e.target.value }))} /></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Target Department</label><select className="input-field" value={bulkAssignForm.dept} onChange={e => setBulkAssignForm(p => ({ ...p, dept: e.target.value }))}><option value="All">All Departments</option><option>Engineering</option><option>Data</option><option>DevOps</option><option>Design</option><option>Security</option></select></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Exam Date</label><input type="date" className="input-field" value={bulkAssignForm.examDate} onChange={e => setBulkAssignForm(p => ({ ...p, examDate: e.target.value }))} /></div>
+          <button onClick={handleBulkAssign} className="btn-primary w-full text-sm bg-primary hover:bg-violet-700">Assign to {bulkAssignForm.dept === "All" ? "All Employees" : bulkAssignForm.dept}</button>
+        </div>
+      </Modal>
+
+      {/* Assign Exam Modal */}
+      <Modal open={assignExamModal.open} onClose={() => setAssignExamModal({ open: false, empName: "", empId: 0 })} title="Assign Certification Exam">
+        <div className="space-y-4">
+          <div className="p-3 bg-primary/10 rounded-xl"><p className="text-sm"><strong>Employee:</strong> {assignExamModal.empName}</p></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Certification</label><select className="input-field"><option>AWS Solutions Architect</option><option>Certified Kubernetes Administrator</option><option>Google Professional Data Engineer</option><option>CompTIA Security+</option></select></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Exam Date</label><input type="date" className="input-field" /></div>
+          <div><label className="block text-sm font-medium text-foreground mb-1.5">Notes</label><textarea className="input-field resize-none" placeholder="Any special instructions..." /></div>
+          <button onClick={assignExam} className="btn-primary w-full text-sm bg-primary hover:bg-violet-700">Assign Exam</button>
         </div>
       </Modal>
     </div>

@@ -39,7 +39,7 @@ export default function ForgotPassword() {
           {isSent ? (
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="w-8 h-8 text-emerald-500" />
+                <CheckCircle2 className="w-8 h-8 text-accent" />
               </div>
               <h2 className="text-2xl font-bold text-foreground mb-2">Check Your Email</h2>
               <p className="text-muted-foreground text-sm mb-6">
@@ -47,7 +47,7 @@ export default function ForgotPassword() {
               </p>
               <p className="text-xs text-muted-foreground mb-6">
                 Didn't receive it? Check your spam folder or{" "}
-                <button onClick={() => setIsSent(false)} className="text-blue-600 dark:text-blue-400 hover:underline">
+                <button onClick={() => setIsSent(false)} className="text-primary dark:text-primary/80 hover:underline">
                   try again
                 </button>
               </p>
@@ -94,7 +94,7 @@ export default function ForgotPassword() {
 
               <p className="mt-6 text-center text-sm text-muted-foreground">
                 Remember your password?{" "}
-                <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
+                <Link to="/login" className="text-primary dark:text-primary/80 hover:underline font-medium">
                   Sign in
                 </Link>
               </p>

@@ -48,7 +48,7 @@ export default function DashboardPreview() {
               ))}
             </div>
 
-            <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors group">
+            <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary dark:hover:text-primary/80 transition-colors group">
               Explore the dashboard
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -61,7 +61,7 @@ export default function DashboardPreview() {
               {/* Top bar */}
               <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
                     <Code2 className="w-3.5 h-3.5 text-white" />
                   </div>
                   <span className="text-white/70 font-medium text-xs">Alex Johnson — Student Dashboard</span>
@@ -79,7 +79,7 @@ export default function DashboardPreview() {
                   {/* Stats row */}
                   <div className="grid grid-cols-4 gap-3">
                     {[
-                      { label: "Courses", value: "7", icon: BookOpen, color: "text-blue-400" },
+                      { label: "Courses", value: "7", icon: BookOpen, color: "text-primary/80" },
                       { label: "Hours", value: "156", icon: TrendingUp, color: "text-emerald-400" },
                       { label: "Certs", value: "3", icon: Award, color: "text-yellow-400" },
                       { label: "Streak", value: "24d", icon: BarChart2, color: "text-purple-400" },
@@ -171,10 +171,10 @@ export default function DashboardPreview() {
                     <p className="text-white/50 text-xs mb-2">AI recommendation</p>
                     <p className="text-white/70 text-xs leading-relaxed">
                       Based on your progress, start{" "}
-                      <span className="text-blue-400 font-medium">TypeScript Advanced Patterns</span>{" "}
+                      <span className="text-primary/80 font-medium">TypeScript Advanced Patterns</span>{" "}
                       to strengthen your React skills.
                     </p>
-                    <button className="mt-2.5 text-xs text-blue-400 flex items-center gap-1 hover:text-blue-300 transition-colors">
+                    <button className="mt-2.5 text-xs text-primary/80 flex items-center gap-1 hover:text-blue-300 transition-colors">
                       View roadmap <ArrowRight className="w-3 h-3" />
                     </button>
                   </div>

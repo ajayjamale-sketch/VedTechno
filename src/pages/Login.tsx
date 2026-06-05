@@ -64,7 +64,7 @@ export default function Login() {
         <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
         <div className="relative flex flex-col h-full p-16">
           <Link to="/" className="flex items-center gap-2 mb-auto">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-xl shadow-blue-600/40">
+            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-xl shadow-primary/40">
               <Code2 className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-white">VedTechno</span>
@@ -100,7 +100,7 @@ export default function Login() {
         <div className="w-full max-w-md py-8">
           {/* Mobile Logo */}
           <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Code2 className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-foreground">VedTechno</span>
@@ -109,7 +109,7 @@ export default function Login() {
           <h2 className="text-2xl font-bold text-foreground mb-1">Sign in to your account</h2>
           <p className="text-muted-foreground text-sm mb-6">
             Don't have an account?{" "}
-            <Link to="/register" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Create one free</Link>
+            <Link to="/register" className="text-primary dark:text-primary/80 hover:underline font-medium">Create one free</Link>
           </p>
 
           {/* Demo Accounts Section */}
@@ -126,11 +126,11 @@ export default function Login() {
                   key={role}
                   onClick={() => handleDemoLogin(role)}
                   disabled={demoLoading !== null}
-                  className="group relative p-3 rounded-xl border border-border bg-card hover:border-blue-600/40 hover:shadow-md transition-all duration-200 text-left disabled:opacity-60 min-h-[64px]"
+                  className="group relative p-3 rounded-xl border border-border bg-card hover:border-primary/40 hover:shadow-md transition-all duration-200 text-left disabled:opacity-60 min-h-[64px]"
                 >
                   {demoLoading === role ? (
                     <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-blue-600/30 border-t-blue-600 rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-primary/30 border-t-blue-600 rounded-full animate-spin" />
                       <span className="text-xs text-muted-foreground">Logging in…</span>
                     </div>
                   ) : (
@@ -167,7 +167,7 @@ export default function Login() {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-sm font-medium text-foreground">Password</label>
-                <Link to="/forgot-password" className="text-xs text-blue-600 dark:text-blue-400 hover:underline">Forgot password?</Link>
+                <Link to="/forgot-password" className="text-xs text-primary dark:text-primary/80 hover:underline">Forgot password?</Link>
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />

@@ -22,16 +22,24 @@ export default function Blog() {
   return (
     <main className="page-enter pt-20">
       {/* Hero */}
-      <section className="py-16 bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-gradient opacity-80" />
+      <section className="relative pt-24 md:pt-32 pb-16 bg-background overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            opacity: 0.4,
+            maskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+          }}
+        />
         <div className="relative container-custom text-center">
-          <span className="badge-primary mb-4 inline-block !bg-blue-600/20 !text-blue-300 !border-blue-500/30">VedTechno Blog</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <span className="badge-primary mb-4 inline-block ">VedTechno Blog</span>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Insights for the
             <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">Modern Developer</span>
           </h1>
-          <p className="text-white/60 text-lg max-w-xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             Tutorials, career tips, tech trends, and success stories from our community.
           </p>
         </div>
@@ -42,7 +50,7 @@ export default function Blog() {
           {/* Featured Post */}
           <div className="mb-12">
             <h2 className="text-lg font-semibold text-foreground mb-5">Featured Article</h2>
-            <div className="group grid lg:grid-cols-2 gap-6 bg-card border border-border rounded-2xl overflow-hidden hover:border-blue-600/30 hover:shadow-xl transition-all duration-300">
+            <div className="group grid lg:grid-cols-2 gap-6 bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 hover:shadow-xl transition-all duration-300">
               <div className="overflow-hidden">
                 <img src={featured.thumbnail} alt={featured.title} className="w-full h-56 lg:h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
@@ -51,7 +59,7 @@ export default function Blog() {
                   <span className="badge-primary text-xs">{featured.category}</span>
                   <span className="text-xs text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" />{featured.readTime}</span>
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{featured.title}</h3>
+                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary dark:group-hover:text-primary/80 transition-colors">{featured.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed mb-5">{featured.excerpt}</p>
                 <div className="flex items-center gap-3 mb-5">
                   <img src={featured.authorAvatar} alt={featured.author} className="w-8 h-8 rounded-full object-cover" />
@@ -64,9 +72,9 @@ export default function Blog() {
                   <span className="flex items-center gap-1"><Eye className="w-3.5 h-3.5" />{formatNumber(featured.views)}</span>
                   <span className="flex items-center gap-1"><Heart className="w-3.5 h-3.5" />{formatNumber(featured.likes)}</span>
                 </div>
-                <button className="btn-primary self-start text-sm">
+                <Link to={`/blog/${featured.id}`} className="btn-primary self-start text-sm">
                   Read Article <ArrowRight className="w-4 h-4 ml-1.5" />
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -83,7 +91,7 @@ export default function Blog() {
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
-                    activeCategory === cat ? "bg-blue-600 text-white" : "border border-border text-muted-foreground hover:border-blue-600/50"
+                    activeCategory === cat ? "bg-primary text-white" : "border border-border text-muted-foreground hover:border-primary/50"
                   }`}
                 >
                   {cat}
@@ -106,7 +114,9 @@ export default function Blog() {
                       <Clock className="w-3 h-3" />{post.readTime}
                     </span>
                   </div>
-                  <h3 className="font-semibold text-foreground text-sm mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{post.title}</h3>
+                  <Link to={`/blog/${post.id}`} className="font-semibold text-foreground text-sm mb-2 line-clamp-2 group-hover:text-primary dark:group-hover:text-primary/80 transition-colors">
+                    {post.title}
+                  </Link>
                   <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
                   <div className="flex items-center gap-2 pt-3 border-t border-border">
                     <img src={post.authorAvatar} alt={post.author} className="w-7 h-7 rounded-full object-cover" />

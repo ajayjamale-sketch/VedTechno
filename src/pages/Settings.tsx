@@ -52,8 +52,8 @@ export default function Settings() {
   }
 
   return (
-    <main className="page-enter pt-20">
-      <div className="container-custom py-10 max-w-5xl">
+    <div className="animation-fade-in">
+      <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-foreground">Settings</h1>
           <p className="text-muted-foreground text-sm">Manage your account preferences and platform settings.</p>
@@ -167,7 +167,7 @@ export default function Settings() {
                         </div>
                         <button
                           onClick={() => setNotifications((prev) => ({ ...prev, [key]: !prev[key as keyof typeof prev] }))}
-                          className={cn("relative w-11 h-6 rounded-full transition-colors", value ? "bg-blue-600" : "bg-muted")}
+                          className={cn("relative w-11 h-6 rounded-full transition-colors", value ? "bg-primary" : "bg-muted")}
                         >
                           <div className={cn("absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform", value ? "translate-x-5" : "")} />
                         </button>
@@ -198,7 +198,7 @@ export default function Settings() {
                         </div>
                         <button
                           onClick={() => setPrivacy((prev) => ({ ...prev, [key]: !prev[key as keyof typeof prev] }))}
-                          className={cn("relative w-11 h-6 rounded-full transition-colors", value ? "bg-blue-600" : "bg-muted")}
+                          className={cn("relative w-11 h-6 rounded-full transition-colors", value ? "bg-primary" : "bg-muted")}
                         >
                           <div className={cn("absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform", value ? "translate-x-5" : "")} />
                         </button>
@@ -222,11 +222,11 @@ export default function Settings() {
                     <button
                       key={id}
                       onClick={() => { if (id !== "system") { if (theme !== id) toggleTheme(); } else toast.info("System theme follows your OS preference."); }}
-                      className={cn("p-4 rounded-2xl border text-center transition-all", active ? "border-blue-600 bg-blue-600/10" : "border-border hover:border-blue-600/30")}
+                      className={cn("p-4 rounded-2xl border text-center transition-all", active ? "border-primary bg-primary/10" : "border-border hover:border-primary/30")}
                     >
-                      <Icon className={cn("w-6 h-6 mx-auto mb-2", active ? "text-blue-600" : "text-muted-foreground")} />
-                      <p className={cn("text-sm font-medium", active ? "text-blue-600" : "text-foreground")}>{label}</p>
-                      {active && <CheckCircle2 className="w-4 h-4 text-blue-600 mx-auto mt-1" />}
+                      <Icon className={cn("w-6 h-6 mx-auto mb-2", active ? "text-primary" : "text-muted-foreground")} />
+                      <p className={cn("text-sm font-medium", active ? "text-primary" : "text-foreground")}>{label}</p>
+                      {active && <CheckCircle2 className="w-4 h-4 text-primary mx-auto mt-1" />}
                     </button>
                   ))}
                 </div>
@@ -242,6 +242,6 @@ export default function Settings() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

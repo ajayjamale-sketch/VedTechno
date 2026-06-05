@@ -361,25 +361,25 @@ export const FOOTER_LINKS = {
     { label: "Features", href: "/features" },
     { label: "Pricing", href: "/pricing" },
     { label: "Dashboard", href: "/dashboard" },
-    { label: "Changelog", href: "/blog" },
+    { label: "Changelog", href: "/changelog" },
   ],
   Company: [
     { label: "About Us", href: "/about" },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
-    { label: "Careers", href: "/about" },
+    { label: "Careers", href: "/careers" },
   ],
   Resources: [
-    { label: "Documentation", href: "/features" },
-    { label: "Community", href: "/dashboard" },
+    { label: "Documentation", href: "/docs" },
+    { label: "Community", href: "/community" },
     { label: "FAQ", href: "/faq" },
-    { label: "Tutorials", href: "/blog" },
+    { label: "Tutorials", href: "/tutorials" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
-    { label: "Cookie Policy", href: "/privacy" },
-    { label: "Security", href: "/about" },
+    { label: "Cookie Policy", href: "/cookies" },
+    { label: "Security", href: "/security" },
   ],
 };
 

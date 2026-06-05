@@ -9,7 +9,7 @@ export default function CTABanner() {
 
           {/* Eyebrow */}
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
               <Code2 className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="text-sm text-muted-foreground font-medium">VedTechno</span>
@@ -28,7 +28,7 @@ export default function CTABanner() {
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
               to="/register"
-              className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 text-base"
+              className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 text-base"
             >
               Start learning for free
               <ArrowRight className="w-4 h-4" />

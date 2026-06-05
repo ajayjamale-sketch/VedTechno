@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, Code2 } from "lucide-react";
 
-const team = [
-  { name: "Dr. Aryan Mehta", role: "CEO & Co-Founder", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face", bio: "Former Google engineer. Stanford CS PhD. Spent 8 years building developer tools before starting VedTechno." },
-  { name: "Priya Sharma", role: "CTO", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face", bio: "Ex-Microsoft. Built the AI coding assistant from scratch. Obsessed with developer experience." },
-  { name: "Marcus Chen", role: "Chief Learning Officer", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face", bio: "15 years designing curriculum at MIT OpenCourseWare and Coursera before joining as a co-founder." },
-  { name: "Sarah Mitchell", role: "Head of Partnerships", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face", bio: "Built the hiring partner network from 0 to 500+ companies. Former recruiter at Amazon and Stripe." },
-];
 
 const milestones = [
   { year: "2021", event: "Founded with 10 founding courses and a 4-person team." },
@@ -83,7 +77,7 @@ export default function About() {
               />
               <div className="mt-5 p-5 bg-muted rounded-xl border border-border">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-foreground">Best EdTech Platform 2025</p>
                     <p className="text-xs text-muted-foreground mt-0.5">TechCrunch Startup Awards — Recognized for innovation in career-outcome-focused learning</p>
@@ -130,29 +124,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="section-padding bg-muted/30 border-t border-border">
-        <div className="container-custom">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Team</p>
-              <h2 className="text-3xl font-bold text-foreground leading-tight">
-                Built by people who've been in your shoes
-              </h2>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((m) => (
-              <div key={m.name} className="bg-card border border-border rounded-2xl p-5">
-                <img src={m.avatar} alt={m.name} className="w-12 h-12 rounded-xl object-cover mb-4" />
-                <p className="font-semibold text-foreground text-sm">{m.name}</p>
-                <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-3">{m.role}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{m.bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="py-20 bg-background border-t border-border">

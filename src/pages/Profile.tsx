@@ -23,7 +23,7 @@ export default function Profile() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <User className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+          <User className="w-12 h-12 text-primary mx-auto mb-4" />
           <p className="text-muted-foreground mb-4">You need to sign in to view your profile.</p>
           <Link to="/login" className="btn-primary">Sign In</Link>
         </div>
@@ -50,8 +50,8 @@ export default function Profile() {
   };
 
   return (
-    <main className="page-enter pt-20">
-      <div className="container-custom py-10 max-w-5xl">
+    <div className="animation-fade-in">
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
           <div>
@@ -81,18 +81,18 @@ export default function Profile() {
                 {user.avatar ? (
                   <img src={user.avatar} alt={user.name} className="w-24 h-24 rounded-2xl object-cover" />
                 ) : (
-                  <div className="w-24 h-24 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
+                  <div className="w-24 h-24 rounded-2xl bg-primary flex items-center justify-center text-white text-2xl font-bold">
                     {getInitials(user.name)}
                   </div>
                 )}
                 {isEditing && (
-                  <button className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center border-2 border-background">
+                  <button className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-primary flex items-center justify-center border-2 border-background">
                     <Camera className="w-3.5 h-3.5 text-white" />
                   </button>
                 )}
               </div>
               <h2 className="text-lg font-bold text-foreground">{user.name}</h2>
-              <p className="text-blue-600 dark:text-blue-400 text-sm capitalize">{user.role}</p>
+              <p className="text-primary dark:text-primary/80 text-sm capitalize">{user.role}</p>
               <p className="text-xs text-muted-foreground mt-1">Member since {new Date(user.joinedAt).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
             </div>
 
@@ -161,7 +161,7 @@ export default function Profile() {
                     {isEditing ? (
                       <input className="input-field" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })} placeholder="https://yoursite.com" />
                     ) : (
-                      <p className="text-sm text-blue-600 dark:text-blue-400">{user.website || "Not set"}</p>
+                      <p className="text-sm text-primary dark:text-primary/80">{user.website || "Not set"}</p>
                     )}
                   </div>
                 </div>
@@ -180,8 +180,8 @@ export default function Profile() {
                       className={cn(
                         "px-3 py-1.5 rounded-lg text-xs font-medium transition-all border",
                         form.skills.includes(skill)
-                          ? "bg-blue-600 text-white border-blue-600"
-                          : "border-border text-muted-foreground hover:border-blue-600/50"
+                          ? "bg-primary text-white border-primary"
+                          : "border-border text-muted-foreground hover:border-primary/50"
                       )}
                     >
                       {form.skills.includes(skill) && <CheckCircle2 className="w-3 h-3 inline mr-1" />}
@@ -203,7 +203,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

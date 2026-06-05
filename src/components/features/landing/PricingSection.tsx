@@ -45,7 +45,7 @@ export default function PricingSection() {
               className={cn(
                 "relative rounded-2xl border flex flex-col",
                 plan.highlighted
-                  ? "border-blue-600 bg-blue-600 text-white"
+                  ? "border-primary bg-primary text-white"
                   : "border-border bg-card"
               )}
             >
@@ -79,7 +79,7 @@ export default function PricingSection() {
               <ul className="px-6 py-5 space-y-3 flex-1">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-center gap-2.5 text-sm">
-                    <Check className={cn("w-4 h-4 flex-shrink-0", plan.highlighted ? "text-white/80" : "text-emerald-500")} />
+                    <Check className={cn("w-4 h-4 flex-shrink-0", plan.highlighted ? "text-white/80" : "text-accent")} />
                     <span className={cn(plan.highlighted ? "text-white/80" : "text-muted-foreground")}>{f}</span>
                   </li>
                 ))}
@@ -91,7 +91,7 @@ export default function PricingSection() {
                   className={cn(
                     "w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-colors",
                     plan.highlighted
-                      ? "bg-white text-blue-600 hover:bg-white/90"
+                      ? "bg-white text-primary hover:bg-white/90"
                       : "border border-border text-foreground hover:bg-muted"
                   )}
                 >
@@ -106,7 +106,7 @@ export default function PricingSection() {
         {/* Enterprise footnote */}
         <p className="mt-8 text-sm text-muted-foreground text-center">
           Need a custom plan for large teams?{" "}
-          <Link to="/contact" className="text-foreground font-medium hover:text-blue-600 dark:hover:text-blue-400 underline underline-offset-2 transition-colors">
+          <Link to="/contact" className="text-foreground font-medium hover:text-primary dark:hover:text-primary/80 underline underline-offset-2 transition-colors">
             Talk to our enterprise team
           </Link>
         </p>

@@ -16,11 +16,13 @@ import RecruiterDashboard from "@/components/features/dashboard/RecruiterDashboa
 import CorporateDashboard from "@/components/features/dashboard/CorporateDashboard";
 import StartupDashboard from "@/components/features/dashboard/StartupDashboard";
 import AdminDashboard from "@/components/features/dashboard/AdminDashboard";
+import Profile from "@/pages/Profile";
+import SettingsPage from "@/pages/Settings";
 
-export default function Dashboard() {
+export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState(defaultTab || "overview");
   const [searchQuery, setSearchQuery] = useState("");
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background p-6">
         <div className="text-center max-w-md">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-blue-600/30">
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-primary/30">
             <Code2 className="w-10 h-10 text-white" />
           </div>
           <h2 className="text-2xl font-bold mb-3 text-foreground">Access Your Dashboard</h2>
@@ -57,19 +59,19 @@ export default function Dashboard() {
   };
 
   const roleConfig = {
-    student: { label: "Student", color: "bg-blue-600", icon: BookOpen, sidebar: studentSidebar },
-    developer: { label: "Developer", color: "bg-indigo-600", icon: Code2, sidebar: developerSidebar },
-    trainer: { label: "Trainer", color: "bg-emerald-600", icon: Brain, sidebar: trainerSidebar },
-    recruiter: { label: "Recruiter", color: "bg-orange-600", icon: Briefcase, sidebar: recruiterSidebar },
-    corporate: { label: "Corporate", color: "bg-violet-600", icon: Users, sidebar: corporateSidebar },
-    startup: { label: "Startup", color: "bg-pink-600", icon: Rocket, sidebar: startupSidebar },
-    admin: { label: "Admin", color: "bg-red-600", icon: Settings, sidebar: adminSidebar },
+    student: { label: "Student", color: "bg-primary", icon: BookOpen, sidebar: studentSidebar },
+    developer: { label: "Developer", color: "bg-primary", icon: Code2, sidebar: developerSidebar },
+    trainer: { label: "Trainer", color: "bg-accent", icon: Brain, sidebar: trainerSidebar },
+    recruiter: { label: "Recruiter", color: "bg-accent", icon: Briefcase, sidebar: recruiterSidebar },
+    corporate: { label: "Corporate", color: "bg-primary", icon: Users, sidebar: corporateSidebar },
+    startup: { label: "Startup", color: "bg-accent", icon: Rocket, sidebar: startupSidebar },
+    admin: { label: "Admin", color: "bg-primary", icon: Settings, sidebar: adminSidebar },
   };
 
   const config = roleConfig[user.role as keyof typeof roleConfig] || roleConfig.student;
   const RoleIcon = config.icon;
 
-  const DashboardComponent = {
+  const ChildDashboard = {
     student: StudentDashboard,
     developer: DeveloperDashboard,
     trainer: TrainerDashboard,
@@ -96,25 +98,25 @@ export default function Dashboard() {
     : [];
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-muted/20 dark:bg-background flex">
       {/* Sidebar */}
       <aside className={cn(
         "fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border flex flex-col transition-transform duration-300",
         sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}>
-        <div className="flex items-center justify-between p-5 border-b border-border">
+        <div className="flex items-center justify-between p-5 border-b border-border/20">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Code2 className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-foreground">VedTechno</span>
           </Link>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-1 hover:bg-muted rounded transition-colors">
+          <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-1 text-muted-foreground hover:text-foreground rounded transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="px-4 py-3 border-b border-border">
+        <div className="px-4 py-3 border-b border-border/20">
           <div className={cn("inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white", config.color)}>
             <RoleIcon className="w-3 h-3" />
             {config.label} Dashboard
@@ -134,12 +136,12 @@ export default function Dashboard() {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-border space-y-1">
-          <Link to="/profile" className="sidebar-link" onClick={() => setSidebarOpen(false)}>
+        <div className="p-4 border-t border-border/20 space-y-1">
+          <button onClick={() => handleSidebarNav("profile")} className={cn("sidebar-link w-full text-left", activeTab === "profile" && "sidebar-link-active")}>
             {user.avatar ? (
-              <img src={user.avatar} alt={user.name} className="w-7 h-7 rounded-lg object-cover flex-shrink-0" />
+              <img src={user.avatar} alt={user.name} className="w-7 h-7 rounded-lg object-cover flex-shrink-0 border border-border" />
             ) : (
-              <div className="w-7 h-7 rounded-lg bg-blue-600/20 flex items-center justify-center text-xs font-bold text-blue-600 flex-shrink-0">
+              <div className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center text-xs font-bold text-primary flex-shrink-0 border border-primary/30">
                 {getInitials(user.name)}
               </div>
             )}
@@ -147,11 +149,11 @@ export default function Dashboard() {
               <p className="text-xs font-semibold text-foreground truncate">{user.name}</p>
               <p className="text-xs text-muted-foreground truncate">{user.email}</p>
             </div>
-          </Link>
-          <Link to="/settings" className="sidebar-link" onClick={() => setSidebarOpen(false)}>
+          </button>
+          <button onClick={() => handleSidebarNav("settings")} className={cn("sidebar-link w-full text-left", activeTab === "settings" && "sidebar-link-active")}>
             <Settings className="w-4 h-4" />Settings
-          </Link>
-          <button onClick={handleLogout} className="sidebar-link text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 w-full">
+          </button>
+          <button onClick={handleLogout} className="sidebar-link text-red-400 hover:bg-red-500/10 hover:text-red-300 w-full">
             <LogOut className="w-4 h-4" />Sign Out
           </button>
         </div>
@@ -159,7 +161,7 @@ export default function Dashboard() {
 
       {sidebarOpen && <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
-      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
+      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen bg-muted/20 dark:bg-background">
         {/* Top Bar */}
         <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border px-4 py-3 flex items-center gap-3">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 hover:bg-muted rounded-lg transition-colors">
@@ -203,7 +205,7 @@ export default function Dashboard() {
             <div className="relative">
               <button onClick={() => setNotifOpen(!notifOpen)} className="relative p-2 hover:bg-muted rounded-lg transition-colors">
                 <Bell className="w-5 h-5 text-muted-foreground" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-blue-600 rounded-full" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full" />
               </button>
               {notifOpen && (
                 <>
@@ -211,11 +213,11 @@ export default function Dashboard() {
                   <div className="absolute right-0 top-full mt-2 w-80 bg-card border border-border rounded-2xl shadow-xl z-50 overflow-hidden">
                     <div className="p-4 border-b border-border flex items-center justify-between">
                       <h3 className="font-semibold text-foreground text-sm">Notifications</h3>
-                      <button onClick={() => { toast.success("All marked as read"); setNotifOpen(false); }} className="text-xs text-blue-600 dark:text-blue-400 hover:underline">Mark all read</button>
+                      <button onClick={() => { toast.success("All marked as read"); setNotifOpen(false); }} className="text-xs text-primary dark:text-primary/80 hover:underline">Mark all read</button>
                     </div>
                     {[
                       { title: "New course available", msg: "Advanced React Patterns is now live", time: "2m ago", dot: "bg-blue-500" },
-                      { title: "Certificate earned!", msg: "You completed Python Fundamentals", time: "1h ago", dot: "bg-emerald-500" },
+                      { title: "Certificate earned!", msg: "You completed Python Fundamentals", time: "1h ago", dot: "bg-accent" },
                       { title: "Community mention", msg: "@maya replied to your thread", time: "3h ago", dot: "bg-orange-500" },
                     ].map((n, i) => (
                       <button key={i} onClick={() => { toast.info(n.msg); setNotifOpen(false); }} className="w-full flex items-start gap-3 p-4 hover:bg-muted transition-colors text-left border-b border-border last:border-0">
@@ -228,27 +230,33 @@ export default function Dashboard() {
                       </button>
                     ))}
                     <div className="p-3 text-center">
-                      <button onClick={() => { toast.info("Opening all notifications..."); setNotifOpen(false); }} className="text-xs text-blue-600 dark:text-blue-400 hover:underline">View all notifications</button>
+                      <button onClick={() => { toast.info("Opening all notifications..."); setNotifOpen(false); }} className="text-xs text-primary dark:text-primary/80 hover:underline">View all notifications</button>
                     </div>
                   </div>
                 </>
               )}
             </div>
 
-            <Link to="/profile">
+            <button onClick={() => setActiveTab("profile")} className="focus:outline-none">
               {user.avatar ? (
                 <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-lg object-cover border border-border" />
               ) : (
-                <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xs font-bold">
+                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-bold">
                   {getInitials(user.name)}
                 </div>
               )}
-            </Link>
+            </button>
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-6">
-          <DashboardComponent user={user} initialTab={activeTab} key={activeTab} />
+        <main className="flex-1 p-4 md:p-6 overflow-y-auto">
+          {activeTab === "profile" ? (
+            <Profile />
+          ) : activeTab === "settings" ? (
+            <SettingsPage />
+          ) : (
+            <ChildDashboard user={user} initialTab={activeTab} key={activeTab} />
+          )}
         </main>
       </div>
     </div>

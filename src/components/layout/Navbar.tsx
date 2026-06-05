@@ -48,7 +48,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 no-select group">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Code2 className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-foreground tracking-tight">
@@ -88,7 +88,7 @@ export default function Navbar() {
               <>
                 <button className="relative p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
                   <Bell className="w-4 h-4" />
-                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-blue-600 rounded-full" />
+                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-primary rounded-full" />
                 </button>
 
                 <div className="relative ml-1">
@@ -99,7 +99,7 @@ export default function Navbar() {
                     {user.avatar ? (
                       <img src={user.avatar} alt={user.name} className="w-7 h-7 rounded-md object-cover" />
                     ) : (
-                      <div className="w-7 h-7 rounded-md bg-blue-600 flex items-center justify-center text-white text-xs font-bold">
+                      <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center text-white text-xs font-bold">
                         {getInitials(user.name)}
                       </div>
                     )}
@@ -141,7 +141,7 @@ export default function Navbar() {
                 <Link to="/login" className="px-3.5 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md">
                   Sign in
                 </Link>
-                <Link to="/register" className="px-4 py-2 text-sm bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                <Link to="/register" className="px-4 py-2 text-sm bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">
                   Get started
                 </Link>
               </div>

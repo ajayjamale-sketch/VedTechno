@@ -49,7 +49,7 @@ export default function HeroSection() {
 
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-border bg-card text-xs font-medium text-muted-foreground mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
             250,000+ learners — now hiring
           </div>
 
@@ -58,7 +58,7 @@ export default function HeroSection() {
             The platform built
             <br />
             for{" "}
-            <span className="text-blue-600 dark:text-blue-400">
+            <span className="text-primary dark:text-primary/80">
               {displayed}
               <span className="animate-pulse">|</span>
             </span>
@@ -72,7 +72,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
             <Link
               to="/register"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 text-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 text-sm"
             >
               Start for free
               <ArrowRight className="w-4 h-4" />
@@ -81,7 +81,7 @@ export default function HeroSection() {
               to="/dashboard"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-border text-foreground font-medium rounded-xl hover:bg-muted transition-colors text-sm"
             >
-              <Play className="w-3.5 h-3.5 fill-current text-blue-600" />
+              <Play className="w-3.5 h-3.5 fill-current text-primary" />
               See the dashboard
             </Link>
           </div>
@@ -108,7 +108,7 @@ export default function HeroSection() {
               <span>4.9 / 5 rating</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-accent" />
               <span>No credit card needed</span>
             </div>
           </div>

@@ -35,7 +35,7 @@ export default function TestimonialsSection() {
 
           {/* Featured — takes more space */}
           <div className="lg:col-span-5">
-            <div className="h-full flex flex-col justify-between bg-blue-600 rounded-2xl p-8 text-white">
+            <div className="h-full flex flex-col justify-between bg-primary rounded-2xl p-8 text-white">
               <div>
                 <div className="flex gap-0.5 mb-6">
                   {[...Array(TESTIMONIALS[activeIdx].rating)].map((_, i) => (
@@ -69,7 +69,7 @@ export default function TestimonialsSection() {
                 className={cn(
                   "text-left p-5 rounded-xl border transition-all duration-200",
                   idx === activeIdx
-                    ? "border-blue-600/40 bg-blue-600/5"
+                    ? "border-primary/40 bg-primary/5"
                     : "border-border bg-card hover:border-muted-foreground/30"
                 )}
               >
@@ -93,7 +93,7 @@ export default function TestimonialsSection() {
         {/* Bottom CTA */}
         <div className="mt-12 pt-10 border-t border-border flex items-center justify-between gap-4 flex-wrap">
           <p className="text-sm text-muted-foreground">Join 250,000+ learners who've already made the switch.</p>
-          <Link to="/register" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors group">
+          <Link to="/register" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary dark:hover:text-primary/80 transition-colors group">
             Get started free
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>

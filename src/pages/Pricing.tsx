@@ -18,18 +18,26 @@ export default function Pricing() {
   return (
     <main className="page-enter">
       {/* Hero */}
-      <section className="pt-28 pb-16 bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-gradient opacity-80" />
+      <section className="relative pt-24 md:pt-32 pb-16 bg-background overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            opacity: 0.4,
+            maskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+          }}
+        />
         <div className="relative container-custom text-center">
-          <span className="badge-primary mb-4 inline-block !bg-blue-600/20 !text-blue-300 !border-blue-500/30">Pricing</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-5">
+          <span className="badge-primary mb-4 inline-block ">Pricing</span>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-5">
             Simple,{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
               Transparent
             </span>{" "}
             Pricing
           </h1>
-          <p className="text-white/60 text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Start free and scale as you grow. No hidden fees, no surprises.
           </p>
         </div>
@@ -42,7 +50,7 @@ export default function Pricing() {
             <span className={cn("text-sm font-medium", !isAnnual ? "text-foreground" : "text-muted-foreground")}>Monthly</span>
             <button
               onClick={() => setIsAnnual(!isAnnual)}
-              className={cn("relative w-12 h-6 rounded-full transition-colors", isAnnual ? "bg-blue-600" : "bg-muted-foreground/30")}
+              className={cn("relative w-12 h-6 rounded-full transition-colors", isAnnual ? "bg-primary" : "bg-muted-foreground/30")}
             >
               <div className={cn("absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform", isAnnual ? "translate-x-6" : "")} />
             </button>
@@ -64,13 +72,13 @@ export default function Pricing() {
                 className={cn(
                   "relative rounded-2xl border p-8 flex flex-col",
                   plan.highlighted
-                    ? "border-blue-600 bg-gradient-to-b from-blue-600/5 to-background shadow-2xl shadow-blue-600/10 scale-105"
+                    ? "border-primary bg-gradient-to-b from-blue-600/5 to-background shadow-2xl shadow-primary/10 scale-105"
                     : "border-border bg-card"
                 )}
               >
                 {plan.badge && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <span className="px-4 py-1 bg-blue-600 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1">
+                    <span className="px-4 py-1 bg-primary text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1">
                       <Zap className="w-3 h-3" />{plan.badge}
                     </span>
                   </div>
@@ -84,12 +92,12 @@ export default function Pricing() {
                 <ul className="space-y-3 mb-8 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-sm">
-                      <Check className={cn("w-4 h-4 flex-shrink-0 mt-0.5", plan.highlighted ? "text-blue-600" : "text-emerald-500")} />
+                      <Check className={cn("w-4 h-4 flex-shrink-0 mt-0.5", plan.highlighted ? "text-primary" : "text-accent")} />
                       <span className="text-muted-foreground">{f}</span>
                     </li>
                   ))}
                 </ul>
-                <Link to="/register" className={cn("w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all", plan.highlighted ? "bg-blue-600 text-white hover:bg-blue-700 shadow-lg" : "border border-border hover:border-blue-600/50 hover:bg-muted text-foreground")}>
+                <Link to="/register" className={cn("w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all", plan.highlighted ? "bg-primary text-white hover:bg-primary/90 shadow-lg" : "border border-border hover:border-primary/50 hover:bg-muted text-foreground")}>
                   {plan.price.monthly === 0 ? "Start Free" : "Try Free 14 Days"} <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -110,7 +118,7 @@ export default function Pricing() {
               <div key={a.name} className="feature-card">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="font-semibold text-foreground text-sm">{a.name}</h3>
-                  <span className="text-blue-600 font-bold">${a.price}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
+                  <span className="text-primary font-bold">${a.price}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
                 </div>
                 <p className="text-xs text-muted-foreground">{a.desc}</p>
               </div>
@@ -129,7 +137,7 @@ export default function Pricing() {
                 <tr className="border-b border-border">
                   <th className="text-left py-3 pr-6 text-foreground font-semibold">Feature</th>
                   {PRICING_PLANS.map((p) => (
-                    <th key={p.id} className={cn("text-center py-3 px-4 font-semibold", p.highlighted ? "text-blue-600" : "text-foreground")}>{p.name}</th>
+                    <th key={p.id} className={cn("text-center py-3 px-4 font-semibold", p.highlighted ? "text-primary" : "text-foreground")}>{p.name}</th>
                   ))}
                 </tr>
               </thead>
@@ -148,7 +156,7 @@ export default function Pricing() {
                   <tr key={feature} className="border-b border-border hover:bg-muted/30 transition-colors">
                     <td className="py-3 pr-6 text-muted-foreground">{feature}</td>
                     <td className="text-center py-3 px-4 text-muted-foreground">{free}</td>
-                    <td className="text-center py-3 px-4 text-blue-600 dark:text-blue-400 font-medium">{pro}</td>
+                    <td className="text-center py-3 px-4 text-primary dark:text-primary/80 font-medium">{pro}</td>
                     <td className="text-center py-3 px-4 text-muted-foreground">{ent}</td>
                   </tr>
                 ))}
@@ -164,7 +172,7 @@ export default function Pricing() {
           <h2 className="text-2xl font-bold text-foreground text-center mb-10">Pricing FAQ</h2>
           <div className="space-y-3">
             {FAQS.slice(0, 5).map((faq, idx) => (
-              <div key={idx} className={cn("border rounded-2xl overflow-hidden transition-all", openFaq === idx ? "border-blue-600/30 bg-blue-600/5" : "border-border bg-card")}>
+              <div key={idx} className={cn("border rounded-2xl overflow-hidden transition-all", openFaq === idx ? "border-primary/30 bg-primary/5" : "border-border bg-card")}>
                 <button onClick={() => setOpenFaq(openFaq === idx ? null : idx)} className="flex items-center justify-between w-full text-left px-5 py-4">
                   <span className="text-sm font-medium text-foreground">{faq.question}</span>
                   <HelpCircle className="w-4 h-4 text-muted-foreground flex-shrink-0" />

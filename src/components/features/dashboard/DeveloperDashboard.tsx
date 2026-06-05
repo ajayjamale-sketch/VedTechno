@@ -338,21 +338,21 @@ const COMMUNITY_GROUPS: CommunityGroup[] = [
     name: "Open Source Contributors",
     members: "12K+",
     icon: GitBranch,
-    color: "text-indigo-600 bg-indigo-600/10",
+    color: "text-indigo-600 bg-primary/10",
   },
   {
     id: "g2",
     name: "React Developers",
     members: "45K+",
     icon: Code2,
-    color: "text-blue-600 bg-blue-600/10",
+    color: "text-primary bg-primary/10",
   },
   {
     id: "g3",
     name: "ML Engineers",
     members: "28K+",
     icon: Brain,
-    color: "text-emerald-600 bg-emerald-600/10",
+    color: "text-accent bg-accent/10",
   },
 ];
 
@@ -665,7 +665,7 @@ export default function DeveloperDashboard({
             className={cn(
               "flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all",
               activeTab === id
-                ? "bg-indigo-600 text-white shadow-lg"
+                ? "bg-primary text-white shadow-lg"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted",
             )}
           >
@@ -692,7 +692,7 @@ export default function DeveloperDashboard({
             </div>
             <button
               onClick={() => toast.info("Opening AI code assistant...")}
-              className="btn-primary text-sm bg-indigo-600 hover:bg-indigo-700 shadow-indigo-600/25"
+              className="btn-primary text-sm bg-primary hover:bg-indigo-700 shadow-indigo-600/25"
             >
               <Brain className="w-4 h-4 mr-1.5" />
               AI Assistant
@@ -704,7 +704,7 @@ export default function DeveloperDashboard({
                 label: "Problems Solved",
                 value: solvedCount.toString(),
                 icon: CheckCircle2,
-                color: "text-indigo-600 bg-indigo-600/10",
+                color: "text-indigo-600 bg-primary/10",
                 tab: "challenges",
               },
               {
@@ -718,14 +718,14 @@ export default function DeveloperDashboard({
                 label: "Skill Points",
                 value: userPoints.toString(),
                 icon: Star,
-                color: "text-emerald-600 bg-emerald-600/10",
+                color: "text-accent bg-accent/10",
                 tab: null,
               },
               {
                 label: "Hours Coded",
                 value: "312",
                 icon: Clock,
-                color: "text-blue-600 bg-blue-600/10",
+                color: "text-primary bg-primary/10",
                 tab: null,
               },
             ].map(({ label, value, icon: Icon, color, tab }) => (
@@ -933,7 +933,7 @@ export default function DeveloperDashboard({
                     className={cn(
                       "px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all border",
                       challengeFilter === f
-                        ? "bg-indigo-600 text-white border-indigo-600"
+                        ? "bg-primary text-white border-indigo-600"
                         : "border-border text-muted-foreground hover:bg-muted",
                     )}
                   >
@@ -983,7 +983,7 @@ export default function DeveloperDashboard({
                       {ch.difficulty}
                     </span>
                     {ch.solved && (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                      <CheckCircle2 className="w-4 h-4 text-accent" />
                     )}
                   </div>
                   <h3 className="font-semibold text-foreground text-sm mb-2">
@@ -1034,7 +1034,7 @@ export default function DeveloperDashboard({
                       {
                         "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400":
                           hack.status === "open",
-                        "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400":
+                        "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-primary/80":
                           hack.status === "upcoming",
                         "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400":
                           hack.status === "ended",
@@ -1074,7 +1074,7 @@ export default function DeveloperDashboard({
                           "px-4 py-2 text-sm font-medium rounded-xl transition-colors",
                           registeredHackathons.includes(hack.id)
                             ? "bg-green-600 text-white opacity-80 cursor-default"
-                            : "bg-indigo-600 text-white hover:bg-indigo-700",
+                            : "bg-primary text-white hover:bg-indigo-700",
                         )}
                       >
                         {registeredHackathons.includes(hack.id)
@@ -1099,7 +1099,7 @@ export default function DeveloperDashboard({
             <h1 className="text-2xl font-bold text-foreground">My Portfolio</h1>
             <button
               onClick={() => setAddProjectModal(true)}
-              className="btn-primary text-sm bg-indigo-600 hover:bg-indigo-700 shadow-indigo-600/25"
+              className="btn-primary text-sm bg-primary hover:bg-indigo-700 shadow-indigo-600/25"
             >
               <Plus className="w-4 h-4 mr-1.5" />
               Add Project
@@ -1253,7 +1253,7 @@ export default function DeveloperDashboard({
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-600/10 text-indigo-600 font-medium">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-indigo-600 font-medium">
                       {post.tag}
                     </span>
                     <p className="text-sm font-medium text-foreground mt-2">
@@ -1285,13 +1285,13 @@ export default function DeveloperDashboard({
               {
                 label: "Market Rate",
                 value: "$130K",
-                color: "text-emerald-600",
+                color: "text-accent",
                 desc: "Avg for your skill set",
               },
               {
                 label: "Job Matches",
                 value: "47",
-                color: "text-blue-600",
+                color: "text-primary",
                 desc: "Active openings",
               },
             ].map(({ label, value, color, desc }) => (
@@ -1357,7 +1357,7 @@ export default function DeveloperDashboard({
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-emerald-600">
+                    <span className="text-xs font-bold text-accent">
                       {job.match}%
                     </span>
                     <button
@@ -1367,7 +1367,7 @@ export default function DeveloperDashboard({
                         "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors",
                         appliedJobs.includes(job.title)
                           ? "bg-green-600 text-white opacity-80 cursor-default"
-                          : "bg-indigo-600 text-white hover:bg-indigo-700",
+                          : "bg-primary text-white hover:bg-indigo-700",
                       )}
                     >
                       {appliedJobs.includes(job.title) ? "Applied ✓" : "Apply"}
@@ -1414,7 +1414,7 @@ export default function DeveloperDashboard({
                 </div>
                 <div>
                   <span className="text-muted-foreground">Prize Pool:</span>{" "}
-                  <span className="text-emerald-600 font-bold">
+                  <span className="text-accent font-bold">
                     {hackathonDetailModal.prize}
                   </span>
                 </div>
@@ -1475,7 +1475,7 @@ export default function DeveloperDashboard({
                       onClick={() =>
                         handleHackathonRegister(hackathonDetailModal)
                       }
-                      className="w-full btn-primary bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl flex items-center justify-center gap-2"
+                      className="w-full btn-primary bg-primary hover:bg-indigo-700 text-white py-2.5 rounded-xl flex items-center justify-center gap-2"
                     >
                       <Send className="w-4 h-4" /> Confirm Registration
                     </button>
@@ -1537,7 +1537,7 @@ export default function DeveloperDashboard({
               />
               <button
                 onClick={() => handleJoinGroup(joinGroupModal)}
-                className="w-full btn-primary bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl flex items-center justify-center gap-2"
+                className="w-full btn-primary bg-primary hover:bg-indigo-700 text-white py-2.5 rounded-xl flex items-center justify-center gap-2"
               >
                 <UserPlus className="w-4 h-4" /> Join Community
               </button>
@@ -1630,7 +1630,7 @@ export default function DeveloperDashboard({
           </div>
           <button
             onClick={submitJobApplication}
-            className="w-full btn-primary bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl flex items-center justify-center gap-2"
+            className="w-full btn-primary bg-accent hover:bg-accent/90 text-white py-2.5 rounded-xl flex items-center justify-center gap-2"
           >
             <FileText className="w-4 h-4" /> Submit Application
           </button>
@@ -1713,7 +1713,7 @@ export default function DeveloperDashboard({
               <button
                 onClick={runCode}
                 disabled={codeRunning}
-                className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2 bg-primary text-white rounded-xl text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {codeRunning ? (
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -1725,7 +1725,7 @@ export default function DeveloperDashboard({
               <button
                 onClick={submitSolution}
                 disabled={selectedChallenge.solved}
-                className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2 bg-accent text-white rounded-xl text-sm font-medium hover:bg-accent/90 disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 <Save className="w-4 h-4" /> Submit Solution
               </button>
@@ -1798,7 +1798,7 @@ export default function DeveloperDashboard({
             </button>
             <button
               onClick={handleAddProject}
-              className="flex-1 btn-primary text-sm bg-indigo-600 hover:bg-indigo-700"
+              className="flex-1 btn-primary text-sm bg-primary hover:bg-indigo-700"
             >
               Add Project
             </button>
@@ -1903,7 +1903,7 @@ export default function DeveloperDashboard({
               </button>
               <button
                 onClick={handleEditProject}
-                className="flex-1 btn-primary text-sm bg-indigo-600 hover:bg-indigo-700"
+                className="flex-1 btn-primary text-sm bg-primary hover:bg-indigo-700"
               >
                 Save Changes
               </button>
@@ -1940,7 +1940,7 @@ export default function DeveloperDashboard({
             </button>
             <button
               onClick={handleDeleteProject}
-              className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-xl text-sm font-semibold hover:bg-red-700"
+              className="flex-1 px-4 py-2.5 bg-primary text-white rounded-xl text-sm font-semibold hover:bg-red-700"
             >
               Delete
             </button>

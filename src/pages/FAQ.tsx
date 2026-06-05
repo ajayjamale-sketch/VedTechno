@@ -43,16 +43,24 @@ export default function FAQ() {
   return (
     <main className="page-enter pt-20">
       {/* Hero */}
-      <section className="py-16 bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-gradient opacity-80" />
+      <section className="relative pt-24 md:pt-32 pb-16 bg-background overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            opacity: 0.4,
+            maskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+          }}
+        />
         <div className="relative container-custom text-center">
-          <span className="badge-primary mb-4 inline-block !bg-blue-600/20 !text-blue-300 !border-blue-500/30">Help Center</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <span className="badge-primary mb-4 inline-block ">Help Center</span>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Frequently Asked
             <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">Questions</span>
           </h1>
-          <p className="text-white/60 text-lg max-w-xl mx-auto mb-8">
+          <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
             Everything you need to know about VedTechno.
           </p>
           <div className="relative max-w-md mx-auto">
@@ -77,9 +85,9 @@ export default function FAQ() {
               { emoji: "🎓", title: "Courses & Learning", link: "/features" },
               { emoji: "📩", title: "Contact Support", link: "/contact" },
             ].map((card) => (
-              <Link key={card.title} to={card.link} className="feature-card text-center hover:border-blue-600/40 group">
+              <Link key={card.title} to={card.link} className="feature-card text-center hover:border-primary/40 group">
                 <span className="text-2xl mb-2 block">{card.emoji}</span>
-                <p className="text-sm font-medium text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{card.title}</p>
+                <p className="text-sm font-medium text-foreground group-hover:text-primary dark:group-hover:text-primary/80 transition-colors">{card.title}</p>
               </Link>
             ))}
           </div>
@@ -95,7 +103,7 @@ export default function FAQ() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                  activeCategory === cat ? "bg-blue-600 text-white" : "border border-border text-muted-foreground hover:border-blue-600/50"
+                  activeCategory === cat ? "bg-primary text-white" : "border border-border text-muted-foreground hover:border-primary/50"
                 }`}
               >
                 {cat}
@@ -114,14 +122,14 @@ export default function FAQ() {
               {filtered.map((faq, idx) => (
                 <div
                   key={idx}
-                  className={cn("border rounded-2xl overflow-hidden transition-all", openIdx === idx ? "border-blue-600/30 bg-blue-600/5" : "border-border bg-card hover:border-blue-600/20")}
+                  className={cn("border rounded-2xl overflow-hidden transition-all", openIdx === idx ? "border-primary/30 bg-primary/5" : "border-border bg-card hover:border-primary/20")}
                 >
                   <button
                     onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
                     className="flex items-center justify-between w-full text-left px-5 py-4 gap-4 min-h-[56px]"
                   >
                     <span className="text-sm font-medium text-foreground">{faq.question}</span>
-                    <ChevronDown className={cn("w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform duration-200", openIdx === idx && "rotate-180 text-blue-600 dark:text-blue-400")} />
+                    <ChevronDown className={cn("w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform duration-200", openIdx === idx && "rotate-180 text-primary dark:text-primary/80")} />
                   </button>
                   {openIdx === idx && (
                     <div className="px-5 pb-4 text-sm text-muted-foreground leading-relaxed">{faq.answer}</div>
@@ -131,7 +139,7 @@ export default function FAQ() {
             </div>
           )}
 
-          <div className="mt-12 text-center p-8 bg-gradient-to-r from-blue-600/5 to-emerald-500/5 rounded-2xl border border-blue-600/10">
+          <div className="mt-12 text-center p-8 bg-gradient-to-r from-blue-600/5 to-emerald-500/5 rounded-2xl border border-primary/10">
             <p className="font-semibold text-foreground mb-2">Still have questions?</p>
             <p className="text-muted-foreground text-sm mb-5">Our support team is available 24/7 to help you.</p>
             <Link to="/contact" className="btn-primary text-sm">Contact Support</Link>

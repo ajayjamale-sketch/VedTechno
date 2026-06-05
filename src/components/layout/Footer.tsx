@@ -29,7 +29,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-4">
             <Link to="/" className="flex items-center gap-2.5 mb-5">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <Code2 className="w-4 h-4 text-white" />
               </div>
               <span className="font-bold text-foreground">VedTechno</span>
@@ -50,7 +50,7 @@ export default function Footer() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-3.5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 flex-shrink-0"
+                className="px-3.5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 flex-shrink-0"
               >
                 {isSubmitting ? "..." : <ArrowRight className="w-4 h-4" />}
               </button>

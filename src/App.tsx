@@ -14,16 +14,22 @@ import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import ForgotPassword from "@/pages/ForgotPassword";
-import Profile from "@/pages/Profile";
-import Settings from "@/pages/Settings";
 import Blog from "@/pages/Blog";
+import BlogDetail from "@/pages/BlogDetail";
 import FAQ from "@/pages/FAQ";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Terms from "@/pages/Terms";
+import Changelog from "@/pages/Changelog";
+import Careers from "@/pages/Careers";
+import Documentation from "@/pages/Documentation";
+import Community from "@/pages/Community";
+import Tutorials from "@/pages/Tutorials";
+import CookiePolicy from "@/pages/CookiePolicy";
+import Security from "@/pages/Security";
 import NotFound from "@/pages/NotFound";
 
-const NO_LAYOUT_ROUTES = ["/login", "/register", "/forgot-password", "/dashboard"];
-const NO_FOOTER_ROUTES = ["/dashboard"];
+const NO_LAYOUT_ROUTES = ["/login", "/register", "/forgot-password", "/dashboard", "/profile", "/settings"];
+const NO_FOOTER_ROUTES = ["/dashboard", "/profile", "/settings"];
 
 function AppContent() {
   const location = useLocation();
@@ -46,12 +52,20 @@ function AppContent() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile" element={<Dashboard defaultTab="profile" />} />
+          <Route path="/settings" element={<Dashboard defaultTab="settings" />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/changelog" element={<Changelog />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/docs" element={<Documentation />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/tutorials" element={<Tutorials />} />
+          <Route path="/cookies" element={<CookiePolicy />} />
+          <Route path="/security" element={<Security />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

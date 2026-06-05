@@ -80,18 +80,26 @@ export default function Features() {
   return (
     <main className="page-enter">
       {/* Hero */}
-      <section className="pt-28 pb-16 bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-gradient opacity-80" />
+      <section className="relative pt-24 md:pt-32 pb-16 bg-background overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            opacity: 0.4,
+            maskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+          }}
+        />
         <div className="relative container-custom text-center">
-          <span className="badge-primary mb-4 inline-block !bg-blue-600/20 !text-blue-300 !border-blue-500/30">Platform Features</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-5">
+          <span className="badge-primary mb-4 inline-block ">Platform Features</span>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-5">
             Every Tool You Need to
             <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
               Become a Tech Expert
             </span>
           </h1>
-          <p className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
             From your first line of code to your first dev job — VedTechno has the tools, courses, and community to get you there.
           </p>
           <Link to="/register" className="btn-primary text-base px-8">
@@ -133,7 +141,7 @@ export default function Features() {
                 <ul className="space-y-4">
                   {group.features.map((f) => (
                     <li key={f.title} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center flex-shrink-0 mt-0.5">
                         <Check className="w-3 h-3" />
                       </div>
                       <div>
@@ -147,8 +155,8 @@ export default function Features() {
               <div className={`bg-gradient-to-br ${group.color} rounded-2xl p-8 text-white h-64 flex items-center justify-center ${gIdx % 2 !== 0 ? "lg:col-start-1" : ""}`}>
                 <div className="text-center">
                   <span className="text-6xl">{group.icon}</span>
-                  <p className="mt-4 text-xl font-bold text-white/90">{group.category}</p>
-                  <p className="mt-2 text-sm text-white/60">{group.features.length} key capabilities</p>
+                  <p className="mt-4 text-xl font-bold text-muted-foreground">{group.category}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{group.features.length} key capabilities</p>
                 </div>
               </div>
             </div>
@@ -162,7 +170,7 @@ export default function Features() {
           <h2 className="text-3xl font-bold text-white mb-4">Ready to Experience All Features?</h2>
           <p className="text-blue-100 mb-8 max-w-lg mx-auto">Start with our free plan and unlock everything at your own pace.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/register" className="px-8 py-3.5 bg-white text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-colors">
+            <Link to="/register" className="px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-primary/10 transition-colors">
               Start Free Today
             </Link>
             <Link to="/pricing" className="px-8 py-3.5 border border-white/30 text-white font-semibold rounded-xl hover:bg-white/10 transition-colors">

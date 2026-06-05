@@ -53,7 +53,7 @@ export default function Register() {
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 70% 30%, rgba(16,185,129,0.3) 0%, transparent 50%)" }} />
         <div className="relative flex flex-col justify-center px-16 text-white">
           <Link to="/" className="flex items-center gap-2 mb-16">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
               <Code2 className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold">VedTechno</span>
@@ -70,7 +70,7 @@ export default function Register() {
               { stat: "14 days", label: "free trial, no credit card needed" },
             ].map((s) => (
               <div key={s.stat} className="flex items-center gap-4 bg-white/5 rounded-xl p-4 border border-white/10">
-                <span className="text-2xl font-bold text-blue-400">{s.stat}</span>
+                <span className="text-2xl font-bold text-primary/80">{s.stat}</span>
                 <span className="text-white/60 text-sm">{s.label}</span>
               </div>
             ))}
@@ -82,7 +82,7 @@ export default function Register() {
       <div className="flex-1 flex items-center justify-center p-6 bg-background">
         <div className="w-full max-w-md">
           <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Code2 className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-foreground">VedTechno</span>
@@ -93,7 +93,7 @@ export default function Register() {
             {[1, 2].map((s) => (
               <div key={s} className="flex items-center gap-2">
                 <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                  step > s ? "bg-emerald-500 text-white" : step === s ? "bg-blue-600 text-white" : "bg-muted text-muted-foreground"
+                  step > s ? "bg-accent text-white" : step === s ? "bg-primary text-white" : "bg-muted text-muted-foreground"
                 }`}>
                   {step > s ? <CheckCircle2 className="w-4 h-4" /> : s}
                 </div>
@@ -110,7 +110,7 @@ export default function Register() {
               <h2 className="text-2xl font-bold text-foreground mb-1">Create your account</h2>
               <p className="text-muted-foreground text-sm mb-8">
                 Already have one?{" "}
-                <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Sign in</Link>
+                <Link to="/login" className="text-primary dark:text-primary/80 hover:underline font-medium">Sign in</Link>
               </p>
               <div className="space-y-4">
                 <div>
@@ -162,8 +162,8 @@ export default function Register() {
                     onClick={() => setForm({ ...form, role: role.value })}
                     className={`p-4 rounded-2xl border text-left transition-all ${
                       form.role === role.value
-                        ? "border-blue-600 bg-blue-600/10 shadow-md"
-                        : "border-border bg-card hover:border-blue-600/30"
+                        ? "border-primary bg-primary/10 shadow-md"
+                        : "border-border bg-card hover:border-primary/30"
                     }`}
                   >
                     <div className="text-2xl mb-2">{role.icon}</div>

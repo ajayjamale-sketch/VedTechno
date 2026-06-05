@@ -30,7 +30,7 @@ export default function FAQSection() {
 
             {/* Support status */}
             <div className="mt-8 flex items-center gap-2 text-xs text-muted-foreground">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse flex-shrink-0" />
               Support team is online — avg. 2h response
             </div>
           </div>

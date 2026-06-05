@@ -98,13 +98,21 @@ export default function Terms() {
   return (
     <main className="page-enter pt-20">
       {/* Hero */}
-      <section className="py-16 bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-gradient opacity-80" />
+      <section className="relative pt-24 md:pt-32 pb-16 bg-background overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            opacity: 0.4,
+            maskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+          }}
+        />
         <div className="relative container-custom">
           <div className="max-w-3xl">
-            <span className="badge-primary mb-4 inline-block !bg-blue-600/20 !text-blue-300 !border-blue-500/30">Legal</span>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Terms of Service</h1>
-            <p className="text-white/60 text-lg mb-4">
+            <span className="badge-primary mb-4 inline-block ">Legal</span>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Terms of Service</h1>
+            <p className="text-muted-foreground text-lg mb-4">
               Please read these terms carefully before using VedTechno. By using our platform, you agree to these terms.
             </p>
             <p className="text-white/40 text-sm">Last updated: June 1, 2026 · Effective: June 1, 2026</p>
@@ -128,8 +136,8 @@ export default function Terms() {
                   ))}
                 </nav>
                 <div className="mt-5 pt-4 border-t border-border space-y-2">
-                  <Link to="/privacy" className="text-xs text-blue-600 dark:text-blue-400 hover:underline block">Privacy Policy →</Link>
-                  <Link to="/contact" className="text-xs text-blue-600 dark:text-blue-400 hover:underline block">Contact Legal →</Link>
+                  <Link to="/privacy" className="text-xs text-primary dark:text-primary/80 hover:underline block">Privacy Policy →</Link>
+                  <Link to="/contact" className="text-xs text-primary dark:text-primary/80 hover:underline block">Contact Legal →</Link>
                 </div>
               </div>
             </div>
@@ -146,8 +154,8 @@ export default function Terms() {
               {termsSections.map((section) => (
                 <div key={section.id} id={`term-${section.id}`} className="bg-card border border-border rounded-2xl p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-9 h-9 rounded-xl bg-blue-600/10 flex items-center justify-center flex-shrink-0">
-                      <FileText className="w-4 h-4 text-blue-600" />
+                    <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <FileText className="w-4 h-4 text-primary" />
                     </div>
                     <h2 className="text-lg font-bold text-foreground">{section.id}. {section.title}</h2>
                   </div>
@@ -159,8 +167,8 @@ export default function Terms() {
                 </div>
               ))}
 
-              <div className="p-6 bg-gradient-to-r from-blue-600/5 to-emerald-500/5 border border-blue-600/10 rounded-2xl text-center">
-                <Mail className="w-8 h-8 text-blue-600 mx-auto mb-3" />
+              <div className="p-6 bg-gradient-to-r from-blue-600/5 to-emerald-500/5 border border-primary/10 rounded-2xl text-center">
+                <Mail className="w-8 h-8 text-primary mx-auto mb-3" />
                 <p className="font-semibold text-foreground mb-1">Questions about our Terms?</p>
                 <p className="text-sm text-muted-foreground mb-4">Our legal team responds to inquiries within 3 business days.</p>
                 <Link to="/contact" className="btn-primary text-sm">Contact Legal Team</Link>

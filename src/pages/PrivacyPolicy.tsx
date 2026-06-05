@@ -97,13 +97,21 @@ export default function PrivacyPolicy() {
   return (
     <main className="page-enter pt-20">
       {/* Hero */}
-      <section className="py-16 bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-gradient opacity-80" />
+      <section className="relative pt-24 md:pt-32 pb-16 bg-background overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            opacity: 0.4,
+            maskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+          }}
+        />
         <div className="relative container-custom">
           <div className="max-w-3xl">
-            <span className="badge-primary mb-4 inline-block !bg-blue-600/20 !text-blue-300 !border-blue-500/30">Legal</span>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Privacy Policy</h1>
-            <p className="text-white/60 text-lg mb-4">
+            <span className="badge-primary mb-4 inline-block ">Legal</span>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Privacy Policy</h1>
+            <p className="text-muted-foreground text-lg mb-4">
               We take your privacy seriously. This policy explains how VedTechno collects, uses, and protects your personal information.
             </p>
             <p className="text-white/40 text-sm">Last updated: June 1, 2026 · Effective: June 1, 2026</p>
@@ -121,8 +129,8 @@ export default function PrivacyPolicy() {
               { icon: Eye, title: "Full Transparency", desc: "You have complete control over your data at all times." },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-start gap-3 p-4 bg-muted/30 rounded-xl border border-border">
-                <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-4.5 h-4.5 text-emerald-500" />
+                <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-4.5 h-4.5 text-accent" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">{title}</p>
@@ -154,7 +162,7 @@ export default function PrivacyPolicy() {
                   ))}
                 </nav>
                 <div className="mt-5 pt-4 border-t border-border">
-                  <Link to="/contact" className="text-xs text-blue-600 dark:text-blue-400 hover:underline">
+                  <Link to="/contact" className="text-xs text-primary dark:text-primary/80 hover:underline">
                     Questions? Contact us →
                   </Link>
                 </div>
@@ -165,12 +173,12 @@ export default function PrivacyPolicy() {
             <div className="lg:col-span-3 space-y-8">
               <div className="p-5 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl">
                 <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <Mail className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-foreground">Privacy Questions</p>
                     <p className="text-xs text-muted-foreground mt-0.5">
                       For privacy-related inquiries, contact us at{" "}
-                      <a href="mailto:privacy@vedtechno.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+                      <a href="mailto:privacy@vedtechno.com" className="text-primary dark:text-primary/80 hover:underline">
                         privacy@vedtechno.com
                       </a>{" "}
                       or write to: VedTechno Privacy Team, 123 Tech Avenue, San Francisco, CA 94105
@@ -184,8 +192,8 @@ export default function PrivacyPolicy() {
                 return (
                   <div key={section.id} id={`section-${section.id}`} className="bg-card border border-border rounded-2xl p-6">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-9 h-9 rounded-xl bg-blue-600/10 flex items-center justify-center">
-                        <Icon className="w-4.5 h-4.5 text-blue-600" />
+                      <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Icon className="w-4.5 h-4.5 text-primary" />
                       </div>
                       <h2 className="text-lg font-bold text-foreground">{section.id}. {section.title}</h2>
                     </div>

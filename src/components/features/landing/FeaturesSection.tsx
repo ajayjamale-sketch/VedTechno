@@ -62,7 +62,7 @@ const tagColor: Record<string, string> = {
   Core: "bg-muted text-muted-foreground",
   AI: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
   New: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-  Teams: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+  Teams: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-primary/80",
 };
 
 export default function FeaturesSection() {
@@ -82,7 +82,7 @@ export default function FeaturesSection() {
             <p className="text-muted-foreground leading-relaxed text-sm">
               From beginner programming to enterprise architecture — structured courses, live coding, certifications, and placement support built into one coherent platform.
             </p>
-            <Link to="/features" className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-blue-600 dark:hover:text-blue-400 mt-4 group transition-colors">
+            <Link to="/features" className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-primary dark:hover:text-primary/80 mt-4 group transition-colors">
               All features
               <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
@@ -100,8 +100,8 @@ export default function FeaturesSection() {
                 className={`bg-card p-6 hover:bg-muted/40 transition-colors group ${isFeatured ? "md:col-span-2 lg:col-span-1" : ""}`}
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center group-hover:bg-blue-600/10 transition-colors">
-                    <Icon className="w-4 h-4 text-muted-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
+                  <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                    <Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary dark:group-hover:text-primary/80 transition-colors" />
                   </div>
                   <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${tagColor[f.tag]}`}>
                     {f.tag}
