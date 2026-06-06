@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, ArrowRight, Code2, Loader2, ChevronRight, Users, BookOpen, Brain, Briefcase, Building2, Rocket, Shield } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Code2, Loader2, Phone, Smartphone, ChevronRight, Users, BookOpen, Brain, Briefcase, Building2, Rocket, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { validateEmail } from "@/lib/utils";
@@ -20,6 +20,10 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [loginMethod, setLoginMethod] = useState<"email" | "otp">("email");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
   const [demoLoading, setDemoLoading] = useState<string | null>(null);
   const { login, demoLogin, isLoading } = useAuth();
   const navigate = useNavigate();
@@ -42,6 +46,26 @@ export default function Login() {
     } else {
       toast.error("Invalid credentials. Use any email + 6-char password.");
     }
+  };
+
+  const handleSendOTP = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (mobileNumber.length < 10) {
+      toast.error("Enter a valid mobile number");
+      return;
+    }
+    toast.success("OTP sent to " + mobileNumber);
+    setOtpSent(true);
+  };
+
+  const handleVerifyOTP = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (otpCode.length < 4) {
+      toast.error("Enter a valid OTP");
+      return;
+    }
+    toast.success("OTP Verified! Welcome.");
+    navigate("/dashboard");
   };
 
   const handleDemoLogin = async (role: string) => {
@@ -151,38 +175,83 @@ export default function Login() {
 
           <div className="relative mb-5">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
-            <div className="relative flex justify-center text-xs"><span className="bg-background px-3 text-muted-foreground">or sign in with email</span></div>
+            <div className="relative flex justify-center text-xs"><span className="bg-background px-3 text-muted-foreground">or</span></div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input type="email" className={`input-field pl-10 ${errors.email ? "border-red-500 focus:ring-red-500" : ""}`} placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-sm font-medium text-foreground">Password</label>
-                <Link to="/forgot-password" className="text-xs text-primary dark:text-primary/80 hover:underline">Forgot password?</Link>
-              </div>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input type={showPassword ? "text" : "password"} className={`input-field pl-10 pr-10 ${errors.password ? "border-red-500 focus:ring-red-500" : ""}`} placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-            </div>
-
-            <button type="submit" disabled={isLoading} className="btn-primary w-full py-3.5">
-              {isLoading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Signing in...</> : <>Sign In <ArrowRight className="w-4 h-4 ml-2" /></>}
+          <div className="flex bg-muted/50 p-1 rounded-xl mb-6">
+            <button onClick={() => { setLoginMethod("email"); setErrors({}); }} className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${loginMethod === "email" ? "bg-background text-foreground shadow-sm border border-border" : "text-muted-foreground hover:text-foreground"}`}>
+              Email
             </button>
-          </form>
+            <button onClick={() => { setLoginMethod("otp"); setErrors({}); }} className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${loginMethod === "otp" ? "bg-background text-foreground shadow-sm border border-border" : "text-muted-foreground hover:text-foreground"}`}>
+              Mobile OTP
+            </button>
+          </div>
+
+          {loginMethod === "email" ? (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <input type="email" className={`input-field pl-10 ${errors.email ? "border-red-500 focus:ring-red-500" : ""}`} placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-sm font-medium text-foreground">Password</label>
+                  <Link to="/forgot-password" className="text-xs text-primary dark:text-primary/80 hover:underline">Forgot password?</Link>
+                </div>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <input type={showPassword ? "text" : "password"} className={`input-field pl-10 pr-10 ${errors.password ? "border-red-500 focus:ring-red-500" : ""}`} placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+              </div>
+
+              <button type="submit" disabled={isLoading} className="btn-primary w-full py-3.5">
+                {isLoading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Signing in...</> : <>Sign In <ArrowRight className="w-4 h-4 ml-2" /></>}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={otpSent ? handleVerifyOTP : handleSendOTP} className="space-y-4">
+              {!otpSent ? (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">Mobile Number</label>
+                    <div className="relative flex">
+                      <div className="inline-flex items-center justify-center px-4 border border-r-0 border-input rounded-l-xl bg-muted/50 text-muted-foreground text-sm border-r">
+                        +91
+                      </div>
+                      <input type="tel" className="input-field rounded-l-none pl-4" placeholder="9876543210" value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, ''))} maxLength={10} />
+                      <Phone className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    </div>
+                  </div>
+                  <button type="submit" className="btn-primary w-full py-3.5">
+                    Send OTP <ArrowRight className="w-4 h-4 ml-2" />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">Enter OTP</label>
+                    <p className="text-xs text-muted-foreground mb-3">Sent to +91 {mobileNumber} <button type="button" onClick={() => setOtpSent(false)} className="text-primary hover:underline ml-1">Edit</button></p>
+                    <div className="relative">
+                      <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <input type="text" className="input-field pl-10 text-center tracking-[0.5em] font-mono text-lg" placeholder="••••" value={otpCode} onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))} maxLength={6} />
+                    </div>
+                  </div>
+                  <button type="submit" className="btn-primary w-full py-3.5">
+                    Verify & Login <ArrowRight className="w-4 h-4 ml-2" />
+                  </button>
+                </>
+              )}
+            </form>
+          )}
 
           <div className="relative my-5">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>

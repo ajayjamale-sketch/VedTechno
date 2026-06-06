@@ -4,6 +4,7 @@ import { PRICING_PLANS, FAQS } from "@/lib/constants";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useState as useAccordionState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 const addons = [
   { name: "AI Interview Coach", price: 9, desc: "Unlimited AI mock interviews with feedback" },
@@ -14,6 +15,7 @@ const addons = [
 export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const { user } = useAuth();
 
   return (
     <main className="page-enter">
@@ -97,7 +99,7 @@ export default function Pricing() {
                     </li>
                   ))}
                 </ul>
-                <Link to="/register" className={cn("w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all", plan.highlighted ? "bg-primary text-white hover:bg-primary/90 shadow-lg" : "border border-border hover:border-primary/50 hover:bg-muted text-foreground")}>
+                <Link to={user ? (plan.price.monthly === 0 ? "/contact" : "/payment") : "/register"} className={cn("w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all", plan.highlighted ? "bg-primary text-white hover:bg-primary/90 shadow-lg" : "border border-border hover:border-primary/50 hover:bg-muted text-foreground")}>
                   {plan.price.monthly === 0 ? "Start Free" : "Try Free 14 Days"} <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>

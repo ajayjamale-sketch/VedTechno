@@ -27,6 +27,7 @@ import Tutorials from "@/pages/Tutorials";
 import CookiePolicy from "@/pages/CookiePolicy";
 import Security from "@/pages/Security";
 import NotFound from "@/pages/NotFound";
+import Payment from "@/pages/Payment";
 
 const NO_LAYOUT_ROUTES = ["/login", "/register", "/forgot-password", "/dashboard", "/profile", "/settings"];
 const NO_FOOTER_ROUTES = ["/dashboard", "/profile", "/settings"];
@@ -51,6 +52,7 @@ function AppContent() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/profile" element={<Dashboard defaultTab="profile" />} />
           <Route path="/settings" element={<Dashboard defaultTab="settings" />} />

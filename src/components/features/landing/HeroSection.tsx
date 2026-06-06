@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Code2, Play, CheckCircle2, Star, Users, Award } from "lucide-react";
 import heroDashboard from "@/assets/hero-dashboard.jpg";
+import { useAuth } from "@/hooks/useAuth";
 
 const roles = ["Students", "Developers", "Teams", "Founders", "Engineers"];
 
 export default function HeroSection() {
+  const { user } = useAuth();
   const [roleIdx, setRoleIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [typing, setTyping] = useState(true);
@@ -71,10 +73,10 @@ export default function HeroSection() {
           {/* Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
             <Link
-              to="/register"
+              to={user ? "/dashboard" : "/register"}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 text-sm"
             >
-              Start for free
+              {user ? "Go to dashboard" : "Start for free"}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link

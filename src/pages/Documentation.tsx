@@ -56,10 +56,10 @@ export default function Documentation() {
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">build today?</span>
           </h1>
           <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
-              className="w-full pl-12 pr-32 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500 focus:bg-white/20 transition-all text-lg"
+              className="w-full pl-12 pr-32 py-4 bg-card border border-input rounded-2xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-lg shadow-sm"
               placeholder="Search guides, API docs, and tutorials..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

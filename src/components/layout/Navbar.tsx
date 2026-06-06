@@ -6,11 +6,13 @@ import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/hooks/useAuth";
 import { NAV_LINKS } from "@/lib/constants";
 import { getInitials } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const location = useLocation();
@@ -86,10 +88,40 @@ export default function Navbar() {
 
             {user ? (
               <>
-                <button className="relative p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-                  <Bell className="w-4 h-4" />
-                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-primary rounded-full" />
-                </button>
+                <div className="relative">
+                  <button onClick={() => setNotifOpen(!notifOpen)} className="relative p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+                    <Bell className="w-4 h-4" />
+                    <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-primary rounded-full" />
+                  </button>
+                  {notifOpen && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
+                      <div className="absolute right-0 top-full mt-2 w-80 bg-card border border-border rounded-2xl shadow-xl z-50 overflow-hidden">
+                        <div className="p-4 border-b border-border flex items-center justify-between">
+                          <h3 className="font-semibold text-foreground text-sm">Notifications</h3>
+                          <button onClick={() => { toast.success("All marked as read"); setNotifOpen(false); }} className="text-xs text-primary dark:text-primary/80 hover:underline">Mark all read</button>
+                        </div>
+                        {[
+                          { title: "New course available", msg: "Advanced React Patterns is now live", time: "2m ago", dot: "bg-blue-500" },
+                          { title: "Certificate earned!", msg: "You completed Python Fundamentals", time: "1h ago", dot: "bg-accent" },
+                          { title: "Community mention", msg: "@maya replied to your thread", time: "3h ago", dot: "bg-orange-500" },
+                        ].map((n, i) => (
+                          <button key={i} onClick={() => { toast.info(n.msg); setNotifOpen(false); }} className="w-full flex items-start gap-3 p-4 hover:bg-muted transition-colors text-left border-b border-border last:border-0">
+                            <div className={cn("w-2 h-2 rounded-full mt-1.5 flex-shrink-0", n.dot)} />
+                            <div>
+                              <p className="text-sm font-medium text-foreground">{n.title}</p>
+                              <p className="text-xs text-muted-foreground">{n.msg}</p>
+                              <p className="text-xs text-muted-foreground mt-0.5">{n.time}</p>
+                            </div>
+                          </button>
+                        ))}
+                        <div className="p-3 text-center">
+                          <button onClick={() => { toast.info("Opening all notifications..."); setNotifOpen(false); }} className="text-xs text-primary dark:text-primary/80 hover:underline">View all notifications</button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
 
                 <div className="relative ml-1">
                   <button

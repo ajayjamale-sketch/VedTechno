@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Code2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function CTABanner() {
+  const { user } = useAuth();
   return (
     <section className="py-24 bg-background border-t border-border">
       <div className="container-custom">
@@ -27,10 +29,10 @@ export default function CTABanner() {
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
-              to="/register"
+              to={user ? "/dashboard" : "/register"}
               className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 text-base"
             >
-              Start learning for free
+              {user ? "Go to Dashboard" : "Start learning for free"}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link

@@ -56,7 +56,7 @@ export default function DashboardPreview() {
 
           {/* Dashboard mockup */}
           <div className="flex-1 w-full">
-            <div className="bg-secondary rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/20">
+            <div className="bg-slate-950 rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/20">
 
               {/* Top bar */}
               <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10">

@@ -3,9 +3,11 @@ import { Check, ArrowRight } from "lucide-react";
 import { PRICING_PLANS } from "@/lib/constants";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function PricingSection() {
   const [isAnnual, setIsAnnual] = useState(false);
+  const { user } = useAuth();
 
   return (
     <section className="section-padding bg-muted/30" id="pricing">
@@ -87,7 +89,7 @@ export default function PricingSection() {
 
               <div className="p-6 pt-0">
                 <Link
-                  to="/register"
+                  to={user ? (plan.price.monthly === 0 ? "/contact" : "/payment") : "/register"}
                   className={cn(
                     "w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-colors",
                     plan.highlighted

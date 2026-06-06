@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, Code2 } from "lucide-react";
-
-
+import { useAuth } from "@/hooks/useAuth";
 const milestones = [
   { year: "2021", event: "Founded with 10 founding courses and a 4-person team." },
   { year: "2022", event: "50,000 learners. Launched the AI coding assistant." },
@@ -12,6 +11,7 @@ const milestones = [
 ];
 
 export default function About() {
+  const { user } = useAuth();
   return (
     <main className="page-enter">
 
@@ -27,7 +27,7 @@ export default function About() {
               VedTechno was founded in 2021 with one conviction: world-class technical education should be available to any person with an internet connection, not just those who can afford $150,000 CS degrees.
             </p>
             <div className="flex gap-3">
-              <Link to="/register" className="btn-primary text-sm">Join the platform</Link>
+              <Link to={user ? "/dashboard" : "/register"} className="btn-primary text-sm">{user ? "Go to dashboard" : "Join the platform"}</Link>
               <Link to="/contact" className="btn-secondary text-sm">Get in touch</Link>
             </div>
           </div>
@@ -133,8 +133,8 @@ export default function About() {
             <p className="text-muted-foreground mb-8 leading-relaxed">
               Start learning today and become part of a community of 250,000 developers building the future of technology.
             </p>
-            <Link to="/register" className="inline-flex items-center gap-2 btn-primary text-sm">
-              Get started for free <ArrowRight className="w-4 h-4" />
+            <Link to={user ? "/dashboard" : "/register"} className="inline-flex items-center gap-2 btn-primary text-sm">
+              {user ? "Go to dashboard" : "Get started for free"} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

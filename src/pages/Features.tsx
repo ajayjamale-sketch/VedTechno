@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { Code2, Brain, Cloud, Shield, Smartphone, Database, Rocket, Users, BarChart3, ArrowRight, Check, Terminal, GitBranch, Award } from "lucide-react";
+import { Code2, Brain, Cloud, Shield, Smartphone, Database, Rocket, Users, BarChart3, ArrowRight, Check, Terminal, GitBranch, Award, BookOpen, Building2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const featureGroups = [
   {
     category: "Learning Platform",
-    icon: "📚",
+    icon: BookOpen,
     color: "from-blue-500 to-indigo-600",
     features: [
       { title: "1,200+ Expert Courses", desc: "From web dev to AI/ML, cloud, security, and mobile development." },
@@ -15,8 +16,20 @@ const featureGroups = [
     ],
   },
   {
+    category: "Project-Based Learning Platform",
+    icon: Terminal,
+    color: "from-blue-600 to-cyan-500",
+    features: [
+      { title: "Real-World Projects", desc: "Build applications that solve actual industry problems." },
+      { title: "Guided Pathways", desc: "Step-by-step instructions transitioning into independent coding." },
+      { title: "Portfolio Building", desc: "Automatically generate a professional portfolio of your deployed projects." },
+      { title: "Code Reviews", desc: "Get expert feedback on architecture, style, and best practices." },
+      { title: "Team Collaboration", desc: "Work in Agile teams to simulate real engineering environments." },
+    ],
+  },
+  {
     category: "Interactive Coding Lab",
-    icon: "💻",
+    icon: Code2,
     color: "from-emerald-500 to-teal-600",
     features: [
       { title: "Cloud-Based IDE", desc: "Full-featured code editor accessible from any browser." },
@@ -28,7 +41,7 @@ const featureGroups = [
   },
   {
     category: "AI Coding Assistant",
-    icon: "🤖",
+    icon: Brain,
     color: "from-purple-500 to-pink-600",
     features: [
       { title: "Intelligent Code Generation", desc: "AI generates boilerplate code, functions, and components." },
@@ -40,7 +53,7 @@ const featureGroups = [
   },
   {
     category: "Certification System",
-    icon: "🏆",
+    icon: Award,
     color: "from-yellow-500 to-orange-600",
     features: [
       { title: "Proctored Assessments", desc: "Secure, verifiable skill evaluations with AI monitoring." },
@@ -52,7 +65,7 @@ const featureGroups = [
   },
   {
     category: "Career Development",
-    icon: "🚀",
+    icon: Rocket,
     color: "from-orange-500 to-red-600",
     features: [
       { title: "AI Resume Builder", desc: "Smart resume builder tailored to each job application." },
@@ -64,7 +77,7 @@ const featureGroups = [
   },
   {
     category: "Community & Collaboration",
-    icon: "👥",
+    icon: Users,
     color: "from-cyan-500 to-blue-600",
     features: [
       { title: "Developer Forums", desc: "Ask questions, share knowledge, get peer support." },
@@ -77,6 +90,7 @@ const featureGroups = [
 ];
 
 export default function Features() {
+  const { user } = useAuth();
   return (
     <main className="page-enter">
       {/* Hero */}
@@ -102,8 +116,8 @@ export default function Features() {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
             From your first line of code to your first dev job — VedTechno has the tools, courses, and community to get you there.
           </p>
-          <Link to="/register" className="btn-primary text-base px-8">
-            Start Building Today <ArrowRight className="w-4 h-4 ml-2" />
+          <Link to={user ? "/dashboard" : "/register"} className="btn-primary text-base px-8">
+            {user ? "Go to Dashboard" : "Start Building Today"} <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>
       </section>
@@ -113,13 +127,13 @@ export default function Features() {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: "Courses", value: "1,200+", icon: "📚" },
-              { label: "Languages Supported", value: "20+", icon: "💻" },
-              { label: "AI Interactions Daily", value: "2M+", icon: "🤖" },
-              { label: "Hiring Partners", value: "500+", icon: "🏢" },
+              { label: "Courses", value: "1,200+", icon: BookOpen },
+              { label: "Languages Supported", value: "20+", icon: Code2 },
+              { label: "AI Interactions Daily", value: "2M+", icon: Brain },
+              { label: "Hiring Partners", value: "500+", icon: Building2 },
             ].map((s) => (
               <div key={s.label} className="text-center">
-                <span className="text-2xl">{s.icon}</span>
+                <div className="flex justify-center text-primary mb-3"><s.icon className="w-8 h-8" /></div>
                 <p className="text-3xl font-bold text-foreground mt-1">{s.value}</p>
                 <p className="text-sm text-muted-foreground">{s.label}</p>
               </div>
@@ -134,8 +148,8 @@ export default function Features() {
           <div className="container-custom">
             <div className={`grid lg:grid-cols-2 gap-12 items-center ${gIdx % 2 !== 0 ? "lg:grid-flow-dense" : ""}`}>
               <div className={gIdx % 2 !== 0 ? "lg:col-start-2" : ""}>
-                <div className={`inline-flex w-12 h-12 rounded-xl bg-gradient-to-br ${group.color} items-center justify-center text-xl mb-5`}>
-                  {group.icon}
+                <div className={`inline-flex w-12 h-12 rounded-xl bg-gradient-to-br ${group.color} items-center justify-center mb-5`}>
+                  <group.icon className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-3xl font-bold text-foreground mb-4">{group.category}</h2>
                 <ul className="space-y-4">
@@ -154,9 +168,9 @@ export default function Features() {
               </div>
               <div className={`bg-gradient-to-br ${group.color} rounded-2xl p-8 text-white h-64 flex items-center justify-center ${gIdx % 2 !== 0 ? "lg:col-start-1" : ""}`}>
                 <div className="text-center">
-                  <span className="text-6xl">{group.icon}</span>
-                  <p className="mt-4 text-xl font-bold text-muted-foreground">{group.category}</p>
-                  <p className="mt-2 text-sm text-muted-foreground">{group.features.length} key capabilities</p>
+                  <group.icon className="w-16 h-16 text-white/90 mx-auto" />
+                  <p className="mt-4 text-xl font-bold text-white">{group.category}</p>
+                  <p className="mt-2 text-sm text-white/80">{group.features.length} key capabilities</p>
                 </div>
               </div>
             </div>
@@ -170,8 +184,8 @@ export default function Features() {
           <h2 className="text-3xl font-bold text-white mb-4">Ready to Experience All Features?</h2>
           <p className="text-blue-100 mb-8 max-w-lg mx-auto">Start with our free plan and unlock everything at your own pace.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/register" className="px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-primary/10 transition-colors">
-              Start Free Today
+            <Link to={user ? "/dashboard" : "/register"} className="px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-primary/10 transition-colors">
+              {user ? "Go to Dashboard" : "Start Free Today"}
             </Link>
             <Link to="/pricing" className="px-8 py-3.5 border border-white/30 text-white font-semibold rounded-xl hover:bg-white/10 transition-colors">
               Compare Plans
