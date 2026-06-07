@@ -150,7 +150,8 @@ export default function Login() {
                   key={role}
                   onClick={() => handleDemoLogin(role)}
                   disabled={demoLoading !== null}
-                  className="group relative p-3 rounded-xl border border-border bg-card hover:border-primary/40 hover:shadow-md transition-all duration-200 text-left disabled:opacity-60 min-h-[64px]"
+                  className="group relative p-3 rounded-xl border border-border bg-muted/40 dark:bg-card hover:bg-card hover:border-primary/40 hover:shadow-md transition-all duration-200 text-left disabled:opacity-60 min-h-[64px]"
+
                 >
                   {demoLoading === role ? (
                     <div className="flex items-center gap-2">
@@ -260,7 +261,7 @@ export default function Login() {
 
           <div className="grid grid-cols-2 gap-3">
             {[
-              { name: "Google", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/24px-Google_%22G%22_logo.svg.png", darkInvert: false },
+              { name: "Google", logo: "https://developers.google.com/identity/images/g-logo.png", darkInvert: false },
               { name: "GitHub", logo: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", darkInvert: true },
             ].map((p) => (
               <button key={p.name} onClick={() => toast.info(`${p.name} login coming soon`)} className="flex items-center justify-center gap-2 py-3 border border-border rounded-xl hover:bg-muted transition-colors text-sm font-medium text-foreground">

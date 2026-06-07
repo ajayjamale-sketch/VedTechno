@@ -1,11 +1,13 @@
 import { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   BookOpen, Code2, Award, Users, BarChart3, Settings, LogOut, Menu, X,
   Bell, Search, ChevronRight, Target, TrendingUp, FileText,
-  LayoutDashboard, Briefcase, Brain, MessageSquare, Trophy, GitBranch, Rocket, Flag, Server, DollarSign, Lightbulb
+  LayoutDashboard, Briefcase, Brain, MessageSquare, Trophy, GitBranch, Rocket, Flag, Server, DollarSign, Lightbulb, FolderGit,
+  Sun, Moon
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "@/hooks/useTheme";
 import { cn, getInitials } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -18,13 +20,18 @@ import StartupDashboard from "@/components/features/dashboard/StartupDashboard";
 import AdminDashboard from "@/components/features/dashboard/AdminDashboard";
 import Profile from "@/pages/Profile";
 import SettingsPage from "@/pages/Settings";
+import NotificationModal from "@/components/ui/NotificationModal";
 
 export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState(defaultTab || "overview");
+  const [allNotifOpen, setAllNotifOpen] = useState(false);
+  const [searchParams] = useSearchParams();
+  const activeTab = defaultTab || searchParams.get("tab") || "overview";
   const [searchQuery, setSearchQuery] = useState("");
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+
   const navigate = useNavigate();
 
   if (!user) {
@@ -54,9 +61,17 @@ export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
   };
 
   const handleSidebarNav = (id: string) => {
-    setActiveTab(id);
+    if (id === "profile") {
+      navigate("/profile");
+    } else if (id === "settings") {
+      navigate("/settings");
+    } else {
+      navigate(`/dashboard?tab=${id}`);
+    }
     setSidebarOpen(false);
   };
+
+
 
   const roleConfig = {
     student: { label: "Student", color: "bg-primary", icon: BookOpen, sidebar: studentSidebar },
@@ -98,7 +113,7 @@ export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
     : [];
 
   return (
-    <div className="min-h-screen bg-muted/20 dark:bg-background flex">
+    <div className="min-h-screen bg-muted/20 dark:bg-background flex dashboard-root">
       {/* Sidebar */}
       <aside className={cn(
         "fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border flex flex-col transition-transform duration-300",
@@ -201,6 +216,19 @@ export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
           </div>
 
           <div className="ml-auto flex items-center gap-2">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground"
+              aria-label="Toggle Theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-5 h-5 text-yellow-500 fill-yellow-500/20" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
+
             {/* Notifications */}
             <div className="relative">
               <button onClick={() => setNotifOpen(!notifOpen)} className="relative p-2 hover:bg-muted rounded-lg transition-colors">
@@ -230,7 +258,7 @@ export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
                       </button>
                     ))}
                     <div className="p-3 text-center">
-                      <button onClick={() => { toast.info("Opening all notifications..."); setNotifOpen(false); }} className="text-xs text-primary dark:text-primary/80 hover:underline">View all notifications</button>
+                      <button onClick={() => { setAllNotifOpen(true); setNotifOpen(false); }} className="text-xs text-primary dark:text-primary/80 hover:underline">View all notifications</button>
                     </div>
                   </div>
                 </>
@@ -259,6 +287,7 @@ export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
           )}
         </main>
       </div>
+      <NotificationModal isOpen={allNotifOpen} onClose={() => setAllNotifOpen(false)} />
     </div>
   );
 }
@@ -272,6 +301,7 @@ interface SidebarItem {
 const studentSidebar: SidebarItem[] = [
   { icon: LayoutDashboard, label: "Overview", id: "overview" },
   { icon: BookOpen, label: "My Courses", id: "courses" },
+  { icon: FolderGit, label: "Project Lab", id: "projects" },
   { icon: Code2, label: "Coding Lab", id: "lab" },
   { icon: Award, label: "Certificates", id: "certs" },
   { icon: Target, label: "Career Hub", id: "career" },
@@ -281,12 +311,14 @@ const studentSidebar: SidebarItem[] = [
 
 const developerSidebar: SidebarItem[] = [
   { icon: LayoutDashboard, label: "Overview", id: "overview" },
+  { icon: FolderGit, label: "Project Lab", id: "projects" },
   { icon: Code2, label: "Coding Challenges", id: "challenges" },
   { icon: Trophy, label: "Hackathons", id: "hackathons" },
   { icon: Briefcase, label: "Portfolio", id: "portfolio" },
   { icon: Users, label: "Community", id: "community" },
   { icon: TrendingUp, label: "Career", id: "career" },
 ];
+
 
 const trainerSidebar: SidebarItem[] = [
   { icon: LayoutDashboard, label: "Overview", id: "overview" },

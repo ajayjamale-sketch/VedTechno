@@ -7,16 +7,19 @@ import { useAuth } from "@/hooks/useAuth";
 import { NAV_LINKS } from "@/lib/constants";
 import { getInitials } from "@/lib/utils";
 import { toast } from "sonner";
+import NotificationModal from "@/components/ui/NotificationModal";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [allNotifOpen, setAllNotifOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 12);
@@ -116,7 +119,7 @@ export default function Navbar() {
                           </button>
                         ))}
                         <div className="p-3 text-center">
-                          <button onClick={() => { toast.info("Opening all notifications..."); setNotifOpen(false); }} className="text-xs text-primary dark:text-primary/80 hover:underline">View all notifications</button>
+                          <button onClick={() => { setAllNotifOpen(true); setNotifOpen(false); }} className="text-xs text-primary dark:text-primary/80 hover:underline">View all notifications</button>
                         </div>
                       </div>
                     </>
@@ -221,6 +224,7 @@ export default function Navbar() {
       {userMenuOpen && (
         <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
       )}
+      <NotificationModal isOpen={allNotifOpen} onClose={() => setAllNotifOpen(false)} />
     </header>
   );
 }

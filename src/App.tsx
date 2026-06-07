@@ -28,6 +28,7 @@ import CookiePolicy from "@/pages/CookiePolicy";
 import Security from "@/pages/Security";
 import NotFound from "@/pages/NotFound";
 import Payment from "@/pages/Payment";
+import Projects from "@/pages/Projects";
 
 const NO_LAYOUT_ROUTES = ["/login", "/register", "/forgot-password", "/dashboard", "/profile", "/settings"];
 const NO_FOOTER_ROUTES = ["/dashboard", "/profile", "/settings"];
@@ -64,6 +65,8 @@ function AppContent() {
           <Route path="/changelog" element={<Changelog />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/docs" element={<Documentation />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/project-learning" element={<Projects />} />
           <Route path="/community" element={<Community />} />
           <Route path="/tutorials" element={<Tutorials />} />
           <Route path="/cookies" element={<CookiePolicy />} />
@@ -71,6 +74,7 @@ function AppContent() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+
       {!noLayout && !noFooter && <Footer />}
       <ScrollToTop />
     </div>

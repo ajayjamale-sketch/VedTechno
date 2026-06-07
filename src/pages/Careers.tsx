@@ -142,9 +142,10 @@ export default function Careers() {
                       <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {job.type}</span>
                     </div>
                   </div>
-                  <button onClick={() => { setSelectedJob(job.role); setApplyModalOpen(true); }} className="mt-4 sm:mt-0 px-6 py-2.5 bg-primary text-white text-sm font-medium rounded-xl hover:bg-primary/90 transition-colors shadow-sm">
+                  <button onClick={() => { setSelectedJob(job.role); setApplyModalOpen(true); }} className="btn-primary mt-4 sm:mt-0 text-sm py-2 px-6 shadow-sm">
                     Apply Now
                   </button>
+
                 </div>
               ))
             ) : (

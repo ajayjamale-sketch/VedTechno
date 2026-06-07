@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search, Rocket, CreditCard, BookOpen, Mail } from "lucide-react";
 import { FAQS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
@@ -80,19 +80,25 @@ export default function FAQ() {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { emoji: "🚀", title: "Getting Started", link: "/register" },
-              { emoji: "💳", title: "Billing & Plans", link: "/pricing" },
-              { emoji: "🎓", title: "Courses & Learning", link: "/features" },
-              { emoji: "📩", title: "Contact Support", link: "/contact" },
-            ].map((card) => (
-              <Link key={card.title} to={card.link} className="feature-card text-center hover:border-primary/40 group">
-                <span className="text-2xl mb-2 block">{card.emoji}</span>
-                <p className="text-sm font-medium text-foreground group-hover:text-primary dark:group-hover:text-primary/80 transition-colors">{card.title}</p>
-              </Link>
-            ))}
+              { icon: Rocket, title: "Getting Started", link: "/register" },
+              { icon: CreditCard, title: "Billing & Plans", link: "/pricing" },
+              { icon: BookOpen, title: "Courses & Learning", link: "/features" },
+              { icon: Mail, title: "Contact Support", link: "/contact" },
+            ].map((card) => {
+              const Icon = card.icon;
+              return (
+                <Link key={card.title} to={card.link} className="feature-card text-center hover:border-primary/40 group flex flex-col items-center justify-center p-6">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                    <Icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <p className="text-sm font-medium text-foreground group-hover:text-primary dark:group-hover:text-primary/80 transition-colors">{card.title}</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
+
 
       {/* FAQ Accordion */}
       <section className="section-padding bg-background">

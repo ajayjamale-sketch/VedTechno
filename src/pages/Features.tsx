@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-import { Code2, Brain, Cloud, Shield, Smartphone, Database, Rocket, Users, BarChart3, ArrowRight, Check, Terminal, GitBranch, Award, BookOpen, Building2 } from "lucide-react";
+import { 
+  Code2, Brain, Cloud, Shield, Smartphone, Database, Rocket, Users, BarChart3, ArrowRight, Check, Terminal, GitBranch, Award, BookOpen, Building2,
+  Compass, Cpu, PlayCircle, Video, Briefcase, FileCheck, Languages, CheckCircle2, FileText, LayoutGrid, ShieldAlert, Medal, Building, FileSpreadsheet, FileEdit, MessageSquare, TrendingUp, HeartHandshake, MessageCircle, Trophy, UserCheck, GitFork, FolderGit
+} from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const featureGroups = [
@@ -8,11 +11,11 @@ const featureGroups = [
     icon: BookOpen,
     color: "from-blue-500 to-indigo-600",
     features: [
-      { title: "1,200+ Expert Courses", desc: "From web dev to AI/ML, cloud, security, and mobile development." },
-      { title: "Structured Learning Paths", desc: "Curated 4-6 month paths designed with industry experts." },
-      { title: "Adaptive Learning Engine", desc: "AI that personalizes your pace, content, and recommendations." },
-      { title: "Video + Text Lessons", desc: "Multi-format content for different learning styles." },
-      { title: "Live Sessions & Workshops", desc: "Weekly instructor-led live coding sessions." },
+      { title: "1,200+ Expert Courses", desc: "From web dev to AI/ML, cloud, security, and mobile development.", icon: BookOpen },
+      { title: "Structured Learning Paths", desc: "Curated 4-6 month paths designed with industry experts.", icon: GitFork },
+      { title: "Adaptive Learning Engine", desc: "AI that personalizes your pace, content, and recommendations.", icon: Cpu },
+      { title: "Video + Text Lessons", desc: "Multi-format content for different learning styles.", icon: PlayCircle },
+      { title: "Live Sessions & Workshops", desc: "Weekly instructor-led live coding sessions.", icon: Video },
     ],
   },
   {
@@ -20,11 +23,11 @@ const featureGroups = [
     icon: Terminal,
     color: "from-blue-600 to-cyan-500",
     features: [
-      { title: "Real-World Projects", desc: "Build applications that solve actual industry problems." },
-      { title: "Guided Pathways", desc: "Step-by-step instructions transitioning into independent coding." },
-      { title: "Portfolio Building", desc: "Automatically generate a professional portfolio of your deployed projects." },
-      { title: "Code Reviews", desc: "Get expert feedback on architecture, style, and best practices." },
-      { title: "Team Collaboration", desc: "Work in Agile teams to simulate real engineering environments." },
+      { title: "Real-World Projects", desc: "Build applications that solve actual industry problems.", icon: Briefcase },
+      { title: "Guided Pathways", desc: "Step-by-step instructions transitioning into independent coding.", icon: Compass },
+      { title: "Portfolio Building", desc: "Automatically generate a professional portfolio of your deployed projects.", icon: FolderGit },
+      { title: "Code Reviews", desc: "Get expert feedback on architecture, style, and best practices.", icon: Code2 },
+      { title: "Team Collaboration", desc: "Work in Agile teams to simulate real engineering environments.", icon: Users },
     ],
   },
   {
@@ -32,11 +35,11 @@ const featureGroups = [
     icon: Code2,
     color: "from-emerald-500 to-teal-600",
     features: [
-      { title: "Cloud-Based IDE", desc: "Full-featured code editor accessible from any browser." },
-      { title: "20+ Programming Languages", desc: "Python, JavaScript, Go, Rust, Java, C++, and more." },
-      { title: "Automated Code Evaluation", desc: "Instant feedback on correctness, performance, and style." },
-      { title: "Sandbox Environments", desc: "Pre-configured development environments for each tech stack." },
-      { title: "Pair Programming", desc: "Real-time collaborative coding with peers or mentors." },
+      { title: "Cloud-Based IDE", desc: "Full-featured code editor accessible from any browser.", icon: Cloud },
+      { title: "20+ Programming Languages", desc: "Python, JavaScript, Go, Rust, Java, C++, and more.", icon: Languages },
+      { title: "Automated Code Evaluation", desc: "Instant feedback on correctness, performance, and style.", icon: CheckCircle2 },
+      { title: "Sandbox Environments", desc: "Pre-configured development environments for each tech stack.", icon: Terminal },
+      { title: "Pair Programming", desc: "Real-time collaborative coding with peers or mentors.", icon: Users },
     ],
   },
   {
@@ -44,11 +47,11 @@ const featureGroups = [
     icon: Brain,
     color: "from-purple-500 to-pink-600",
     features: [
-      { title: "Intelligent Code Generation", desc: "AI generates boilerplate code, functions, and components." },
-      { title: "Real-Time Bug Detection", desc: "Catch errors before they compile with smart analysis." },
-      { title: "Refactoring Suggestions", desc: "Get recommendations to improve code quality and performance." },
-      { title: "Documentation Generator", desc: "Automatically generate clear, comprehensive docs." },
-      { title: "Architecture Guidance", desc: "AI advises on system design and architectural patterns." },
+      { title: "Intelligent Code Generation", desc: "AI generates boilerplate code, functions, and components.", icon: Brain },
+      { title: "Real-Time Bug Detection", desc: "Catch errors before they compile with smart analysis.", icon: ShieldAlert },
+      { title: "Refactoring Suggestions", desc: "Get recommendations to improve code quality and performance.", icon: Cpu },
+      { title: "Documentation Generator", desc: "Automatically generate clear, comprehensive docs.", icon: FileText },
+      { title: "Architecture Guidance", desc: "AI advises on system design and architectural patterns.", icon: LayoutGrid },
     ],
   },
   {
@@ -56,11 +59,11 @@ const featureGroups = [
     icon: Award,
     color: "from-yellow-500 to-orange-600",
     features: [
-      { title: "Proctored Assessments", desc: "Secure, verifiable skill evaluations with AI monitoring." },
-      { title: "Digital Certificates", desc: "Blockchain-verified certificates shareable on LinkedIn." },
-      { title: "Skill Badges", desc: "Micro-credentials for individual competencies." },
-      { title: "Industry Alignment", desc: "Certifications aligned with AWS, Google, and Microsoft standards." },
-      { title: "Practice Exams", desc: "Unlimited mock tests with detailed explanations." },
+      { title: "Proctored Assessments", desc: "Secure, verifiable skill evaluations with AI monitoring.", icon: Shield },
+      { title: "Digital Certificates", desc: "Blockchain-verified certificates shareable on LinkedIn.", icon: Award },
+      { title: "Skill Badges", desc: "Micro-credentials for individual competencies.", icon: Medal },
+      { title: "Industry Alignment", desc: "Certifications aligned with AWS, Google, and Microsoft standards.", icon: Building },
+      { title: "Practice Exams", desc: "Unlimited mock tests with detailed explanations.", icon: FileSpreadsheet },
     ],
   },
   {
@@ -68,11 +71,11 @@ const featureGroups = [
     icon: Rocket,
     color: "from-orange-500 to-red-600",
     features: [
-      { title: "AI Resume Builder", desc: "Smart resume builder tailored to each job application." },
-      { title: "Job Board Integration", desc: "500+ hiring partners posting exclusively on VedTechno." },
-      { title: "Mock Interview Platform", desc: "AI-powered technical and behavioral interview practice." },
-      { title: "Career Roadmaps", desc: "Personalized step-by-step paths to your target role." },
-      { title: "Placement Assistance", desc: "Dedicated career coaches for job placement support." },
+      { title: "AI Resume Builder", desc: "Smart resume builder tailored to each job application.", icon: FileEdit },
+      { title: "Job Board Integration", desc: "500+ hiring partners posting exclusively on VedTechno.", icon: Briefcase },
+      { title: "Mock Interview Platform", desc: "AI-powered technical and behavioral interview practice.", icon: MessageSquare },
+      { title: "Career Roadmaps", desc: "Personalized step-by-step paths to your target role.", icon: TrendingUp },
+      { title: "Placement Assistance", desc: "Dedicated career coaches for job placement support.", icon: HeartHandshake },
     ],
   },
   {
@@ -80,11 +83,11 @@ const featureGroups = [
     icon: Users,
     color: "from-cyan-500 to-blue-600",
     features: [
-      { title: "Developer Forums", desc: "Ask questions, share knowledge, get peer support." },
-      { title: "Hackathons & Challenges", desc: "Weekly coding competitions with real prizes." },
-      { title: "Open Source Projects", desc: "Contribute to real codebases and build your GitHub profile." },
-      { title: "Mentorship Network", desc: "Access experienced developers for 1:1 guidance." },
-      { title: "Study Groups", desc: "Form cohorts and learn together with accountability partners." },
+      { title: "Developer Forums", desc: "Ask questions, share knowledge, get peer support.", icon: MessageCircle },
+      { title: "Hackathons & Challenges", desc: "Weekly coding competitions with real prizes.", icon: Trophy },
+      { title: "Open Source Projects", desc: "Contribute to real codebases and build your GitHub profile.", icon: GitBranch },
+      { title: "Mentorship Network", desc: "Access experienced developers for 1:1 guidance.", icon: Users },
+      { title: "Study Groups", desc: "Form cohorts and learn together with accountability partners.", icon: UserCheck },
     ],
   },
 ];
@@ -153,17 +156,20 @@ export default function Features() {
                 </div>
                 <h2 className="text-3xl font-bold text-foreground mb-4">{group.category}</h2>
                 <ul className="space-y-4">
-                  {group.features.map((f) => (
-                    <li key={f.title} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <span className="text-sm font-semibold text-foreground">{f.title}: </span>
-                        <span className="text-sm text-muted-foreground">{f.desc}</span>
-                      </div>
-                    </li>
-                  ))}
+                  {group.features.map((f) => {
+                    const Icon = f.icon;
+                    return (
+                      <li key={f.title} className="flex items-start gap-3">
+                        <div className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Icon className="w-3 h-3" />
+                        </div>
+                        <div>
+                          <span className="text-sm font-semibold text-foreground">{f.title}: </span>
+                          <span className="text-sm text-muted-foreground">{f.desc}</span>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className={`bg-gradient-to-br ${group.color} rounded-2xl p-8 text-white h-64 flex items-center justify-center ${gIdx % 2 !== 0 ? "lg:col-start-1" : ""}`}>
@@ -177,6 +183,7 @@ export default function Features() {
           </div>
         </section>
       ))}
+
 
       {/* CTA */}
       <section className="section-padding bg-gradient-to-r from-blue-600 to-indigo-700">

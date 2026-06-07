@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User, Briefcase, ArrowRight, Code2, Loader2, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Briefcase, ArrowRight, Code2, Loader2, CheckCircle2, Phone, Smartphone } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { validateEmail, validatePassword } from "@/lib/utils";
@@ -17,6 +17,10 @@ export default function Register() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({ name: "", email: "", password: "", role: "student" as UserType["role"] });
   const [showPassword, setShowPassword] = useState(false);
+  const [registerMethod, setRegisterMethod] = useState<"email" | "otp">("email");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { register, isLoading } = useAuth();
   const navigate = useNavigate();
@@ -24,16 +28,31 @@ export default function Register() {
   const validateStep1 = () => {
     const e: Record<string, string> = {};
     if (!form.name.trim() || form.name.length < 2) e.name = "Name must be at least 2 characters";
-    if (!validateEmail(form.email)) e.email = "Enter a valid email address";
-    const passVal = validatePassword(form.password);
-    if (!passVal.isValid) e.password = passVal.errors[0];
+    
+    if (registerMethod === "email") {
+      if (!validateEmail(form.email)) e.email = "Enter a valid email address";
+      const passVal = validatePassword(form.password);
+      if (!passVal.isValid) e.password = passVal.errors[0];
+    } else {
+      if (mobileNumber.length < 10) e.mobile = "Enter a valid 10-digit mobile number";
+      if (otpSent && otpCode.length < 4) e.otp = "Enter a valid verification code";
+    }
+    
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
   const handleNext = () => {
-    if (validateStep1()) setStep(2);
+    if (!validateStep1()) return;
+
+    if (registerMethod === "otp" && !otpSent) {
+      toast.success("OTP sent to " + mobileNumber);
+      setOtpSent(true);
+    } else {
+      setStep(2);
+    }
   };
+
 
   const handleSubmit = async () => {
     const success = await register(form);
@@ -108,10 +127,21 @@ export default function Register() {
           {step === 1 ? (
             <>
               <h2 className="text-2xl font-bold text-foreground mb-1">Create your account</h2>
-              <p className="text-muted-foreground text-sm mb-8">
+              <p className="text-muted-foreground text-sm mb-6">
                 Already have one?{" "}
                 <Link to="/login" className="text-primary dark:text-primary/80 hover:underline font-medium">Sign in</Link>
               </p>
+
+              {/* Method Switcher */}
+              <div className="flex bg-muted/50 p-1 rounded-xl mb-6">
+                <button onClick={() => { setRegisterMethod("email"); setErrors({}); }} className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${registerMethod === "email" ? "bg-background text-foreground shadow-sm border border-border" : "text-muted-foreground hover:text-foreground"}`}>
+                  Email
+                </button>
+                <button onClick={() => { setRegisterMethod("otp"); setErrors({}); }} className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${registerMethod === "otp" ? "bg-background text-foreground shadow-sm border border-border" : "text-muted-foreground hover:text-foreground"}`}>
+                  Mobile OTP
+                </button>
+              </div>
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">Full Name</label>
@@ -121,27 +151,58 @@ export default function Register() {
                   </div>
                   {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <input type="email" className={`input-field pl-10 ${errors.email ? "border-red-500" : ""}`} placeholder="you@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-                  </div>
-                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Password</label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <input type={showPassword ? "text" : "password"} className={`input-field pl-10 pr-10 ${errors.password ? "border-red-500" : ""}`} placeholder="Min. 8 chars, 1 uppercase, 1 number" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                  {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-                </div>
+
+                {registerMethod === "email" ? (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <input type="email" className={`input-field pl-10 ${errors.email ? "border-red-500" : ""}`} placeholder="you@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                      </div>
+                      {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-1.5">Password</label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <input type={showPassword ? "text" : "password"} className={`input-field pl-10 pr-10 ${errors.password ? "border-red-500" : ""}`} placeholder="Min. 8 chars, 1 uppercase, 1 number" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                      {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-1.5">Mobile Number</label>
+                      <div className="relative flex">
+                        <div className="inline-flex items-center justify-center px-4 border border-r-0 border-input rounded-l-xl bg-muted/50 text-muted-foreground text-sm border-r">
+                          +91
+                        </div>
+                        <input type="tel" className={`input-field rounded-l-none pl-4 ${errors.mobile ? "border-red-500" : ""}`} placeholder="9876543210" value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, ''))} maxLength={10} />
+                        <Phone className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      </div>
+                      {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
+                    </div>
+
+                    {otpSent && (
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-1.5">Enter OTP</label>
+                        <div className="relative">
+                          <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                          <input type="text" className={`input-field pl-10 text-center tracking-[0.5em] font-mono text-lg ${errors.otp ? "border-red-500" : ""}`} placeholder="••••" value={otpCode} onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))} maxLength={6} />
+                        </div>
+                        {errors.otp && <p className="text-red-500 text-xs mt-1">{errors.otp}</p>}
+                      </div>
+                    )}
+                  </>
+                )}
+
                 <button onClick={handleNext} className="btn-primary w-full py-3.5">
-                  Continue <ArrowRight className="w-4 h-4 ml-2" />
+                  {registerMethod === "otp" && !otpSent ? "Send OTP" : "Continue"} <ArrowRight className="w-4 h-4 ml-2" />
                 </button>
                 <p className="text-xs text-center text-muted-foreground">
                   By signing up, you agree to our{" "}
@@ -149,6 +210,24 @@ export default function Register() {
                   and{" "}
                   <Link to="/privacy" className="underline">Privacy Policy</Link>
                 </p>
+
+                
+                <div className="relative my-5">
+                  <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
+                  <div className="relative flex justify-center text-xs"><span className="bg-background px-3 text-muted-foreground">or register with</span></div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { name: "Google", logo: "https://developers.google.com/identity/images/g-logo.png", darkInvert: false },
+                    { name: "GitHub", logo: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", darkInvert: true },
+                  ].map((p) => (
+                    <button key={p.name} type="button" onClick={() => toast.info(`${p.name} signup coming soon`)} className="flex items-center justify-center gap-2 py-3 border border-border rounded-xl hover:bg-muted transition-colors text-sm font-medium text-foreground">
+                      <img src={p.logo} alt={p.name} className={`w-5 h-5 object-contain${p.darkInvert ? " dark:invert" : ""}`} />
+                      {p.name}
+                    </button>
+                  ))}
+                </div>
               </div>
             </>
           ) : (
@@ -163,7 +242,8 @@ export default function Register() {
                     className={`p-4 rounded-2xl border text-left transition-all ${
                       form.role === role.value
                         ? "border-primary bg-primary/10 shadow-md"
-                        : "border-border bg-card hover:border-primary/30"
+                        : "border-border bg-muted/40 dark:bg-card hover:bg-card hover:border-primary/30"
+
                     }`}
                   >
                     <div className="text-2xl mb-2">{role.icon}</div>

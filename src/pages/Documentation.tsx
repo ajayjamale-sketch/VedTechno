@@ -59,7 +59,7 @@ export default function Documentation() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
-              className="w-full pl-12 pr-32 py-4 bg-card border border-input rounded-2xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-lg shadow-sm"
+              className="w-full pl-12 pr-32 py-4 bg-muted/60 dark:bg-card border border-border dark:border-input rounded-2xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:bg-card focus:border-primary focus:ring-1 focus:ring-primary transition-all text-lg shadow-sm"
               placeholder="Search guides, API docs, and tutorials..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -68,6 +68,7 @@ export default function Documentation() {
               Search
             </button>
           </form>
+
         </div>
       </section>
 

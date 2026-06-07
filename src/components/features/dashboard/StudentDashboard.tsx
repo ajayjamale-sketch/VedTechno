@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import {
   BookOpen, Award, Clock, Flame, Code2, ChevronRight, Play, Star, Zap,
   Target, TrendingUp, CheckCircle2, BarChart3, Lock, Brain, ArrowRight,
-  Users, Search, X, Download, Share2, Plus, Filter, Trash2, Edit2, Calendar as CalendarIcon
+  Users, Search, X, Download, Share2, Plus, Filter, Trash2, Edit2, Calendar as CalendarIcon, FolderGit
 } from "lucide-react";
+import Projects from "@/pages/Projects";
 import { MOCK_COURSES } from "@/lib/constants";
 import { cn, formatNumber } from "@/lib/utils";
 import { BarChart, Bar, ResponsiveContainer, XAxis, CartesianGrid, Tooltip, AreaChart, Area } from "recharts";
@@ -222,6 +223,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
   const tabs = [
     { id: "overview", label: "Overview", icon: BarChart3 },
     { id: "courses", label: "My Courses", icon: BookOpen },
+    { id: "projects", label: "Project Lab", icon: FolderGit },
     { id: "lab", label: "Coding Lab", icon: Code2 },
     { id: "certs", label: "Certificates", icon: Award },
     { id: "career", label: "Career Hub", icon: Target },
@@ -542,49 +544,87 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
       )}
 
       {/* Coding Lab Tab */}
-      {activeTab === "lab" && (
-        <div>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-            <h1 className="text-2xl font-bold text-foreground">Interactive Coding Lab</h1>
-            <select className="input-field py-1.5 text-sm w-auto" value={selectedLang} onChange={(e) => { setSelectedLang(e.target.value); toast.info(`Switched to ${e.target.value}`); }}>
-              {["Python", "JavaScript", "Go", "Java", "C++", "Rust"].map(l => <option key={l}>{l}</option>)}
-            </select>
+     {activeTab === "lab" && (
+  <div>
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+      <h1 className="text-2xl font-bold text-foreground">Interactive Coding Lab</h1>
+      <select 
+        className="input-field py-1.5 text-sm w-auto bg-background border-border text-foreground" 
+        value={selectedLang} 
+        onChange={(e) => { setSelectedLang(e.target.value); toast.info(`Switched to ${e.target.value}`); }}
+      >
+        {["Python", "JavaScript", "Go", "Java", "C++", "Rust"].map(l => <option key={l}>{l}</option>)}
+      </select>
+    </div>
+    
+    <div className="bg-white dark:bg-gray-950 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-xl">
+      {/* Header bar */}
+      <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-500/80" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+            <div className="w-3 h-3 rounded-full bg-green-500/80" />
           </div>
-          <div className="bg-gray-950 rounded-2xl overflow-hidden border border-gray-800 shadow-xl">
-            <div className="flex items-center justify-between px-4 py-3 bg-gray-900 border-b border-gray-800">
-              <div className="flex items-center gap-3">
-                <div className="flex gap-1.5"><div className="w-3 h-3 rounded-full bg-red-500/80" /><div className="w-3 h-3 rounded-full bg-yellow-500/80" /><div className="w-3 h-3 rounded-full bg-green-500/80" /></div>
-                <span className="text-white/40 text-xs font-mono">solution.{selectedLang.toLowerCase() === "javascript" ? "js" : selectedLang.toLowerCase() === "python" ? "py" : selectedLang.toLowerCase()}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button onClick={() => { setCode("# Start fresh\n\n"); setCodeOutput(""); toast.info("Editor cleared"); }} className="px-3 py-1 border border-gray-700 text-gray-400 text-xs rounded-lg hover:border-gray-500">Clear</button>
-                <button onClick={runCode} disabled={codeRunning} className="px-4 py-1 bg-accent text-white text-xs rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 flex items-center gap-1.5">
-                  {codeRunning ? <><div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />Running...</> : <>▶ Run Code</>}
-                </button>
-              </div>
-            </div>
-            <textarea value={code} onChange={(e) => setCode(e.target.value)} className="w-full bg-gray-950 text-green-400 font-mono text-sm p-6 outline-none resize-none min-h-[320px] scrollbar-hide" spellCheck={false} />
-            <div className="border-t border-gray-800 px-4 py-3 bg-gray-900">
-              <p className="text-xs text-gray-500 mb-2 font-mono">Output:</p>
-              <p className="text-emerald-400 font-mono text-xs">{codeRunning ? "Running..." : (codeOutput || "Run your code to see output")}</p>
-            </div>
-          </div>
-          <div className="mt-4 grid sm:grid-cols-3 gap-3">
-            {[
-              { title: "Two Sum Problem", desc: "Easy · Array · Hash Map", pts: 10 },
-              { title: "Binary Tree Traversal", desc: "Medium · Tree · BFS/DFS", pts: 25 },
-              { title: "Dynamic Programming", desc: "Hard · DP · Memoization", pts: 50 },
-            ].map((ch) => (
-              <button key={ch.title} onClick={() => loadChallenge(ch.title, ch.desc)} className="feature-card text-left">
-                <Code2 className="w-5 h-5 text-primary mb-2" />
-                <p className="text-sm font-medium text-foreground">{ch.title}</p>
-                <p className="text-xs text-muted-foreground mt-1">{ch.desc}</p>
-                <p className="text-xs text-primary dark:text-primary/80 font-medium mt-1">+{ch.pts} pts</p>
-              </button>
-            ))}
-          </div>
+          <span className="text-gray-500 dark:text-white/40 text-xs font-mono">
+            solution.{selectedLang.toLowerCase() === "javascript" ? "js" : selectedLang.toLowerCase() === "python" ? "py" : selectedLang.toLowerCase()}
+          </span>
         </div>
-      )}
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={() => { setCode("# Start fresh\n\n"); setCodeOutput(""); toast.info("Editor cleared"); }} 
+            className="px-3 py-1 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 text-xs rounded-lg hover:border-gray-500 dark:hover:border-gray-500"
+          >
+            Clear
+          </button>
+          <button 
+            onClick={runCode} 
+            disabled={codeRunning} 
+            className="px-4 py-1 bg-accent text-white text-xs rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 flex items-center gap-1.5"
+          >
+            {codeRunning ? <><div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />Running...</> : <>▶ Run Code</>}
+          </button>
+        </div>
+      </div>
+
+      {/* Code Editor */}
+      <textarea 
+        value={code} 
+        onChange={(e) => setCode(e.target.value)} 
+        className="w-full bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-green-400 font-mono text-sm p-6 outline-none resize-none min-h-[320px] scrollbar-hide" 
+        spellCheck={false} 
+      />
+
+      {/* Output Panel */}
+      <div className="border-t border-gray-200 dark:border-gray-800 px-4 py-3 bg-gray-50 dark:bg-gray-900">
+        <p className="text-xs text-gray-500 dark:text-gray-500 mb-2 font-mono">Output:</p>
+        <p className="text-gray-700 dark:text-emerald-400 font-mono text-xs">
+          {codeRunning ? "Running..." : (codeOutput || "Run your code to see output")}
+        </p>
+      </div>
+    </div>
+
+    {/* Challenge Cards */}
+    <div className="mt-4 grid sm:grid-cols-3 gap-3">
+      {[
+        { title: "Two Sum Problem", desc: "Easy · Array · Hash Map", pts: 10 },
+        { title: "Binary Tree Traversal", desc: "Medium · Tree · BFS/DFS", pts: 25 },
+        { title: "Dynamic Programming", desc: "Hard · DP · Memoization", pts: 50 },
+      ].map((ch) => (
+        <button 
+          key={ch.title} 
+          onClick={() => loadChallenge(ch.title, ch.desc)} 
+          className="feature-card text-left bg-card border border-border rounded-xl p-4 hover:shadow-md transition-shadow"
+        >
+          <Code2 className="w-5 h-5 text-primary mb-2" />
+          <p className="text-sm font-medium text-foreground">{ch.title}</p>
+          <p className="text-xs text-muted-foreground mt-1">{ch.desc}</p>
+          <p className="text-xs text-primary font-medium mt-1">+{ch.pts} pts</p>
+        </button>
+      ))}
+    </div>
+  </div>
+)}
 
       {/* Certificates Tab - SHARE BUTTON FIXED */}
       {activeTab === "certs" && (
@@ -779,6 +819,18 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
               ))}
             </div>
           </div>
+        </div>
+      )}
+
+      {activeTab === "projects" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Project Lab</h1>
+              <p className="text-muted-foreground text-sm">Work through guided industry assignments in sandboxed cloud IDEs</p>
+            </div>
+          </div>
+          <Projects isDashboardView={true} />
         </div>
       )}
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Mail, Phone, MapPin, MessageCircle, Send, Clock, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { validateEmail } from "@/lib/utils";
@@ -17,6 +17,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const nameInputRef = useRef<HTMLInputElement>(null);
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -37,6 +38,16 @@ export default function Contact() {
     setIsSuccess(true);
     toast.success("Message sent! We'll get back to you shortly.");
   };
+
+  const handleBookDemo = () => {
+    setForm(prev => ({ ...prev, topic: "Enterprise Sales" }));
+    document.querySelector("form")?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      nameInputRef.current?.focus();
+    }, 600);
+    toast.info("Topic set to 'Enterprise Sales'. Please enter your details below.");
+  };
+
 
   return (
     <main className="page-enter">
@@ -105,7 +116,7 @@ export default function Contact() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-1.5">Full Name *</label>
-                      <input className={`input-field ${errors.name ? "border-red-500 focus:ring-red-500" : ""}`} placeholder="Alex Johnson" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                      <input ref={nameInputRef} className={`input-field ${errors.name ? "border-red-500 focus:ring-red-500" : ""}`} placeholder="Alex Johnson" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                       {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
                     <div>
@@ -165,19 +176,6 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-blue-600/10 to-emerald-500/10 rounded-2xl p-6 border border-primary/20">
-                <h3 className="font-semibold text-foreground mb-3">Enterprise Inquiries</h3>
-                <p className="text-sm text-muted-foreground mb-4">Need to train 50+ employees? Get a custom demo and dedicated onboarding.</p>
-                <ul className="space-y-2 mb-4">
-                  {["Custom pricing available", "Dedicated account manager", "White-glove onboarding", "Custom content development"].map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-accent" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <button className="btn-primary w-full text-sm">Book Enterprise Demo</button>
-              </div>
 
               <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=500&h=250&fit=crop" alt="Support team" className="rounded-2xl w-full h-40 object-cover" />
             </div>

@@ -117,81 +117,14 @@ export const DEMO_USERS: Record<string, User> = {
   },
 };
 
+import { useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
+
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("vedtechno-user");
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch {
-        localStorage.removeItem("vedtechno-user");
-      }
-    }
-  }, []);
-
-  const login = async (email: string, password: string): Promise<boolean> => {
-    setIsLoading(true);
-    await sleep(MOCK_DELAY);
-    setIsLoading(false);
-
-    if (email && password.length >= 6) {
-      // Check if matches a demo user by email
-      const demoUser = Object.values(DEMO_USERS).find((u) => u.email === email);
-      const loggedUser = demoUser ? demoUser : { ...DEMO_USERS.student, email };
-      setUser(loggedUser);
-      localStorage.setItem("vedtechno-user", JSON.stringify(loggedUser));
-      return true;
-    }
-    return false;
-  };
-
-  const demoLogin = async (role: string): Promise<boolean> => {
-    setIsLoading(true);
-    await sleep(600);
-    setIsLoading(false);
-    const demoUser = DEMO_USERS[role] || DEMO_USERS.student;
-    setUser(demoUser);
-    localStorage.setItem("vedtechno-user", JSON.stringify(demoUser));
-    return true;
-  };
-
-  const register = async (data: RegisterData): Promise<boolean> => {
-    setIsLoading(true);
-    await sleep(MOCK_DELAY);
-    setIsLoading(false);
-
-    const newUser: User = {
-      ...(DEMO_USERS.student),
-      id: `user-${Date.now()}`,
-      name: data.name,
-      email: data.email,
-      role: data.role,
-      joinedAt: new Date().toISOString(),
-      coursesCompleted: 0,
-      certificatesEarned: 0,
-      streakDays: 0,
-      points: 0,
-    };
-    setUser(newUser);
-    localStorage.setItem("vedtechno-user", JSON.stringify(newUser));
-    return true;
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("vedtechno-user");
-  };
-
-  const updateProfile = (data: Partial<User>) => {
-    if (user) {
-      const updated = { ...user, ...data };
-      setUser(updated);
-      localStorage.setItem("vedtechno-user", JSON.stringify(updated));
-    }
-  };
-
-  return { user, isLoading, login, demoLogin, register, logout, updateProfile };
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 }
+

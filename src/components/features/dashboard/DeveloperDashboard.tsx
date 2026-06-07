@@ -31,7 +31,9 @@ import {
   FileText,
   Send,
   Upload,
+  FolderGit,
 } from "lucide-react";
+import Projects from "@/pages/Projects";
 import { cn } from "@/lib/utils";
 import {
   AreaChart,
@@ -448,6 +450,7 @@ export default function DeveloperDashboard({
 
   const tabs = [
     { id: "overview", label: "Overview", icon: BarChart3 },
+    { id: "projects", label: "Project Lab", icon: FolderGit },
     { id: "challenges", label: "Challenges", icon: Code2 },
     { id: "hackathons", label: "Hackathons", icon: Trophy },
     { id: "portfolio", label: "Portfolio", icon: Briefcase },
@@ -1377,6 +1380,18 @@ export default function DeveloperDashboard({
               ))}
             </div>
           </div>
+        </div>
+      )}
+
+      {activeTab === "projects" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Project Lab</h1>
+              <p className="text-muted-foreground text-sm">Work through guided industry assignments in sandboxed cloud IDEs</p>
+            </div>
+          </div>
+          <Projects isDashboardView={true} />
         </div>
       )}
 

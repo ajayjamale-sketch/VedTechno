@@ -11,12 +11,12 @@ const categories = [
 ];
 
 const tutorials = [
-  { id: 1, title: "Build a TikTok Clone with React Native", duration: "45 min", level: "Intermediate", category: "Mobile", views: "12K", thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=250&fit=crop" },
-  { id: 2, title: "Understanding Next.js App Router in 10 Mins", duration: "12 min", level: "Beginner", category: "Frontend", views: "34K", thumbnail: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop" },
-  { id: 3, title: "Create a REST API with Node & Express", duration: "25 min", level: "Beginner", category: "Backend", views: "8K", thumbnail: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=250&fit=crop" },
-  { id: 4, title: "State Management: Redux vs Zustand", duration: "18 min", level: "Intermediate", category: "Frontend", views: "15K", thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop" },
-  { id: 5, title: "Deploying Docker Containers to AWS", duration: "35 min", level: "Advanced", category: "Backend", views: "22K", thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop" },
-  { id: 6, title: "Building a Chat App with Socket.io", duration: "50 min", level: "Advanced", category: "Full Stack", views: "9K", thumbnail: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=400&h=250&fit=crop" }
+  { id: 1, title: "Build a TikTok Clone with React Native", duration: "45 min", level: "Intermediate", category: "Mobile", views: "12K", rating: "4.8", thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=250&fit=crop" },
+  { id: 2, title: "Understanding Next.js App Router in 10 Mins", duration: "12 min", level: "Beginner", category: "Frontend", views: "34K", rating: "4.5", thumbnail: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop" },
+  { id: 3, title: "Create a REST API with Node & Express", duration: "25 min", level: "Beginner", category: "Backend", views: "8K", rating: "4.7", thumbnail: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=250&fit=crop" },
+  { id: 4, title: "State Management: Redux vs Zustand", duration: "18 min", level: "Intermediate", category: "Frontend", views: "15K", rating: "4.6", thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop" },
+  { id: 5, title: "Deploying Docker Containers to AWS", duration: "35 min", level: "Advanced", category: "Backend", views: "22K", rating: "4.9", thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop" },
+  { id: 6, title: "Building a Chat App with Socket.io", duration: "50 min", level: "Advanced", category: "Full Stack", views: "9K", rating: "4.8", thumbnail: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=400&h=250&fit=crop" }
 ];
 
 export default function Tutorials() {
@@ -26,18 +26,28 @@ export default function Tutorials() {
   const filtered = activeCat === "All" ? tutorials : tutorials.filter(t => t.category === activeCat);
 
   return (
-    <main className="page-enter pt-20">
+    <main className="page-enter pt-20 bg-background">
       {/* 1. Hero */}
-      <section className="py-20 bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-gradient opacity-80" />
-        <div className="relative container-custom text-center">
-          <span className="badge-primary mb-4 inline-block !bg-primary/20 !text-blue-300 !border-blue-500/30">Free Tutorials</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+      <section className="relative py-20 md:py-28 bg-background border-b border-border overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            opacity: 0.4,
+            maskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+          }}
+        />
+        <div className="relative container-custom text-center z-10">
+          <span className="badge-primary mb-4 inline-block">Free Tutorials</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
             Learn by Building
             <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">Real Projects</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-emerald-500 dark:from-blue-400 dark:to-emerald-400">
+              Real Projects
+            </span>
           </h1>
-          <p className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-8">
             Bite-sized, practical tutorials to help you learn specific tools, frameworks, and concepts quickly.
           </p>
         </div>
@@ -46,27 +56,27 @@ export default function Tutorials() {
       {/* 2. Featured Path */}
       <section className="py-16 bg-background border-b border-border">
         <div className="container-custom">
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row">
-            <div className="flex-1 p-10 lg:p-12 text-white">
+          <div className="bg-gradient-to-br from-blue-600 to-indigo-800 rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row">
+            <div className="flex-1 p-8 sm:p-10 lg:p-12 text-white z-10">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 rounded-full text-xs font-bold mb-6">
                 <Star className="w-3.5 h-3.5" /> Featured Path
               </div>
-              <h2 className="text-3xl font-bold mb-4">React to Full Stack in 30 Days</h2>
-              <p className="text-blue-100 mb-8 leading-relaxed max-w-md">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-4">React to Full Stack in 30 Days</h2>
+              <p className="text-blue-100 mb-8 leading-relaxed max-w-lg">
                 A curated sequence of 15 short tutorials that takes you from basic React components to a fully deployed MERN stack application.
               </p>
-              <div className="flex flex-wrap gap-6 mb-8 text-sm font-medium text-blue-200">
+              <div className="flex flex-wrap gap-4 sm:gap-6 mb-8 text-sm font-medium text-blue-200">
                 <span className="flex items-center gap-2"><Video className="w-4 h-4" /> 15 Videos</span>
                 <span className="flex items-center gap-2"><Clock className="w-4 h-4" /> 8 Hours Total</span>
                 <span className="flex items-center gap-2"><Code2 className="w-4 h-4" /> 4 Projects</span>
               </div>
-              <Link to="/dashboard" className="px-8 py-3 bg-white text-blue-700 hover:bg-primary/10 font-bold rounded-xl transition-colors inline-block">
+              <Link to="/dashboard" className="px-8 py-3 bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl transition-all shadow-md inline-block text-center w-full sm:w-auto">
                 Start Path Free
               </Link>
             </div>
-            <div className="md:w-2/5 min-h-[300px] relative">
+            <div className="md:w-2/5 min-h-[260px] md:min-h-[350px] relative">
               <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop" alt="Coding" className="absolute inset-0 w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-700 to-transparent opacity-90 md:opacity-0" />
+              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-indigo-800 via-indigo-800/40 to-transparent" />
             </div>
           </div>
         </div>
@@ -76,11 +86,11 @@ export default function Tutorials() {
       <section className="section-padding bg-muted/30">
         <div className="container-custom">
           <h2 className="text-2xl font-bold text-foreground mb-8">Browse Categories</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {categories.map((cat) => {
               const Icon = cat.icon;
               return (
-                <div key={cat.name} onClick={() => setActiveCat(cat.name)} className={`p-6 rounded-2xl border cursor-pointer transition-all ${activeCat === cat.name ? "border-primary bg-primary/5 shadow-md" : "border-border bg-card hover:border-primary/30"}`}>
+                <div key={cat.name} onClick={() => setActiveCat(cat.name)} className={`p-6 rounded-2xl border cursor-pointer transition-all ${activeCat === cat.name ? "border-primary bg-primary/5 shadow-md" : "border-border bg-card hover:border-primary/30 hover:shadow-sm"}`}>
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${cat.bg}`}>
                     <Icon className={`w-6 h-6 ${cat.color}`} />
                   </div>
@@ -121,11 +131,11 @@ export default function Tutorials() {
                 </div>
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="px-2 py-1 bg-secondary text-xs font-medium rounded-md text-foreground">{tutorial.category}</span>
+                    <span className="px-2 py-1 bg-muted text-xs font-medium rounded-md text-muted-foreground">{tutorial.category}</span>
                     <span className={`px-2 py-1 text-xs font-medium rounded-md ${
-                      tutorial.level === "Beginner" ? "bg-accent/10 text-accent" :
-                      tutorial.level === "Intermediate" ? "bg-blue-500/10 text-primary" :
-                      "bg-purple-500/10 text-purple-600"
+                      tutorial.level === "Beginner" ? "bg-accent/10 text-accent dark:text-emerald-400" :
+                      tutorial.level === "Intermediate" ? "bg-blue-500/10 text-primary dark:text-blue-400" :
+                      "bg-purple-500/10 text-purple-600 dark:text-purple-400"
                     }`}>
                       {tutorial.level}
                     </span>
@@ -157,28 +167,28 @@ export default function Tutorials() {
 
       {/* Video Modal */}
       {videoModal.open && videoModal.tutorial && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-card w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden border border-border">
-            <div className="flex justify-between items-center p-4 border-b border-border bg-black">
-              <h3 className="font-semibold text-white">{videoModal.tutorial.title}</h3>
-              <button onClick={() => setVideoModal({ open: false, tutorial: null })} className="p-1 hover:bg-white/10 rounded-lg transition-colors"><X className="w-5 h-5 text-white" /></button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-card w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-border">
+            <div className="flex justify-between items-center p-4 border-b border-border bg-muted/30">
+              <h3 className="font-semibold text-foreground line-clamp-1">{videoModal.tutorial.title}</h3>
+              <button onClick={() => setVideoModal({ open: false, tutorial: null })} className="p-1.5 hover:bg-muted rounded-lg transition-colors"><X className="w-5 h-5 text-muted-foreground hover:text-foreground" /></button>
             </div>
             <div className="aspect-video bg-black relative flex items-center justify-center group/video">
               <img src={videoModal.tutorial.thumbnail} alt={videoModal.tutorial.title} className="w-full h-full object-cover opacity-50" />
-              <button className="absolute w-20 h-20 rounded-full bg-primary/80 text-white flex items-center justify-center group-hover/video:scale-110 transition-transform">
-                <Play className="w-8 h-8 ml-1" />
+              <button className="absolute w-16 h-16 rounded-full bg-primary/95 text-primary-foreground flex items-center justify-center shadow-lg hover:scale-105 hover:bg-primary transition-transform duration-200">
+                <Play className="w-6 h-6 ml-1 fill-current" />
               </button>
             </div>
             <div className="p-6">
-              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {videoModal.tutorial.duration}</span>
-                <span className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500" /> {videoModal.tutorial.rating}</span>
-                <span className="px-2 py-0.5 bg-secondary rounded-md">{videoModal.tutorial.level}</span>
+              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-4">
+                <span className="flex items-center gap-1"><Clock className="w-4 h-4 text-primary" /> {videoModal.tutorial.duration}</span>
+                <span className="flex items-center gap-1"><Star className="w-4 h-4 text-amber-500 fill-current" /> {videoModal.tutorial.rating}</span>
+                <span className="px-2.5 py-0.5 bg-muted text-muted-foreground text-xs font-medium rounded-md">{videoModal.tutorial.level}</span>
               </div>
-              <p className="text-foreground font-medium mb-6">In this tutorial, you will learn the core concepts of {videoModal.tutorial.title} by building practical examples and exploring best practices.</p>
-              <div className="flex justify-end gap-3">
-                <button className="btn-secondary flex items-center gap-2"><FileText className="w-4 h-4" /> Download Resources</button>
-                <Link to="/dashboard" className="btn-primary">View Full Course</Link>
+              <p className="text-foreground font-medium mb-6 text-sm leading-relaxed">In this tutorial, you will learn the core concepts of {videoModal.tutorial.title} by building practical examples and exploring best practices.</p>
+              <div className="flex flex-col sm:flex-row justify-end gap-3">
+                <button className="btn-outline flex items-center justify-center gap-2 w-full sm:w-auto"><FileText className="w-4 h-4" /> Download Resources</button>
+                <Link to="/dashboard" className="btn-primary text-center w-full sm:w-auto">View Full Course</Link>
               </div>
             </div>
           </div>
