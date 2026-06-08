@@ -8,16 +8,22 @@ export default function Payment() {
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
+  // Fixed back navigation with fallback
+  const handleGoBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/pricing"); // fallback route
+    }
+  };
+
   const handlePayment = (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
     
-    // Mock payment processing
     setTimeout(() => {
       setIsProcessing(false);
       setIsSuccess(true);
-      
-      // Redirect to dashboard after a delay
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
@@ -41,7 +47,11 @@ export default function Payment() {
   return (
     <main className="page-enter min-h-screen bg-background py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors">
+        <button 
+          onClick={handleGoBack} 
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
+          type="button"
+        >
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
         

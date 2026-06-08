@@ -29,6 +29,8 @@ import Security from "@/pages/Security";
 import NotFound from "@/pages/NotFound";
 import Payment from "@/pages/Payment";
 import Projects from "@/pages/Projects";
+import CodingLab from "@/pages/CodingLab";
+import AIAssistant from "@/pages/AIAssistant";
 
 const NO_LAYOUT_ROUTES = ["/login", "/register", "/forgot-password", "/dashboard", "/profile", "/settings"];
 const NO_FOOTER_ROUTES = ["/dashboard", "/profile", "/settings"];
@@ -67,6 +69,8 @@ function AppContent() {
           <Route path="/docs" element={<Documentation />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/project-learning" element={<Projects />} />
+          <Route path="/coding-lab" element={<CodingLab />} />
+          <Route path="/ai-assistant" element={<AIAssistant />} />
           <Route path="/community" element={<Community />} />
           <Route path="/tutorials" element={<Tutorials />} />
           <Route path="/cookies" element={<CookiePolicy />} />

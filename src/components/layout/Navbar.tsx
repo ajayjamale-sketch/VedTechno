@@ -1,6 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Sun, Moon, ChevronDown, Bell, User, LogOut, Settings, LayoutDashboard, Code2 } from "lucide-react";
+import {
+  Menu, X, Sun, Moon, ChevronDown, Bell, User, LogOut, Settings,
+  LayoutDashboard, Code2, FolderGit2, Terminal, Brain, BookOpen,
+  Users, FileText, Rocket, ArrowRight
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/hooks/useAuth";
@@ -9,12 +13,66 @@ import { getInitials } from "@/lib/utils";
 import { toast } from "sonner";
 import NotificationModal from "@/components/ui/NotificationModal";
 
+const PLATFORM_FEATURES = [
+  {
+    label: "Project Lab",
+    desc: "Build real-world projects & grow your portfolio",
+    href: "/projects",
+    icon: FolderGit2,
+    color: "text-blue-500",
+    bg: "bg-blue-500/10",
+  },
+  {
+    label: "Coding Lab",
+    desc: "Cloud IDE with 20+ languages & instant feedback",
+    href: "/coding-lab",
+    icon: Terminal,
+    color: "text-emerald-500",
+    bg: "bg-emerald-500/10",
+  },
+  {
+    label: "AI Assistant",
+    desc: "Intelligent code generation, bug detection & docs",
+    href: "/ai-assistant",
+    icon: Brain,
+    color: "text-purple-500",
+    bg: "bg-purple-500/10",
+  },
+  {
+    label: "Tutorials",
+    desc: "Step-by-step guides across every tech stack",
+    href: "/tutorials",
+    icon: BookOpen,
+    color: "text-orange-500",
+    bg: "bg-orange-500/10",
+  },
+  {
+    label: "Community",
+    desc: "Forums, hackathons & mentorship network",
+    href: "/community",
+    icon: Users,
+    color: "text-cyan-500",
+    bg: "bg-cyan-500/10",
+  },
+  {
+    label: "Documentation",
+    desc: "In-depth API references and platform guides",
+    href: "/docs",
+    icon: FileText,
+    color: "text-rose-500",
+    bg: "bg-rose-500/10",
+  },
+];
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [allNotifOpen, setAllNotifOpen] = useState(false);
+  const [featuresOpen, setFeaturesOpen] = useState(false);
+  const [mobileFeatsOpen, setMobileFeatsOpen] = useState(false);
+  const featuresRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const location = useLocation();
@@ -30,7 +88,20 @@ export default function Navbar() {
   useEffect(() => {
     setIsOpen(false);
     setUserMenuOpen(false);
+    setFeaturesOpen(false);
+    setMobileFeatsOpen(false);
   }, [location.pathname]);
+
+  // Close features dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (featuresRef.current && !featuresRef.current.contains(e.target as Node)) {
+        setFeaturesOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -61,9 +132,64 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Nav — minimal, no decorations */}
+          {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-0.5">
-            {NAV_LINKS.map((link) => (
+            {/* Features Dropdown */}
+            <div className="relative" ref={featuresRef}>
+              <button
+                onClick={() => setFeaturesOpen(!featuresOpen)}
+                className={cn(
+                  "flex items-center gap-1 px-3.5 py-2 rounded-md text-sm transition-colors",
+                  location.pathname === "/features" || location.pathname === "/projects" ||
+                  location.pathname === "/tutorials" || location.pathname === "/community" || location.pathname === "/docs" ||
+                  location.pathname === "/coding-lab" || location.pathname === "/ai-assistant"
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                Features
+                <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", featuresOpen && "rotate-180")} />
+              </button>
+
+              {featuresOpen && (
+                <div className="absolute left-0 top-full mt-2 w-[520px] bg-card border border-border rounded-2xl shadow-xl shadow-black/10 z-50 overflow-hidden">
+                  <div className="p-3">
+                    <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-2 mb-2">Platform</p>
+                    <div className="grid grid-cols-2 gap-1">
+                      {PLATFORM_FEATURES.map((feat) => (
+                        <Link
+                          key={feat.label}
+                          to={feat.href}
+                          onClick={() => setFeaturesOpen(false)}
+                          className="flex items-start gap-3 p-3 rounded-xl hover:bg-muted transition-colors group"
+                        >
+                          <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5", feat.bg)}>
+                            <feat.icon className={cn("w-4 h-4", feat.color)} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{feat.label}</p>
+                            <p className="text-xs text-muted-foreground leading-snug mt-0.5">{feat.desc}</p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="border-t border-border px-4 py-3 flex items-center justify-between bg-muted/40">
+                    <p className="text-xs text-muted-foreground">See everything VedTechno offers</p>
+                    <Link
+                      to="/features"
+                      onClick={() => setFeaturesOpen(false)}
+                      className="flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                    >
+                      View all features <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Other nav links (skip Features since it's now a dropdown) */}
+            {NAV_LINKS.filter(l => l.label !== "Features").map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
@@ -197,7 +323,32 @@ export default function Navbar() {
       {isOpen && (
         <div className="lg:hidden border-t border-border bg-background">
           <div className="container-custom py-3 space-y-0.5">
-            {NAV_LINKS.map((link) => (
+            {/* Mobile Features accordion */}
+            <div>
+              <button
+                onClick={() => setMobileFeatsOpen(!mobileFeatsOpen)}
+                className="flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              >
+                Features
+                <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", mobileFeatsOpen && "rotate-180")} />
+              </button>
+              {mobileFeatsOpen && (
+                <div className="ml-3 mt-1 space-y-0.5 border-l-2 border-border pl-3">
+                  {PLATFORM_FEATURES.map((feat) => (
+                    <Link
+                      key={feat.label}
+                      to={feat.href}
+                      className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                    >
+                      <feat.icon className={cn("w-4 h-4 flex-shrink-0", feat.color)} />
+                      {feat.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {NAV_LINKS.filter(l => l.label !== "Features").map((link) => (
               <Link
                 key={link.href}
                 to={link.href}

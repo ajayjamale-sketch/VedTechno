@@ -36,8 +36,8 @@ export default function Community() {
 
   return (
     <main className="page-enter pt-20">
-      {/* 1. Hero */}
-      <section className="py-20 bg-secondary relative overflow-hidden">
+      {/* 1. Hero - Fixed for light mode: dark background ensures white text is visible */}
+      <section className="py-20 bg-gray-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-hero-gradient opacity-80" />
         <div className="relative container-custom text-center">
           <span className="badge-primary mb-4 inline-block !bg-primary/20 !text-blue-300 !border-blue-500/30">Community Hub</span>
@@ -46,14 +46,14 @@ export default function Community() {
             <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">Learn Together</span>
           </h1>
-          <p className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
+          <p className="text-white/70 text-lg max-w-2xl mx-auto mb-8">
             Join 250,000+ developers from 180 countries. Ask questions, share projects, and find your next coding buddy.
           </p>
           <div className="flex justify-center gap-4">
             <a href="https://discord.com/invite/vedtechno" target="_blank" rel="noreferrer" className="px-8 py-3.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold rounded-xl transition-colors flex items-center gap-2">
               <MessageSquare className="w-5 h-5" /> Join Discord
             </a>
-            <button onClick={() => document.getElementById('forums')?.scrollIntoView({ behavior: 'smooth' })} className="btn-secondary">
+            <button onClick={() => document.getElementById('forums')?.scrollIntoView({ behavior: 'smooth' })} className="px-8 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition-colors">
               Browse Forums
             </button>
           </div>
@@ -202,7 +202,7 @@ export default function Community() {
         </div>
       </section>
 
-      {/* Modals */}
+      {/* Modals - unchanged but ensure text contrast */}
       {rsvpModal.open && rsvpModal.event && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-card border border-border w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
@@ -234,7 +234,7 @@ export default function Community() {
 
       {profileModal.open && profileModal.user && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-card border border-border w-full max-w-sm rounded-2xl shadow-xl overflow-hidden text-center p-6">
+          <div className="bg-card border border-border w-full max-w-sm rounded-2xl shadow-xl overflow-hidden text-center p-6 relative">
             <button onClick={() => setProfileModal({ open: false, user: null })} className="absolute top-4 right-4 p-1 hover:bg-muted rounded-lg transition-colors"><X className="w-5 h-5 text-muted-foreground" /></button>
             <img src={profileModal.user.avatar} alt={profileModal.user.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-background shadow-md" />
             <h3 className="font-bold text-foreground text-xl">{profileModal.user.name}</h3>
