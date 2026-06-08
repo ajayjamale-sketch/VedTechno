@@ -235,7 +235,7 @@ export default function Projects({ isDashboardView = false }: { isDashboardView?
             <div className="flex-1 flex overflow-hidden">
               {/* File tree */}
               <div className={cn(
-                "w-48 border-r p-3 flex flex-col gap-2 font-mono text-xs transition-colors duration-200",
+                "hidden sm:flex w-48 border-r p-3 flex-col gap-2 font-mono text-xs transition-colors duration-200",
                 isDark ? "bg-slate-950 border-slate-900 text-slate-400" : "bg-slate-50 border-slate-200 text-slate-600"
               )}>
                 <p className={cn("font-semibold mb-2 uppercase text-[10px]", isDark ? "text-slate-500" : "text-slate-400")}>Explorer</p>

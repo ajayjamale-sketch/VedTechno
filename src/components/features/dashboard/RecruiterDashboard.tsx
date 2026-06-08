@@ -258,7 +258,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
       {/* Overview Tab (unchanged) */}
       {activeTab === "overview" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Recruiter Hub 👥</h1>
               <p className="text-sm text-muted-foreground">Find verified, certified tech talent ready to hire.</p>
@@ -498,7 +498,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
       {/* Analytics Tab (unchanged) */}
       {activeTab === "analytics" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold text-foreground">Hiring Analytics</h1>
             <button onClick={() => toast.success("Analytics report downloaded!")} className="btn-secondary text-sm flex items-center gap-1.5">
               <Download className="w-4 h-4" />Export Report

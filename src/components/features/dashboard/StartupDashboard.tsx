@@ -258,7 +258,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
       {/* Overview Tab (unchanged) */}
       {activeTab === "overview" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Startup Launchpad 🚀</h1>
               <p className="text-sm text-muted-foreground">NeuralEdge · Building the future of AI productivity</p>
@@ -330,7 +330,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
                     <p className="text-xs font-medium text-muted-foreground mb-1">{c.type}</p>
                     <h3 className="font-semibold text-foreground mb-2">{c.title}</h3>
                     <p className="text-xs text-muted-foreground mb-3">Reward: <span className="text-accent dark:text-emerald-400 font-medium">{c.reward}</span></p>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <span className="text-xs text-muted-foreground">Due: {c.deadline}</span>
                       <button onClick={() => registerForChallenge(c.id, c.title)} disabled={isRegistered}
                         className={cn("px-3 py-1.5 text-xs font-medium rounded-lg transition-colors", isRegistered ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-accent text-white hover:bg-pink-700")}>
@@ -401,7 +401,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
       {/* Innovation Hub Tab (unchanged) */}
       {activeTab === "innovation" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold text-foreground">Innovation Hub</h1>
             <button onClick={() => setIdeaModal(true)} className="btn-primary text-sm bg-accent hover:bg-pink-700">
               <Plus className="w-4 h-4 mr-1.5" />Submit Idea
@@ -472,7 +472,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
                   <div className="flex flex-wrap gap-1 mb-3">
                     {m.expertise.map(e => <span key={e} className="text-xs px-1.5 py-0.5 bg-muted rounded text-muted-foreground">{e}</span>)}
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <span className="text-xs text-muted-foreground">★ {m.rating}</span>
                     <button onClick={() => m.available && !isBooked ? setBookMentorModal({ open: true, mentor: m }) : toast.info(isBooked ? "You already booked a session with this mentor." : "Mentor is busy. Join waitlist?")}
                       className={cn("px-3 py-1.5 text-xs font-medium rounded-lg transition-colors", (m.available && !isBooked) ? "bg-accent text-white hover:bg-pink-700" : "border border-border text-muted-foreground hover:bg-muted")}>
@@ -512,7 +512,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
                 </div>
                 <h3 className="font-semibold text-foreground mb-1">{c.title}</h3>
                 <p className="text-xs text-muted-foreground mb-3">Theme: {c.theme}</p>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <p className="text-sm font-bold text-accent">{c.reward}</p>
                     <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5"><Calendar className="w-3 h-3" />Deadline: {c.deadline}</p>

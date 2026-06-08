@@ -176,7 +176,7 @@ export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
 
       {sidebarOpen && <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
-      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen bg-muted/20 dark:bg-background">
+      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen bg-muted/20 dark:bg-background min-w-0">
         {/* Top Bar */}
         <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border px-4 py-3 flex items-center gap-3">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 hover:bg-muted rounded-lg transition-colors">
@@ -277,7 +277,7 @@ export default function Dashboard({ defaultTab }: { defaultTab?: string }) {
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-6 overflow-y-auto">
+        <main className="flex-1 p-4 md:p-6 overflow-y-auto min-w-0">
           {activeTab === "profile" ? (
             <Profile />
           ) : activeTab === "settings" ? (

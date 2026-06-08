@@ -257,7 +257,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
       {/* Overview Tab */}
       {activeTab === "overview" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Enterprise Dashboard 🏢</h1>
               <p className="text-sm text-muted-foreground">GlobalTech Corp · Q2 2026 Learning Report</p>
@@ -458,7 +458,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
       {/* Certifications Tab */}
       {activeTab === "certs" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold text-foreground">Team Certifications</h1>
             <button onClick={exportCertCSV} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
           </div>
@@ -511,7 +511,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
       {/* Analytics Tab */}
       {activeTab === "analytics" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold text-foreground">Learning Analytics</h1>
             <button onClick={exportAnalyticsCSV} className="btn-secondary text-sm flex items-center gap-1.5"><Download className="w-4 h-4" />Export</button>
           </div>

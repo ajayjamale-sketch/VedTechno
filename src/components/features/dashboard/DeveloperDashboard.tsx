@@ -681,7 +681,7 @@ export default function DeveloperDashboard({
       {/* Overview Tab */}
       {activeTab === "overview" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">
                 Developer Hub 🚀
@@ -1053,7 +1053,7 @@ export default function DeveloperDashboard({
                 <p className="text-sm text-muted-foreground mb-4">
                   Theme: {hack.theme}
                 </p>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <p className="text-lg font-bold text-foreground">
                       {hack.prize}
@@ -1385,7 +1385,7 @@ export default function DeveloperDashboard({
 
       {activeTab === "projects" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Project Lab</h1>
               <p className="text-muted-foreground text-sm">Work through guided industry assignments in sandboxed cloud IDEs</p>

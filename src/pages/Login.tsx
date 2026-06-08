@@ -144,7 +144,7 @@ export default function Login() {
               <div className="flex-1 h-px bg-border" />
             </div>
             <p className="text-xs text-muted-foreground mb-3 text-center">Click any role to instantly access that user's dashboard — no credentials needed</p>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {demoAccounts.map(({ role, label, desc, color, icon: Icon }) => (
                 <button
                   key={role}

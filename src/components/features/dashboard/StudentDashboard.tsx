@@ -559,7 +559,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
     
     <div className="bg-white dark:bg-gray-950 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-xl">
       {/* Header bar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center gap-3">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-red-500/80" />
@@ -824,7 +824,7 @@ export default function StudentDashboard({ user, initialTab }: { user: User; ini
 
       {activeTab === "projects" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Project Lab</h1>
               <p className="text-muted-foreground text-sm">Work through guided industry assignments in sandboxed cloud IDEs</p>

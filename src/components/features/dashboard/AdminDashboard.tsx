@@ -568,7 +568,7 @@ export default function AdminDashboard({
       {/* Overview Tab (unchanged but functional) */}
       {activeTab === "overview" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">
                 Admin Control Panel ⚙️
@@ -1166,7 +1166,7 @@ export default function AdminDashboard({
       {/* Revenue Tab (unchanged) */}
       {activeTab === "revenue" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold text-foreground">
               Revenue Analytics
             </h1>

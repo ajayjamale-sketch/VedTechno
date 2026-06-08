@@ -219,7 +219,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
       {/* Overview Tab (unchanged) */}
       {activeTab === "overview" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Instructor Dashboard 🎓</h1>
               <p className="text-sm text-muted-foreground">Welcome back, {user.name.split(" ")[0]}. Here's your teaching overview.</p>
@@ -422,7 +422,7 @@ export default function TrainerDashboard({ user, initialTab }: { user: User; ini
       {/* Revenue Tab */}
       {activeTab === "revenue" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold text-foreground">Revenue Analytics</h1>
             <button onClick={() => toast.success("Revenue report downloaded!")} className="btn-secondary text-sm flex items-center gap-1.5">
               <Download className="w-4 h-4" />Download Report
