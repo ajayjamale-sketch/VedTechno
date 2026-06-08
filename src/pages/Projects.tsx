@@ -60,6 +60,19 @@ const PROJECTS_LIST = [
     image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?w=600&h=350&fit=crop",
     popular: false,
   },
+  {
+    id: "proj-5",
+    title: "Real-Time Collaborative Whiteboard",
+    category: "Full-Stack Development",
+    difficulty: "Intermediate",
+    time: "12 hours",
+    rating: 4.8,
+    students: "3,420",
+    tech: ["React", "TypeScript", "Canvas API", "WebSockets"],
+    desc: "Develop a shared whiteboarding tool where users can draw, write, drag shapes, and collaborate in real-time.",
+    image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&h=350&fit=crop",
+    popular: false,
+  },
 ];
 
 export default function Projects({ isDashboardView = false }: { isDashboardView?: boolean }) {
@@ -330,6 +343,7 @@ export default function Projects({ isDashboardView = false }: { isDashboardView?
         </div>
       </section>
 
+      {renderContent()}
     </main>
   );
 }

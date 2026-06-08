@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User, Briefcase, ArrowRight, Code2, Loader2, CheckCircle2, Phone, Smartphone } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Briefcase, ArrowRight, Code2, Loader2, CheckCircle2, Phone, Smartphone, GraduationCap, Users, Building2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { validateEmail, validatePassword } from "@/lib/utils";
 import type { User as UserType } from "@/types";
 
-const roles: { value: UserType["role"]; label: string; desc: string; icon: string }[] = [
-  { value: "student", label: "Student", desc: "Learning tech fundamentals", icon: "🎓" },
-  { value: "developer", label: "Developer", desc: "Advancing skills & career", icon: "💻" },
-  { value: "trainer", label: "Trainer", desc: "Teaching & creating courses", icon: "👨‍🏫" },
-  { value: "corporate", label: "Enterprise", desc: "Training teams at scale", icon: "🏢" },
+const roles: { value: UserType["role"]; label: string; desc: string; icon: React.ElementType }[] = [
+  { value: "student", label: "Student", desc: "Learning tech fundamentals", icon: GraduationCap },
+  { value: "developer", label: "Developer", desc: "Advancing skills & career", icon: Code2 },
+  { value: "trainer", label: "Trainer", desc: "Teaching & creating courses", icon: Users },
+  { value: "corporate", label: "Enterprise", desc: "Training teams at scale", icon: Building2 },
 ];
 
 export default function Register() {
@@ -235,22 +235,24 @@ export default function Register() {
               <h2 className="text-2xl font-bold text-foreground mb-1">What describes you best?</h2>
               <p className="text-muted-foreground text-sm mb-8">We'll personalize your experience based on your role.</p>
               <div className="grid grid-cols-2 gap-3 mb-8">
-                {roles.map((role) => (
-                  <button
-                    key={role.value}
-                    onClick={() => setForm({ ...form, role: role.value })}
-                    className={`p-4 rounded-2xl border text-left transition-all ${
-                      form.role === role.value
-                        ? "border-primary bg-primary/10 shadow-md"
-                        : "border-border bg-muted/40 dark:bg-card hover:bg-card hover:border-primary/30"
-
-                    }`}
-                  >
-                    <div className="text-2xl mb-2">{role.icon}</div>
-                    <p className="text-sm font-semibold text-foreground">{role.label}</p>
-                    <p className="text-xs text-muted-foreground">{role.desc}</p>
-                  </button>
-                ))}
+                {roles.map((role) => {
+                  const RoleIcon = role.icon;
+                  return (
+                    <button
+                      key={role.value}
+                      onClick={() => setForm({ ...form, role: role.value })}
+                      className={`p-4 rounded-2xl border text-left transition-all ${
+                        form.role === role.value
+                          ? "border-primary bg-primary/10 shadow-md"
+                          : "border-border bg-muted/40 dark:bg-card hover:bg-card hover:border-primary/30"
+                      }`}
+                    >
+                      <RoleIcon className="w-6 h-6 text-primary mb-2" />
+                      <p className="text-sm font-semibold text-foreground">{role.label}</p>
+                      <p className="text-xs text-muted-foreground">{role.desc}</p>
+                    </button>
+                  );
+                })}
               </div>
               <div className="flex gap-3">
                 <button onClick={() => setStep(1)} className="btn-secondary flex-1">Back</button>

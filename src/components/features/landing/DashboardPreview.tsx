@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BarChart2, Code2, Award, BookOpen, TrendingUp, ArrowRight } from "lucide-react";
+import { BarChart2, Code2, Award, BookOpen, TrendingUp, ArrowRight, Trophy, Flame, Star } from "lucide-react";
 import { AreaChart, Area, ResponsiveContainer, XAxis, Tooltip } from "recharts";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
@@ -20,10 +20,13 @@ export default function DashboardPreview() {
   const isDark = theme === "dark";
 
   return (
-    <section className={cn(
-      "section-padding relative overflow-hidden transition-colors duration-200",
-      isDark ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"
-    )} id="dashboard">
+    <section
+      className={cn(
+        "section-padding relative overflow-hidden transition-colors duration-200",
+        isDark ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"
+      )}
+      id="dashboard"
+    >
       {isDark && (
         <>
           <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[120px] pointer-events-none" />
@@ -32,16 +35,16 @@ export default function DashboardPreview() {
       )}
       
       <div className="container-custom relative z-10">
-
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
-
-          {/* Left text — asymmetric */}
+          {/* Left text */}
           <div className="lg:w-96 flex-shrink-0">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Your command center</p>
-            <h2 className={cn("text-3xl sm:text-4xl font-bold leading-tight mb-5", isDark ? "text-white" : "text-slate-900")}>
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-3">
+              Your command center
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold leading-tight mb-5 text-gray-900 dark:text-white">
               One dashboard. Every metric that matters.
             </h2>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-8">
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-8">
               Track daily coding hours, course velocity, certification progress, and career readiness — all updated in real time based on your activity.
             </p>
 
@@ -52,21 +55,26 @@ export default function DashboardPreview() {
                 { icon: Award, label: "Certificate management", sub: "Share directly to LinkedIn" },
               ].map(({ icon: Icon, label, sub }) => (
                 <div key={label} className="flex items-center gap-3">
-                  <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 border",
-                    isDark ? "bg-white/5 border-white/10" : "bg-white border-slate-200 shadow-sm"
-                  )}>
-                    <Icon className="w-3.5 h-3.5 text-muted-foreground" />
+                  <div
+                    className={cn(
+                      "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 border",
+                      isDark ? "bg-white/5 border-white/10" : "bg-white border-gray-200 shadow-sm"
+                    )}
+                  >
+                    <Icon className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" />
                   </div>
                   <div>
-                    <p className={cn("text-sm font-medium", isDark ? "text-white" : "text-slate-800")}>{label}</p>
-                    <p className="text-xs text-muted-foreground">{sub}</p>
+                    <p className="text-sm font-medium text-gray-800 dark:text-white">{label}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{sub}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary dark:hover:text-primary/80 transition-colors group">
+            <Link
+              to="/dashboard"
+              className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors group"
+            >
               Explore the dashboard
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -74,64 +82,75 @@ export default function DashboardPreview() {
 
           {/* Dashboard mockup */}
           <div className="flex-1 w-full">
-            <div className={cn(
-              "rounded-2xl border overflow-hidden shadow-2xl transition-all duration-200",
-              isDark ? "bg-slate-950 border-white/10 shadow-black/40" : "bg-white border-slate-200 shadow-slate-200/50"
-            )}>
-
+            <div
+              className={cn(
+                "rounded-2xl border overflow-hidden shadow-2xl transition-all duration-200",
+                isDark ? "bg-slate-950 border-white/10 shadow-black/40" : "bg-white border-gray-200 shadow-gray-200/50"
+              )}
+            >
               {/* Top bar */}
-              <div className={cn(
-                "flex items-center justify-between px-5 py-3.5 border-b",
-                isDark ? "border-white/10" : "border-slate-100 bg-slate-50/50"
-              )}>
+              <div
+                className={cn(
+                  "flex items-center justify-between px-5 py-3.5 border-b",
+                  isDark ? "border-white/10" : "border-gray-100 bg-gray-50/50"
+                )}
+              >
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
                     <Code2 className="w-3.5 h-3.5 text-white" />
                   </div>
-                  <span className={cn("font-medium text-xs", isDark ? "text-white/70" : "text-slate-700")}>
+                  <span className="font-medium text-xs text-gray-600 dark:text-white/70">
                     Alex Johnson — Student Dashboard
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className={isDark ? "text-white/30 text-xs" : "text-slate-400 text-xs"}>Live</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-gray-400 dark:text-white/30 text-xs">Live</span>
                 </div>
               </div>
 
               <div className="p-5 grid lg:grid-cols-3 gap-4">
-
                 {/* Main panel */}
                 <div className="lg:col-span-2 space-y-4">
                   {/* Stats row */}
                   <div className="grid grid-cols-4 gap-3">
                     {[
-                      { label: "Courses", value: "7", icon: BookOpen, color: "text-primary/80" },
-                      { label: "Hours", value: "156", icon: TrendingUp, color: "text-emerald-500" },
-                      { label: "Certs", value: "3", icon: Award, color: "text-yellow-500" },
-                      { label: "Streak", value: "24d", icon: BarChart2, color: "text-purple-500" },
+                      { label: "Courses", value: "7", icon: BookOpen, color: "text-blue-600 dark:text-blue-400" },
+                      { label: "Hours", value: "156", icon: TrendingUp, color: "text-emerald-600 dark:text-emerald-400" },
+                      { label: "Certs", value: "3", icon: Award, color: "text-amber-600 dark:text-amber-400" },
+                      { label: "Streak", value: "24d", icon: BarChart2, color: "text-purple-600 dark:text-purple-400" },
                     ].map((s) => {
                       const Icon = s.icon;
                       return (
-                        <div key={s.label} className={cn(
-                          "border rounded-xl p-3",
-                          isDark ? "bg-white/5 border-white/8" : "bg-slate-50/50 border-slate-100"
-                        )}>
+                        <div
+                          key={s.label}
+                          className={cn(
+                            "border rounded-xl p-3",
+                            isDark ? "bg-white/5 border-white/10" : "bg-gray-50/50 border-gray-100"
+                          )}
+                        >
                           <Icon className={`w-3.5 h-3.5 ${s.color} mb-2`} />
-                          <p className={cn("text-lg font-bold leading-none", isDark ? "text-white" : "text-slate-800")}>{s.value}</p>
-                          <p className={cn("text-xs mt-1", isDark ? "text-white/40" : "text-slate-400")}>{s.label}</p>
+                          <p className="text-lg font-bold leading-none text-gray-900 dark:text-white">{s.value}</p>
+                          <p className="text-xs mt-1 text-gray-500 dark:text-white/40">{s.label}</p>
                         </div>
                       );
                     })}
                   </div>
 
                   {/* Chart */}
-                  <div className={cn(
-                    "border rounded-xl p-4",
-                    isDark ? "bg-white/5 border-white/8" : "bg-slate-50/50 border-slate-100"
-                  )}>
+                  <div
+                    className={cn(
+                      "border rounded-xl p-4",
+                      isDark ? "bg-white/5 border-white/10" : "bg-gray-50/50 border-gray-100"
+                    )}
+                  >
                     <div className="flex items-center justify-between mb-3">
-                      <span className={isDark ? "text-white/70 text-xs font-medium" : "text-slate-600 text-xs font-medium"}>Learning hours — 2026</span>
-                      <span className="text-emerald-500 text-xs font-medium">+34% vs last month</span>
+                      <span className="text-gray-700 dark:text-white/70 text-xs font-medium">
+                        Learning hours — 2026
+                      </span>
+                      <span className="text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+                        +34% vs last month
+                      </span>
                     </div>
                     <div className="h-28">
                       <ResponsiveContainer width="100%" height="100%">
@@ -142,8 +161,19 @@ export default function DashboardPreview() {
                               <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
                             </linearGradient>
                           </defs>
-                          <XAxis dataKey="month" tick={{ fill: isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)", fontSize: 10 }} axisLine={false} tickLine={false} />
-                          <Tooltip contentStyle={isDark ? { background: "#1e3a8a", border: "none", borderRadius: "8px", color: "white", fontSize: "11px" } : { background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "8px", color: "#0f172a", fontSize: "11px" }} />
+                          <XAxis
+                            dataKey="month"
+                            tick={{ fill: isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.4)", fontSize: 10 }}
+                            axisLine={false}
+                            tickLine={false}
+                          />
+                          <Tooltip
+                            contentStyle={
+                              isDark
+                                ? { background: "#1e293b", border: "none", borderRadius: "8px", color: "white", fontSize: "11px" }
+                                : { background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "8px", color: "#0f172a", fontSize: "11px" }
+                            }
+                          />
                           <Area type="monotone" dataKey="hours" stroke="#2563EB" strokeWidth={2} fill="url(#blueGrad)" />
                         </AreaChart>
                       </ResponsiveContainer>
@@ -151,20 +181,26 @@ export default function DashboardPreview() {
                   </div>
 
                   {/* Courses */}
-                  <div className={cn(
-                    "border rounded-xl p-4",
-                    isDark ? "bg-white/5 border-white/8" : "bg-slate-50/50 border-slate-100"
-                  )}>
-                    <p className={isDark ? "text-white/70 text-xs font-medium mb-3" : "text-slate-600 text-xs font-medium mb-3"}>Active courses</p>
+                  <div
+                    className={cn(
+                      "border rounded-xl p-4",
+                      isDark ? "bg-white/5 border-white/10" : "bg-gray-50/50 border-gray-100"
+                    )}
+                  >
+                    <p className="text-gray-700 dark:text-white/70 text-xs font-medium mb-3">Active courses</p>
                     <div className="space-y-3">
                       {courses.map((c) => (
                         <div key={c.title}>
                           <div className="flex justify-between mb-1.5">
-                            <span className={cn("text-xs truncate flex-1 mr-3", isDark ? "text-white/60" : "text-slate-600")}>{c.title}</span>
-                            <span className={cn("text-xs font-medium flex-shrink-0", isDark ? "text-white" : "text-slate-800")}>{c.progress}%</span>
+                            <span className="text-xs truncate flex-1 mr-3 text-gray-700 dark:text-white/60">
+                              {c.title}
+                            </span>
+                            <span className="text-xs font-medium flex-shrink-0 text-gray-900 dark:text-white">
+                              {c.progress}%
+                            </span>
                           </div>
-                          <div className={cn("h-1 rounded-full", isDark ? "bg-white/10" : "bg-slate-100")}>
-                            <div className="h-full bg-blue-500 rounded-full" style={{ width: `${c.progress}%` }} />
+                          <div className={cn("h-1 rounded-full", isDark ? "bg-white/10" : "bg-gray-100")}>
+                            <div className="h-full bg-blue-600 rounded-full" style={{ width: `${c.progress}%` }} />
                           </div>
                         </div>
                       ))}
@@ -174,51 +210,64 @@ export default function DashboardPreview() {
 
                 {/* Side panel */}
                 <div className="space-y-4">
-                  <div className={cn(
-                    "border rounded-xl p-4",
-                    isDark ? "bg-gradient-to-br from-blue-600/20 to-emerald-500/10 border-blue-500/20" : "bg-gradient-to-br from-blue-50 to-emerald-50 border-blue-100"
-                  )}>
-                    <p className={isDark ? "text-white/50 text-xs mb-1" : "text-slate-500 text-xs mb-1"}>Career readiness</p>
-                    <p className={cn("text-4xl font-bold leading-none", isDark ? "text-white" : "text-slate-800")}>82<span className={isDark ? "text-white/30 text-lg" : "text-slate-300 text-lg"}>/100</span></p>
-                    <div className={cn("h-1.5 rounded-full mt-3", isDark ? "bg-white/10" : "bg-slate-100")}>
-                      <div className="h-full bg-gradient-to-r from-blue-500 to-emerald-400 rounded-full" style={{ width: "82%" }} />
+                  <div
+                    className={cn(
+                      "border rounded-xl p-4",
+                      isDark
+                        ? "bg-gradient-to-br from-blue-600/20 to-emerald-500/10 border-blue-500/20"
+                        : "bg-gradient-to-br from-blue-50 to-emerald-50 border-blue-100"
+                    )}
+                  >
+                    <p className="text-gray-500 dark:text-white/50 text-xs mb-1">Career readiness</p>
+                    <p className="text-4xl font-bold leading-none text-gray-900 dark:text-white">
+                      82<span className="text-gray-400 dark:text-white/30 text-lg">/100</span>
+                    </p>
+                    <div className={cn("h-1.5 rounded-full mt-3", isDark ? "bg-white/10" : "bg-gray-100")}>
+                      <div className="h-full bg-gradient-to-r from-blue-600 to-emerald-500 rounded-full" style={{ width: "82%" }} />
                     </div>
                     <p className="text-emerald-600 dark:text-emerald-400 text-xs mt-2">↑ +8 pts this month</p>
                   </div>
 
-                  <div className={cn(
-                    "border rounded-xl p-4",
-                    isDark ? "bg-white/5 border-white/8" : "bg-slate-50/50 border-slate-100"
-                  )}>
-                    <p className={isDark ? "text-white/50 text-xs font-medium mb-3" : "text-slate-500 text-xs font-medium mb-3"}>Recent achievements</p>
+                  <div
+                    className={cn(
+                      "border rounded-xl p-4",
+                      isDark ? "bg-white/5 border-white/10" : "bg-gray-50/50 border-gray-100"
+                    )}
+                  >
+                    <p className="text-gray-500 dark:text-white/50 text-xs font-medium mb-3">Recent achievements</p>
                     <div className="space-y-2.5">
                       {[
-                        { icon: "🏆", title: "React Master cert", when: "2 days ago" },
-                        { icon: "🔥", title: "24-day streak", when: "Today" },
-                        { icon: "⭐", title: "Top 5% learner", when: "1 week ago" },
-                      ].map((a) => (
-                        <div key={a.title} className="flex items-center gap-2.5">
-                          <span className="text-base">{a.icon}</span>
-                          <div>
-                            <p className={cn("text-xs", isDark ? "text-white/80" : "text-slate-700")}>{a.title}</p>
-                            <p className={cn("text-xs", isDark ? "text-white/30" : "text-slate-400")}>{a.when}</p>
+                        { icon: Trophy, title: "React Master cert", when: "2 days ago", color: "text-amber-500" },
+                        { icon: Flame, title: "24-day streak", when: "Today", color: "text-orange-500" },
+                        { icon: Star, title: "Top 5% learner", when: "1 week ago", color: "text-yellow-500" },
+                      ].map((a) => {
+                        const Icon = a.icon;
+                        return (
+                          <div key={a.title} className="flex items-center gap-2.5">
+                            <Icon className={`w-4 h-4 ${a.color}`} />
+                            <div>
+                              <p className="text-xs text-gray-800 dark:text-white/80">{a.title}</p>
+                              <p className="text-xs text-gray-500 dark:text-white/30">{a.when}</p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
 
-                  <div className={cn(
-                    "border rounded-xl p-4",
-                    isDark ? "bg-white/5 border-white/8" : "bg-slate-50/50 border-slate-100"
-                  )}>
-                    <p className={isDark ? "text-white/50 text-xs mb-2" : "text-slate-500 text-xs mb-2"}>AI recommendation</p>
-                    <p className={cn("text-xs leading-relaxed", isDark ? "text-white/70" : "text-slate-600")}>
+                  <div
+                    className={cn(
+                      "border rounded-xl p-4",
+                      isDark ? "bg-white/5 border-white/10" : "bg-gray-50/50 border-gray-100"
+                    )}
+                  >
+                    <p className="text-gray-500 dark:text-white/50 text-xs mb-2">AI recommendation</p>
+                    <p className="text-xs leading-relaxed text-gray-700 dark:text-white/70">
                       Based on your progress, start{" "}
-                      <span className="text-primary font-medium">TypeScript Advanced Patterns</span>{" "}
+                      <span className="text-blue-600 dark:text-blue-400 font-medium">TypeScript Advanced Patterns</span>{" "}
                       to strengthen your React skills.
                     </p>
-                    <button className="mt-2.5 text-xs text-primary flex items-center gap-1 hover:text-blue-600 transition-colors">
+                    <button className="mt-2.5 text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
                       View roadmap <ArrowRight className="w-3 h-3" />
                     </button>
                   </div>
@@ -227,7 +276,6 @@ export default function DashboardPreview() {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

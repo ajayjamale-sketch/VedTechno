@@ -2,7 +2,8 @@ import { useState, useMemo, useEffect } from "react";
 import {
   Rocket, BookOpen, Users, Trophy, Brain, TrendingUp, Lightbulb,
   Target, Star, Zap, ArrowRight, Plus, CheckCircle2, Clock, MessageSquare,
-  X, Search, Calendar, DollarSign, ExternalLink, Edit, Trash2, Send, Sparkles
+  X, Search, Calendar, DollarSign, ExternalLink, Edit, Trash2, Send, Sparkles,
+  FileText, Settings, BarChart3, PenLine
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AreaChart, Area, ResponsiveContainer, XAxis, Tooltip, BarChart, Bar, CartesianGrid } from "recharts";
@@ -137,7 +138,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
           toast.info("Reviewing module...");
           return m;
         } else if (m.status === "in-progress") {
-          toast.success(`Module "${m.title}" completed! 🎉`);
+          toast.success(`Module "${m.title}" completed!`);
           return { ...m, status: "completed" };
         } else if (m.status === "upcoming") {
           const prevModule = prev.find(pm => pm.id === moduleId - 1);
@@ -225,19 +226,19 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
     let output = "";
     switch(tool) {
       case "Business Plan Generator":
-        output = "📝 **AI-Generated Business Plan**\n\n**Executive Summary:** NeuralEdge is an AI productivity platform...\n**Market Opportunity:** $50B TAM\n**Revenue Model:** SaaS subscription ($29/mo)";
+        output = "[DOCUMENT] **AI-Generated Business Plan**\n\n**Executive Summary:** NeuralEdge is an AI productivity platform...\n**Market Opportunity:** $50B TAM\n**Revenue Model:** SaaS subscription ($29/mo)";
         break;
       case "Competitor Analysis":
-        output = "🔍 **Competitor Analysis**\n\nTop 3 Competitors:\n1. Notion AI – Strength: integration ecosystem\n2. Coda – Weakness: complex pricing\n3. Mem – Opportunity: AI-first UX";
+        output = "[ANALYSIS] **Competitor Analysis**\n\nTop 3 Competitors:\n1. Notion AI – Strength: integration ecosystem\n2. Coda – Weakness: complex pricing\n3. Mem – Opportunity: AI-first UX";
         break;
       case "Pitch Deck Creator":
-        output = "📊 **Pitch Deck Outline**\n\n1. Problem (Slide 1)\n2. Solution (Slide 2)\n3. Market Size (Slide 3)\n4. Traction (Slide 4)\n5. Team (Slide 5)\n6. Ask (Slide 6)";
+        output = "[SLIDES] **Pitch Deck Outline**\n\n1. Problem (Slide 1)\n2. Solution (Slide 2)\n3. Market Size (Slide 3)\n4. Traction (Slide 4)\n5. Team (Slide 5)\n6. Ask (Slide 6)";
         break;
       case "Tech Stack Advisor":
-        output = "⚙️ **Recommended Tech Stack**\n\nFrontend: Next.js + Tailwind\nBackend: Node.js + Express\nDatabase: PostgreSQL + Redis\nAI: OpenAI API + LangChain\nHosting: Vercel + AWS";
+        output = "[CONFIG] **Recommended Tech Stack**\n\nFrontend: Next.js + Tailwind\nBackend: Node.js + Express\nDatabase: PostgreSQL + Redis\nAI: OpenAI API + LangChain\nHosting: Vercel + AWS";
         break;
       default:
-        output = "✅ AI tool generated sample output. In production, this would connect to real AI APIs.";
+        output = "[INFO] AI tool generated sample output. In production, this would connect to real AI APIs.";
     }
     setAiOutput(output);
     setAiModal({ open: true, tool });
@@ -255,12 +256,12 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         ))}
       </div>
 
-      {/* Overview Tab (unchanged) */}
+      {/* Overview Tab */}
       {activeTab === "overview" && (
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Startup Launchpad 🚀</h1>
+              <h1 className="text-2xl font-bold text-foreground">Startup Launchpad</h1>
               <p className="text-sm text-muted-foreground">NeuralEdge · Building the future of AI productivity</p>
             </div>
             <button onClick={() => setActiveTab("innovation")} className="btn-primary text-sm bg-accent hover:bg-pink-700 shadow-pink-600/25">
@@ -345,7 +346,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         </div>
       )}
 
-      {/* Learning Path Tab (unchanged) */}
+      {/* Learning Path Tab */}
       {activeTab === "learning" && (
         <div className="space-y-6">
           <h1 className="text-2xl font-bold text-foreground">Startup Learning Path</h1>
@@ -398,7 +399,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         </div>
       )}
 
-      {/* Innovation Hub Tab (unchanged) */}
+      {/* Innovation Hub Tab */}
       {activeTab === "innovation" && (
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -450,7 +451,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         </div>
       )}
 
-      {/* Mentors Tab (unchanged) */}
+      {/* Mentors Tab */}
       {activeTab === "mentors" && (
         <div>
           <h1 className="text-2xl font-bold text-foreground mb-6">Mentorship Network</h1>
@@ -486,7 +487,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         </div>
       )}
 
-      {/* Challenges Tab with Open button functional */}
+      {/* Challenges Tab */}
       {activeTab === "challenges" && (
         <div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
@@ -533,21 +534,21 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         </div>
       )}
 
-      {/* AI Tools Tab (unchanged) */}
+      {/* AI Tools Tab */}
       {activeTab === "ai" && (
         <div className="space-y-5">
           <h1 className="text-2xl font-bold text-foreground">AI Tools for Founders</h1>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { title: "Business Plan Generator", desc: "AI generates a full business plan from your idea", icon: "📝", action: "Generate Plan" },
-              { title: "Competitor Analysis", desc: "Deep research on competitors, pricing, and positioning", icon: "🔍", action: "Analyze Market" },
-              { title: "Pitch Deck Creator", desc: "AI designs investor-ready pitch decks in minutes", icon: "📊", action: "Create Deck" },
-              { title: "Tech Stack Advisor", desc: "Get recommendations for your product's architecture", icon: "⚙️", action: "Get Advice" },
-              { title: "Financial Projections", desc: "Generate 3-year financial models with AI assistance", icon: "💰", action: "Build Model" },
-              { title: "Marketing Copy AI", desc: "Generate landing pages, ads, and email sequences", icon: "✍️", action: "Generate Copy" },
+              { title: "Business Plan Generator", desc: "AI generates a full business plan from your idea", icon: FileText, action: "Generate Plan" },
+              { title: "Competitor Analysis", desc: "Deep research on competitors, pricing, and positioning", icon: Search, action: "Analyze Market" },
+              { title: "Pitch Deck Creator", desc: "AI designs investor-ready pitch decks in minutes", icon: BarChart3, action: "Create Deck" },
+              { title: "Tech Stack Advisor", desc: "Get recommendations for your product's architecture", icon: Settings, action: "Get Advice" },
+              { title: "Financial Projections", desc: "Generate 3-year financial models with AI assistance", icon: DollarSign, action: "Build Model" },
+              { title: "Marketing Copy AI", desc: "Generate landing pages, ads, and email sequences", icon: PenLine, action: "Generate Copy" },
             ].map((tool, i) => (
               <button key={i} onClick={() => openAiTool(tool.title)} className="feature-card text-left hover:border-pink-600/30">
-                <span className="text-3xl mb-3 block">{tool.icon}</span>
+                <tool.icon className="w-8 h-8 text-pink-500 mb-3" />
                 <h3 className="font-semibold text-foreground text-sm mb-1">{tool.title}</h3>
                 <p className="text-xs text-muted-foreground mb-3">{tool.desc}</p>
                 <span className="text-xs text-pink-600 font-medium">{tool.action} →</span>
@@ -604,7 +605,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         </div>
       </Modal>
 
-      {/* Book Mentor Modal (unchanged) */}
+      {/* Book Mentor Modal */}
       <Modal open={bookMentorModal.open} onClose={() => setBookMentorModal({ open: false, mentor: null })} title="Book Mentor Session">
         {bookMentorModal.mentor && (
           <div className="space-y-4">
@@ -638,7 +639,7 @@ export default function StartupDashboard({ user, initialTab }: { user: User; ini
         )}
       </Modal>
 
-      {/* Submit Idea Modal (unchanged) */}
+      {/* Submit Idea Modal */}
       <Modal open={ideaModal} onClose={() => setIdeaModal(false)} title="Submit Startup Idea">
         <form onSubmit={handleAddIdea} className="space-y-4">
           <div>

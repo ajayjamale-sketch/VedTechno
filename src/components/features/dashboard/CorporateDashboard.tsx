@@ -259,7 +259,7 @@ export default function CorporateDashboard({ user, initialTab }: { user: User; i
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Enterprise Dashboard 🏢</h1>
+              <h1 className="text-2xl font-bold text-foreground">Enterprise Dashboard </h1>
               <p className="text-sm text-muted-foreground">GlobalTech Corp · Q2 2026 Learning Report</p>
             </div>
             <button onClick={() => setAssignPathModal({ open: true, empName: "All Employees" })} className="btn-primary text-sm bg-primary hover:bg-violet-700 shadow-violet-600/25">

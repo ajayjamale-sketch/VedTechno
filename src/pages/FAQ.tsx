@@ -27,7 +27,23 @@ const additionalFaqs = [
   },
 ];
 
-const allFaqs = [...FAQS, ...additionalFaqs];
+// Assign categories to each FAQ based on question content
+const categorizeFaq = (faq: { question: string; answer: string }) => {
+  const q = faq.question.toLowerCase();
+  if (q.includes("account") || q.includes("profile") || q.includes("login") || q.includes("register") || q.includes("sign up")) return "Platform";
+  if (q.includes("course") || q.includes("learn") || q.includes("tutorial") || q.includes("video") || q.includes("content")) return "Learning";
+  if (q.includes("price") || q.includes("cost") || q.includes("payment") || q.includes("refund") || q.includes("bill") || q.includes("student discount")) return "Pricing & Billing";
+  if (q.includes("career") || q.includes("job") || q.includes("certificate") || q.includes("hire") || q.includes("employer")) return "Career";
+  if (q.includes("tech") || q.includes("code") || q.includes("api") || q.includes("integration") || q.includes("hackathon")) return "Technical";
+  return "Platform"; // default
+};
+
+// Combine and enhance FAQs with categories
+const allFaqs = [...FAQS, ...additionalFaqs].map((faq) => ({
+  ...faq,
+  category: categorizeFaq(faq),
+}));
+
 const categories = ["All", "Platform", "Learning", "Pricing & Billing", "Career", "Technical"];
 
 export default function FAQ() {
@@ -35,16 +51,17 @@ export default function FAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const filtered = allFaqs.filter((f) =>
-    f.question.toLowerCase().includes(search.toLowerCase()) ||
-    f.answer.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = allFaqs.filter((f) => {
+    const matchesSearch = f.question.toLowerCase().includes(search.toLowerCase()) ||
+      f.answer.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory = activeCategory === "All" || f.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <main className="page-enter pt-20">
       {/* Hero */}
       <section className="relative pt-24 md:pt-32 pb-16 bg-background overflow-hidden">
-        {/* Subtle background grid */}
         <div className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage: "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
@@ -54,7 +71,7 @@ export default function FAQ() {
           }}
         />
         <div className="relative container-custom text-center">
-          <span className="badge-primary mb-4 inline-block ">Help Center</span>
+          <span className="badge-primary mb-4 inline-block">Help Center</span>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Frequently Asked
             <br />
@@ -99,7 +116,6 @@ export default function FAQ() {
         </div>
       </section>
 
-
       {/* FAQ Accordion */}
       <section className="section-padding bg-background">
         <div className="container-custom max-w-4xl">
@@ -121,7 +137,7 @@ export default function FAQ() {
             <div className="text-center py-16">
               <Search className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
               <p className="font-medium text-foreground">No results found</p>
-              <p className="text-muted-foreground text-sm mt-1">Try different search terms</p>
+              <p className="text-muted-foreground text-sm mt-1">Try different search terms or category</p>
             </div>
           ) : (
             <div className="space-y-3">

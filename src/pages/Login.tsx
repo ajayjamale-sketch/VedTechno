@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, ArrowRight, Code2, Loader2, Phone, Smartphone, ChevronRight, Users, BookOpen, Brain, Briefcase, Building2, Rocket, Shield } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Code2, Loader2, Phone, Smartphone, ChevronRight, Users, BookOpen, Brain, Briefcase, Building2, Rocket, Shield, Flame, Trophy, Bot } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { validateEmail } from "@/lib/utils";
 
 const demoAccounts = [
-  { role: "student", label: "Student", emoji: "🎓", desc: "Learning courses & certifications", color: "from-blue-600 to-blue-700", icon: BookOpen },
-  { role: "developer", label: "Developer", emoji: "💻", desc: "Coding challenges & portfolio", color: "from-indigo-600 to-indigo-700", icon: Code2 },
-  { role: "trainer", label: "Trainer", emoji: "🎓", desc: "Creating & managing courses", color: "from-emerald-600 to-emerald-700", icon: Brain },
-  { role: "recruiter", label: "Recruiter", emoji: "🔍", desc: "Finding certified talent", color: "from-orange-600 to-orange-700", icon: Briefcase },
-  { role: "corporate", label: "Corporate", emoji: "🏢", desc: "Enterprise team training", color: "from-violet-600 to-violet-700", icon: Building2 },
-  { role: "startup", label: "Startup", emoji: "🚀", desc: "Innovation & incubation", color: "from-pink-600 to-pink-700", icon: Rocket },
-  { role: "admin", label: "Admin", emoji: "⚙️", desc: "Platform administration", color: "from-red-600 to-red-700", icon: Shield },
+  { role: "student", label: "Student", desc: "Learning courses & certifications", color: "from-blue-600 to-blue-700", icon: BookOpen },
+  { role: "developer", label: "Developer", desc: "Coding challenges & portfolio", color: "from-indigo-600 to-indigo-700", icon: Code2 },
+  { role: "trainer", label: "Trainer", desc: "Creating & managing courses", color: "from-emerald-600 to-emerald-700", icon: Brain },
+  { role: "recruiter", label: "Recruiter", desc: "Finding certified talent", color: "from-orange-600 to-orange-700", icon: Briefcase },
+  { role: "corporate", label: "Corporate", desc: "Enterprise team training", color: "from-violet-600 to-violet-700", icon: Building2 },
+  { role: "startup", label: "Startup", desc: "Innovation & incubation", color: "from-pink-600 to-pink-700", icon: Rocket },
+  { role: "admin", label: "Admin", desc: "Platform administration", color: "from-red-600 to-red-700", icon: Shield },
 ];
 
 export default function Login() {
@@ -101,16 +101,19 @@ export default function Login() {
             <p className="text-white/60 text-lg mb-8">Continue where you left off. Courses, projects, and community await.</p>
             <div className="space-y-3">
               {[
-                { emoji: "🔥", text: "Maintain your learning streak" },
-                { emoji: "🤖", text: "AI assistant ready to help you code" },
-                { emoji: "🏆", text: "Certifications waiting to be earned" },
-                { emoji: "👥", text: "250,000+ learners building alongside you" },
-              ].map((item) => (
-                <div key={item.text} className="flex items-center gap-3 text-sm">
-                  <span className="text-2xl">{item.emoji}</span>
-                  <span className="text-white/70">{item.text}</span>
-                </div>
-              ))}
+                { icon: Flame, text: "Maintain your learning streak", color: "text-orange-400" },
+                { icon: Bot, text: "AI assistant ready to help you code", color: "text-blue-400" },
+                { icon: Trophy, text: "Certifications waiting to be earned", color: "text-yellow-400" },
+                { icon: Users, text: "250,000+ learners building alongside you", color: "text-emerald-400" },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.text} className="flex items-center gap-3 text-sm">
+                    <Icon className={`w-5 h-5 ${item.color}`} />
+                    <span className="text-white/70">{item.text}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="mt-auto pt-8 border-t border-white/10">
@@ -151,7 +154,6 @@ export default function Login() {
                   onClick={() => handleDemoLogin(role)}
                   disabled={demoLoading !== null}
                   className="group relative p-3 rounded-xl border border-border bg-muted/40 dark:bg-card hover:bg-card hover:border-primary/40 hover:shadow-md transition-all duration-200 text-left disabled:opacity-60 min-h-[64px]"
-
                 >
                   {demoLoading === role ? (
                     <div className="flex items-center gap-2">

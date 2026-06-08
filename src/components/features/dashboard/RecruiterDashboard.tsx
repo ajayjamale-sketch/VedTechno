@@ -260,7 +260,7 @@ export default function RecruiterDashboard({ user, initialTab }: { user: User; i
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Recruiter Hub 👥</h1>
+              <h1 className="text-2xl font-bold text-foreground">Recruiter Hub </h1>
               <p className="text-sm text-muted-foreground">Find verified, certified tech talent ready to hire.</p>
             </div>
             <button onClick={() => setPostJobModal(true)} className="btn-primary text-sm bg-accent hover:bg-orange-700 shadow-orange-600/25">
